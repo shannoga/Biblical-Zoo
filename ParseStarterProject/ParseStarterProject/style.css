@@ -1,0 +1,65 @@
+
+/*##### general settings ###################################################*/
+
+body{
+width:auto ;
+height:auto;
+background-color: #f8eddf;
+	font: 1em Futura;
+	color: #281502;
+}
+
+
+section{
+	width:auto;
+	height:auto;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+
+h1{
+	font-size:25px;
+	color:#281502;
+	text-align:justify;
+	
+
+}
+h5,h2{
+	margin-top:3px;
+    padding-top:3px;
+    margin-bottom:3px;
+    padding-bottom:3px;
+}
+p{
+	font-size:1em;
+	color:#ffffff;
+	text-align:justify;
+}
+dfn{
+	font-size:18px;
+	color:#474747;
+	text-align:justify;
+
+}
+
+p.example{
+	font-size:18px;
+	color:#ffffff;
+	text-align:center;
+}
+
+li{
+font-size:18px;
+text-align:justify;
+list-style-type: decimal;
+list-style-position: outside;
+
+}
+
+a{
+	font-size:14px;
+	color:#ffffff;
+	text-align:justify;
+	text-decoration:none;
+}

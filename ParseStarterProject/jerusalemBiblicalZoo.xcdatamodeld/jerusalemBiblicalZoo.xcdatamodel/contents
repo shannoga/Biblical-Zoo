@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Animal" representedClassName="Animal" syncable="YES">
+        <attribute name="audioGuide" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="binomialName" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="bioClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="conservationStatus" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="diet" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="exhibitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="family" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="generalDescription" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="generalExhibitDescription" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="habitat" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="local" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameEn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="socialStructure" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="verse" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="youTubeUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zooDescription" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="zooItems" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="exhibit" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Exhibit" inverseName="animals" inverseEntity="Exhibit" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES">
+        <attribute name="eventDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="typeString" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Exhibit" representedClassName="Exhibit" parentEntity="Place" syncable="YES">
+        <attribute name="manyAnimals" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mapIcon" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="animals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Animal" inverseName="exhibit" inverseEntity="Animal" syncable="YES"/>
+    </entity>
+    <entity name="Madad" representedClassName="Madad" syncable="YES">
+        <attribute name="am" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="pm" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES">
+        <attribute name="audioGuide" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0">
+            <userInfo/>
+        </attribute>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0">
+            <userInfo/>
+        </attribute>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameEn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="Service" representedClassName="Service" parentEntity="Place" syncable="YES"/>
+    <elements>
+        <element name="Animal" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Event" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Exhibit" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Madad" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Place" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Service" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
