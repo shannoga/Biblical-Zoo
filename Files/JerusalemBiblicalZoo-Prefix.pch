@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'ParseStarterProject' target in the 'ParseStarterProject' project
+//
+
+#import <Availability.h>
+
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#define MR_SHORTHAND
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import "NSManagedObject+Helper.h"
+    #import "ParseHelper.h"
+    #import "UsefulMacros.h"
+    #import "Constants.h"
+    #import "Helper.h"
+    #import "CoreData+MagicalRecord.h"
+    #import "MBProgressHUD.h"
+#endif
