@@ -7,24 +7,18 @@
 #import "NewsListViewController.h"
 #import "FunViewController.h"
 #import "ExhibitsViewController.h"
-#import "Animal.h"
-#import "Exhibit.h"
-#import "Event.h"
-#import "ParseHelper.h"
-#import "NSManagedObject+Helper.h"
-#import "OpeningScreenViewController.h"
-#import "NSFileManager+DirectoryLocations.h"
 #import "Reachability.h"
+
 @implementation JerusalemBiblicalZooAppDelegate
 
 
 @synthesize tabBarController;
 @synthesize window;
-
-
+@synthesize mapController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     //set up core data
     [self setUpMagicalRecord];
     //set up parse
@@ -36,32 +30,46 @@
     //check for updates
     [self checkForUpdates];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-   // [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    NSLog(@"notifications = %@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")){
-        //exclude the audio guide folder from backup
-        [[NSFileManager defaultManager] applicationSupportDirectory:NO];
-    }else{
-       [[NSFileManager defaultManager] applicationTempDirectory];
-    }
-  
-    
+    //[[UIApplication sharedApplication] cancelAllLocalNotifications];
+   // NSLog(@"notifications = %@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
+ 
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
     
     [self setUpTabBarControllers];
     
-    for (Event *event in [Event findAll]) {
-        NSLog(@"event.typeString %@",event.typeString);
-     
+    
+    BOOL askedUser = [[NSUserDefaults standardUserDefaults] boolForKey:@"answeredBugsense"];
+    BOOL agreed = [[NSUserDefaults standardUserDefaults] boolForKey:@"agreedBugsense"];
+    
+    if(!askedUser){
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Help us better this app" message:@"Do you agree to send us data abpult the app functionality" delegate:self cancelButtonTitle:nil otherButtonTitles:@"No Thanks",@"O.K", nil];
+    [alert show];
+    }else if(agreed){
+        [BugSenseController sharedControllerWithBugSenseAPIKey:@"e12a5b10"];
     }
-
-
+    if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app did launch"];
     return YES;
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [[NSUserDefaults standardUserDefaults] setBool:YES   forKey:@"answeredBugsense"];
+
+    switch (buttonIndex) {
+        case 0:
+            [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"agreedBugsense"];
+            break;
+        case 1:
+            [[NSUserDefaults standardUserDefaults] setBool:YES   forKey:@"agreedBugsense"];
+            [BugSenseController sharedControllerWithBugSenseAPIKey:@"e12a5b10"];
+            break;
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 -(void)startLocationServices{
+    
     if([CLLocationManager locationServicesEnabled]){
         if (locationManager==nil) {
             locationManager = [[CLLocationManager alloc] init];
@@ -71,63 +79,126 @@
     }
 }
 
+
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    
-    NSString *visitorsCahnnel;
-    
-    if(![Helper isRightToLeft]){
-        visitorsCahnnel = @"Visitors_En";
-    }else{
-        visitorsCahnnel = @"Visitors_He";
-    }
-    
+
     CLLocation * mapCenterLocation = [[CLLocation alloc] initWithLatitude:31.746233 longitude:35.174095];
     if( [newLocation distanceFromLocation:mapCenterLocation]<1000){
         NSLog(@"user is in zoo");
-        [PFPush subscribeToChannelInBackground:visitorsCahnnel block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Successfully subscribed to the Visitors channel.");
-            } else {
-                NSLog(@"Failed to subscribe to the Visitors channel.");
-            }
-        }];
-        
-      
+        [self subscribeForVisitorNotification];
         
     }else{
         NSLog(@"user is not in the zoo");
-        [PFPush unsubscribeFromChannelInBackground:visitorsCahnnel block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Successfully Unsubscribed to the Visitors channel.");
-            } else {
-                NSLog(@"Failed to Unsubscribe to the Visitors channel.");
-            }
-        }];
+       [self unsubscribeForVisitorNotification];
+        [locationManager stopUpdatingLocation];
     }
+   
+
+}
+
+-(void)startMonitoringZooRegion
+{
+    BOOL monitoring = NO;
+    if ( [CLLocationManager regionMonitoringAvailable] ) {
+        if ( [CLLocationManager regionMonitoringEnabled] ) {
+            if( [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized ) {
+                monitoring = YES;
+                if (locationManager==nil) {
+                    locationManager = [[CLLocationManager alloc] init];
+                    locationManager.delegate = self;
+                }
+            } else {
+                NSLog( @"app is not authorized for location monitoring" );
+            }
+        } else {
+            NSLog( @"region monitoring is not enabled" );
+        }
+    } else {
+        NSLog( @"region monitoring is not available" );
+    }
+    if( !monitoring ) return;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(31.746233, 35.174095);
+    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:center
+                                                               radius:1000
+                                                           identifier:@"zooRegion"];
+    NSLog( @"trying to start monitoring for region %@", region );
+    [locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBest];
+}
+
+-(void)locationManager:(CLLocationManager*)manager didStartMonitoringForRegion:(CLRegion*)region
+{
+    NSLog( @"region monitoring started" );
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+monitoringDidFailForRegion:(CLRegion *)region
+              withError:(NSError *)error
+{
+    NSLog( @"region monitoring failed" );
+}
+
+-(void) locationManager:(CLLocationManager*)manager didEnterRegion:(CLRegion*)region
+{
+    NSLog( @"did enter region" );
+}
+
+-(void) locationManager:(CLLocationManager*)manager didExitRegion:(CLRegion*)region
+{
+    NSLog( @"did exit region" );
+    [locationManager stopMonitoringForRegion:region];
     [locationManager stopUpdatingLocation];
-    [locationManager startMonitoringSignificantLocationChanges];
+    //add alert for bye bye
+}
+
+-(void)subscribeForVisitorNotification{
+     
+    [PFPush subscribeToChannelInBackground:[Helper visitoresChannelName] block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Successfully subscribed to the Visitors channel.");
+        } else {
+            NSLog(@"Failed to subscribe to the Visitors channel.");
+        }
+    }];
+    
+}
+-(void)unsubscribeForVisitorNotification{
+   
+    [PFPush unsubscribeFromChannelInBackground:[Helper visitoresChannelName]  block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Successfully Unsubscribed to the Visitors channel.");
+        } else {
+            NSLog(@"Failed to Unsubscribe to the Visitors channel.");
+        }
+    }];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     if(error.code == kCLErrorDenied) {
         [locationManager stopUpdatingLocation];
-    } else if(error.code == kCLErrorLocationUnknown) {
-        [locationManager startUpdatingLocation];
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error retrieving location"
-                                                        message:[error localizedDescription]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
+                                                        message:NSLocalizedString(@"location services error body",nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              otherButtonTitles:nil, nil];
+          [alert show];
+    }else{
+        [locationManager stopUpdatingLocation];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
+                                                        message:NSLocalizedString(@"location services error body",nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              otherButtonTitles:nil, nil];
         [alert show];
     }
 }
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     if (status == kCLAuthorizationStatusDenied) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"Location serviced disabled"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"location services error title"
+                                                        message:@"location services error body"
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:@"Dismiss"
                                               otherButtonTitles:nil];
         [alert show];
     }
@@ -146,7 +217,7 @@
     
     [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
     [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
-    [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0x8C9544)];
+    [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xC95000)];
     [[UITableView appearance] setBackgroundColor:UIColorFromRGB(0xBDB38C)];
 }
 -(void)setUpMagicalRecord{
@@ -174,12 +245,9 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"JerusalemBiblicalZooSeed.sqlite"];
     
     if (firstLunch) {
-        
+        [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"agreedBugsense"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"answeredBugsense"];
         [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"exhibitsNeedsUpdates"];
-        [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"audioGuidesNeedsUpdates"];
-        
-        
-        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"audioGuideLocalUpdateIndex"];
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"exhibitLocalUpdateIndex"];
     }
 
@@ -205,7 +273,8 @@
     // Use the product identifier from iTunes to register a handler.
     [PFPurchase addObserverForProduct:@"Pro" block:^(SKPaymentTransaction *transaction) {
         // Write business logic that should run once this product is purchased.
-        NSLog(@"parchused");
+        if([Helper bugsenseOn]) [BugSenseController sendCustomEventWithTag:@"app purchesed"];
+        if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app purchesed"];
     }];
 
 }
@@ -228,9 +297,9 @@
     nc = [[UINavigationController alloc]initWithRootViewController:eventsTableViewController];
 	[localViewControllersArray addObject:nc];
     
-    TileMapViewController *mapViewController = [[TileMapViewController alloc] initWithNibName:@"TileMapViewController" bundle:nil];
-    mapViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Map", nil) image:[UIImage imageNamed:@"088-Map"] tag:2];
-    nc = [[UINavigationController alloc]initWithRootViewController:mapViewController];
+    self.mapController = [[TileMapViewController alloc] initWithNibName:@"TileMapViewController" bundle:nil];
+    self.mapController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Map", nil) image:[UIImage imageNamed:@"088-Map"] tag:2];
+    nc = [[UINavigationController alloc]initWithRootViewController:self.mapController];
 	[localViewControllersArray addObject:nc];
     
     NewsListViewController *news = [[NewsListViewController alloc] init];
@@ -312,11 +381,11 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"unlock-feature" object:nil]];
             // Run UI logic that informs user the product has been purchased, such as displaying an alert view.
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank You", nil) message:NSLocalizedString(@"Buying Thanks", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dissmis", nil) otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank You", nil) message:NSLocalizedString(@"Buying Thanks", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
             [alert show];
         }else{
             NSLog(@"error = %@",[error description]);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert", nil) message:NSLocalizedString(@"Perchase failed", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dissmis", nil) otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert", nil) message:NSLocalizedString(@"Perchase failed", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
@@ -425,10 +494,6 @@
     }];
     [MagicalRecord cleanUp];
 }
-
-
-
-
 
 
 

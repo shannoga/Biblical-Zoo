@@ -7,8 +7,8 @@
 //
 
 #import "SignForFriendView.h"
-#import <QuartzCore/QuartzCore.h>
 #import "UIImage+Helper.h"
+
 @implementation SignForFriendView
 @synthesize signDic;
 
@@ -145,12 +145,12 @@
     if (error)
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                            message:NSLocalizedString(@"Unable to save image to Photo Album." ,nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Ok",nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                  otherButtonTitles:nil];
     else // All is well
         alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                            message:@"Image saved to Photo Album."
-                                          delegate:self cancelButtonTitle:@"Ok"
+                                          delegate:self cancelButtonTitle:@"Dismiss"
                                  otherButtonTitles:nil];
     [alert show];
 }

@@ -9,7 +9,6 @@
 
 #import <UIKit/UIKit.h>
 #import "NewsListViewController.h"
-#import <Parse/Parse.h>
 #import "NewsWebViewController.h"
 #import "NewsCell.h"
 #import "Reachability.h"
@@ -28,7 +27,7 @@
         // The className to query on
         self.className = @"News";
         
-        
+        self.tableView.backgroundColor = UIColorFromRGB(0x8C817B);
         // Whether the built-in pull-to-refresh is enabled
         self.pullToRefreshEnabled = NO;
     
@@ -53,9 +52,9 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                              message:NSLocalizedString(@"No Internet alert body",nil)
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                               otherButtonTitles:nil];
 		[alert show];
     }
@@ -197,9 +196,9 @@
           
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                                  message:NSLocalizedString(@"No Internet alert body",nil)
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                   otherButtonTitles:nil];
             [alert show];
             return;

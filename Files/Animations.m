@@ -7,7 +7,6 @@
 //
 
 #import "Animations.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation Animations
 

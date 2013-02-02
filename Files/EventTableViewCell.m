@@ -8,10 +8,8 @@
 
 #import "EventTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Event.h"
 #define D_DAY	86400
 #define D_WEEK	604800
-#define D_MONTH 2419200
 
 @implementation EventTableViewCell
 @synthesize event;

@@ -5,9 +5,7 @@
 //  Created by shani hajbi on 12/21/12.
 //
 
-#import <UIKit/UIKit.h>
 #import "AnimalQuestionsTableView.h"
-#import <Parse/Parse.h>
 #import "AnimalQuestionsCell.h"
 #import "Reachability.h"
 #import "AnimalQuestionAnswerViewController.h"
@@ -53,14 +51,29 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                              message:NSLocalizedString(@"No Internet alert body",nil)
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                               otherButtonTitles:nil];
 		[alert show];
     }
 }
 
+- (PFQuery *)queryForTable {
+    PFQuery *query = [PFQuery queryWithClassName:self.className];
+    
+    // If no objects are loaded in memory, we look to the cache first to fill the table
+    // and then subsequently do a query against the network.
+    if (self.objects.count == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    
+    [query orderByDescending:@"createdAt"];
+    NSString *key = [Helper isRightToLeft]? @"visible":@"visible_en";
+    [query whereKey:key equalTo:@YES];
+    
+    return query;
+}
 
 
 #pragma mark - View lifecycle
@@ -155,18 +168,19 @@
 -(void)sendQuestion{
     if (![self verifyPost]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Attantion", nil)
-                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"O.K", nil) otherButtonTitles:nil];
+                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
         [alert show];
         return;
     }
     
     // Create the object.
     PFObject *userQuestion = [PFObject objectWithClassName:@"AnimalQuestions"];
-    userQuestion[@"question"] = self.textView.text;
+    NSString *key = [Helper isRightToLeft]?@"question":@"question_en";
+    userQuestion[key] = self.textView.text;
    
     NSString * userNameAndCity = [NSString stringWithFormat:@"%@, %@",self.nameTF.text,self.cityTF.text];
     userQuestion[@"user_name"] = userNameAndCity;
-    userQuestion[@"visible"] = @YES;
+    userQuestion[@"visible"] = @NO;
     
     [userQuestion saveEventually];
     
@@ -179,7 +193,7 @@
     [self resignKeyboard];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Question Tanks", nil)
-                                                    message:NSLocalizedString(@"Question Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"O.K", nil) otherButtonTitles:nil];
+                                                    message:NSLocalizedString(@"Question Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
     [alert show];
 }
 -(void)toggleQuestionFromView{
@@ -271,18 +285,6 @@
     [refreshHUD show:YES];
     // This method is called before a PFQuery is fired to get more objects
 }
-// Override to customize what kind of query to perform on the class. The default is to query for
-// all objects ordered by createdAt descending.
-- (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
-    
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
-    [query orderByDescending:@"createdAt"];
-    
-    return query;
-}
 
 /*
 - (void)configureCell:(AnimalQuestionsCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -334,9 +336,9 @@
             
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                                  message:NSLocalizedString(@"No Internet alert body",nil)
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                   otherButtonTitles:nil];
             [alert show];
             return;

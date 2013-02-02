@@ -8,11 +8,9 @@
 
 #import "FunViewController.h"
 #import "SignForFreindViewController.h"
-#import "AlbumViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "ImageOverLayHandleViewController.h"
 #import "FunAnimalImageOverlayViewController.h"
 #import "AnimalQuestionsTableView.h"
+#import <Social/Social.h>
 #define kNext 0
 #define kPrev 1
 #define kPreview 2
@@ -26,7 +24,6 @@
 @synthesize cameraBtn;
 @synthesize questionsButton;
 @synthesize facebookName;
-@synthesize facebookImage;
 @synthesize facebookView;
 @synthesize animalisticCameraLabel;
 @synthesize simpleCameraLabel;
@@ -34,19 +31,25 @@
 @synthesize imagePicker;
 @synthesize scrollView;
 @synthesize zooCamera;
+@synthesize accountStore;
+@synthesize facebookAccount;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Fun",nil); 
-        facebookButton = [[UIBarButtonItem alloc] initWithTitle:@"Facebook" style:UIBarButtonItemStyleDone  target:self action:@selector(loginToFacebook)];
-        self.navigationItem.rightBarButtonItem = facebookButton;
-      
+        self.title = NSLocalizedString(@"More",nil);
+        
+        if(SYSTEM_VERSION_LESS_THAN(@"6.0")){
+            facebookButton = [[UIBarButtonItem alloc] initWithTitle:@"Facebook" style:UIBarButtonItemStyleDone  target:self action:@selector(loginToFacebook)];
+            self.navigationItem.rightBarButtonItem = facebookButton;
+        }
         if(![Helper isLion]){
             [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
         }
+        
+        
     }
     return self;
 }
@@ -68,13 +71,7 @@
     }
 }
 
--(IBAction)openCamera:(id)sender{
-     if([Helper isLion]){
-         
-     }else{
-    [self showBuyFullAppAlert];
-}
-}
+
 
 -(IBAction)openQuestions:(id)sender{
     if([Helper isLion]){
@@ -86,7 +83,140 @@
 }
 
 
--(IBAction)opsenShareCaera:(id)sender{
+-(IBAction)openZooPhotographerCamera:(id)sender{
+    
+    if([Helper isLion]){
+        if ([UIImagePickerController isSourceTypeAvailable:
+             UIImagePickerControllerSourceTypeCamera]){
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:
+                                          NSLocalizedString(@"From Camera", nil),
+                                          NSLocalizedString(@"From Album", nil),
+                                          nil];
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        }else{
+            [self openPhotographerCamera:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+        
+    }else{
+        [self showBuyFullAppAlert];
+    }
+  
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 1:
+            [self openPhotographerCamera:UIImagePickerControllerSourceTypeCamera];
+            
+            break;
+        case 2:
+            [self openPhotographerCamera:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+            break;
+       
+    }
+}
+
+-(void)openPhotographerCamera:(UIImagePickerControllerSourceType)type{
+    if([Helper isLion]){
+        self.imagePicker = [[UIImagePickerController alloc] init];
+        self.imagePicker.delegate = self;
+        
+        if (type == UIImagePickerControllerSourceTypeCamera) {
+            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.allowsEditing=YES;
+            imagePicker.showsCameraControls = YES;
+        }else{
+            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            imagePicker.allowsEditing=YES;
+        }
+         [self presentModalViewController:self.imagePicker  animated:YES];
+            
+        
+    
+    }else{
+        [self showBuyFullAppAlert];
+    }
+}
+
+- (void) imagePickerController: (UIImagePickerController *) picker
+ didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    
+    UIImage  *editedImage;
+   
+        
+        editedImage = (UIImage *) [info objectForKey:
+                                   UIImagePickerControllerEditedImage];
+
+
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self mailToZooWithImage:editedImage];
+    }];
+}
+
+
+#pragma mark -
+#pragma mark Compose Mail
+
+// Displays an email composition interface inside the application. Populates all the Mail fields.
+-(void)mailToZooWithImage:(UIImage *)image{
+    if ([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+        mailComposer.mailComposeDelegate = self;
+
+        [mailComposer setSubject:NSLocalizedString(@"A graet image from [ENTER YOUR NAME HERE]!",nil)];
+        [mailComposer setToRecipients:@[@"tsurischoffman@gmail.com"]];
+        NSData *data = UIImageJPEGRepresentation(image, 100);
+
+        //NSInteger mb = [data length] / (1024*1024);
+
+        [mailComposer addAttachmentData:data mimeType:@"image/jpg"
+                               fileName:@"JerusalemBibilicalZoo.jpg"];
+
+        // Fill out the email body text
+        NSString *emailBody = NSLocalizedString(@"Zoo photographer email massege",nil);
+        [mailComposer setMessageBody:emailBody isHTML:NO];
+
+        [self.navigationController presentModalViewController:mailComposer animated:YES];
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                           message:NSLocalizedString(@"Your email is not configured.",nil)
+                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+                                 otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+
+// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    UIAlertView *alert;
+
+    // Unable to save the image
+    if (result==MFMailComposeResultFailed){
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                           message:NSLocalizedString(@"Unable to send Email.",nil)
+                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+                                 otherButtonTitles:nil];
+        [alert show];
+    }
+    else if(result==MFMailComposeResultSent){
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
+                                           message:NSLocalizedString(@"Email sent.",nil)
+                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                 otherButtonTitles:nil];
+        [alert show];
+    }
+
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+
+///share camera
+
+-(IBAction)openShareCamera:(id)sender{
     if ([UIImagePickerController isSourceTypeAvailable:
          UIImagePickerControllerSourceTypeCamera])
     {
@@ -112,58 +242,63 @@
     
     self.facebookView.transform = CGAffineTransformTranslate(self.facebookView.transform, 0, -self.facebookView.bounds.size.height);
     
-    self.scrollView.contentSize = CGSizeMake(320, 500);
+    if (IS_IPHONE_5) {
+        self.scrollView.frame = CGRectMake(0, 44, 320, 410);
+        self.scrollView.contentSize = CGSizeMake(320, 410);
+    }else{
+        self.scrollView.contentSize = CGSizeMake(320, 410);
+    }
     //labels
-    self.animalisticCameraLabel.text = NSLocalizedString(@"animalistic camera label",nil);
-    self.simpleCameraLabel.text = NSLocalizedString(@"simple camera label",nil);
-    self.signLabel.text = NSLocalizedString(@"sign maker label",nil);
-    
+ 
     
  
     // Create request for user's facebook data
-    
-    if ([PFUser currentUser] && // Check if a user is cached
-        [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
-    {
-        NSLog(@"[PFFacebookUtils session] = %@",[PFFacebookUtils session]);
-      //  [self loginToFacebook];
-        
-        [PFFacebookUtils reauthorizeUser:[PFUser currentUser] withPublishPermissions:@[@"publish_stream"] audience:PF_FBSessionDefaultAudienceFriends block:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [self requestUserData];
-                }else{
-                    NSLog(@"Problem autorizing user");
-                }
-        }];
-
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")){
+          [self toggleFacebookViewForIOS6];
     }else{
-        if([Helper isLion]){
-        //set alert to connect to facebook
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"FaceBook connection",nil)
-                              message:NSLocalizedString(@"facebook connection messege",nil)
-                              delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"Not now",nil)
-                              otherButtonTitles:NSLocalizedString(@"Connect",nil), nil];
-        alert.tag=1;
-        [alert show];
+        if ([PFUser currentUser] && // Check if a user is cached
+            [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
+        {
+            [self requestUserData];
+            NSLog(@"[PFFacebookUtils session] = %@",[PFFacebookUtils session]);
+          //  [self loginToFacebook];
+            /*
+            [PFFacebookUtils reauthorizeUser:[PFUser currentUser] withPublishPermissions:@[@"publish_stream"] audience:PF_FBSessionDefaultAudienceFriends block:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [self requestUserData];
+                    }else{
+                        NSLog(@"Problem autorizing user");
+                    }
+            }];
+               */
+        }else{
+            if([Helper isLion]){
+            //set alert to connect to facebook
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:NSLocalizedString(@"FaceBook connection",nil)
+                                  message:NSLocalizedString(@"facebook connection messege",nil)
+                                  delegate:self
+                                  cancelButtonTitle:NSLocalizedString(@"Not now",nil)
+                                  otherButtonTitles:NSLocalizedString(@"Connect",nil), nil];
+            alert.tag=1;
+            [alert show];
+            }
+            
         }
-        
+        [self toggleFacebookButton];
     }
-    [self toggleFacebookButton];
 }
 
 
 
 -(void)showBuyFullAppAlert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dissmis", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
     alert.tag=2;
     [alert show];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(alertView.tag == 2){
-        NSLog(@"%i",buttonIndex);
         if (buttonIndex==1) {
             [[Helper appDelegate] buyFullApp];
         }
@@ -184,6 +319,10 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+        [self getMeButtonTapped];
+    }
+    
    // self.tabBarController.tabBar.hidden=NO;
 
 }
@@ -215,6 +354,19 @@
         [UIView animateWithDuration:1 animations:^{
             self.facebookView.transform = CGAffineTransformTranslate(self.facebookView.transform, 0, -self.facebookView.bounds.size.height);
         }];
+    }
+}
+
+-(void)toggleFacebookViewForIOS6{
+    [UIView animateWithDuration:1 animations:^{
+        [self.facebookView setHidden:NO];
+        self.facebookView.transform = CGAffineTransformIdentity;
+    }];
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+    {
+        self.facebookName.text = NSLocalizedString(@"Device connected to FaceBook",nil);
+    }else{
+        self.facebookName.text = NSLocalizedString(@"Device dicconected from FaceBook",nil);
     }
 }
 
@@ -259,9 +411,7 @@
 }
 
 -(void)requestUserData{
-    
-    
-    
+
     // Create request for user's Facebook data
     NSString *requestPath = @"me/?fields=name,location";
     
@@ -271,24 +421,10 @@
         if (!error) {
             NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
             
-            NSString *facebookId = userData[@"id"];
             NSString *name = userData[@"name"];
             NSLog(@"location %@",userData[@"location"]);
             facebookName.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"Connected as", nil),name];
           
-            
-            // Download the user's facebook profile picture
-            imageData = [[NSMutableData alloc] init]; // the data will be loaded in here
-            
-            // URL should point to https://graph.facebook.com/{facebookId}/picture?type=large&return_ssl_resources=1
-            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookId]];
-            
-            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
-                                                                      cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                                  timeoutInterval:2.0f];
-            // Run network request asynchronously
-            NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-            NSLog(@"%@",urlConnection);
            
         }else{
             NSLog(@"Error request = %@",[error description]);
@@ -309,20 +445,6 @@
     }
 }
 
-// Called every time a chunk of the data is received
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [imageData appendData:data]; // Build the image
-    [self toggleFacebookView];
-}
-
-// Called when the entire image is finished downloading
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    // Set the image in the header imageView
-    [UIView animateWithDuration:1 animations:^{
-        [facebookImage setImage:[UIImage imageWithData:imageData]];
-    }];
-    
-}
 
 - (void)viewDidUnload
 {
@@ -334,6 +456,58 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)getMeButtonTapped {
+  
+    
+    if (self.accountStore == nil) {
+        self.accountStore = [[ACAccountStore alloc] init];
+    }
+    ACAccountType * facebookAccountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    
+    NSDictionary * dict = @{ACFacebookAppIdKey : @"312934405399723", ACFacebookAudienceKey : ACFacebookAudienceEveryone};
+    [self.accountStore requestAccessToAccountsWithType:facebookAccountType options:dict completion:^(BOOL granted, NSError *error) {
+        if (granted) {
+            NSArray * accounts = [self.accountStore accountsWithAccountType:facebookAccountType];
+            self.facebookAccount = [accounts lastObject];
+            //NSLog(@"account is: %@", self.facebookAccount);
+            [self me];
+        }
+        else {
+            NSLog(@"error is: %@", [error debugDescription]);
+        }
+    }];
+}
+
+- (void)me{
+    NSURL *meurl = [NSURL URLWithString:@"https://graph.facebook.com/me"];
+    
+    SLRequest *merequest = [SLRequest requestForServiceType:SLServiceTypeFacebook
+                                              requestMethod:SLRequestMethodGET
+                                                        URL:meurl
+                                                 parameters:nil];
+    
+    merequest.account = self.facebookAccount;
+    
+    [merequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error debugDescription]);
+        }else{
+            NSDictionary*dic = [NSJSONSerialization JSONObjectWithData:responseData
+                                                               options:kNilOptions
+                                                                 error:nil];
+            if(dic!=nil){
+            self.facebookName.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"Connected as ", nil),dic[@"name"]];
+            }
+        }
+        
+
+        
+        
+    }];
+    
+ 
 }
 
 @end

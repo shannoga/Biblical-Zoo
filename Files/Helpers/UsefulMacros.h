@@ -55,7 +55,7 @@ UIAlertView *__versionAlert = \
                                                                 @"devices running iOS 4.0 or higher.", \
                                                                 __featureName] \
                                                        delegate:nil \
-                                              cancelButtonTitle:@"OK" \
+                                              cancelButtonTitle:@"Dismiss" \
                                               otherButtonTitles:nil] autorelease]; \
   [__versionAlert show];
 

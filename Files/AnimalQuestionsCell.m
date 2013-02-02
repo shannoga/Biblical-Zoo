@@ -58,12 +58,12 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     if (![Helper isRightToLeft]) {
-        CGRect rect = CGRectMake(10,(self.bounds.size.height-86)/2, 86, 86);
+        CGRect rect = CGRectMake(10,(self.bounds.size.height-60)/2, 60, 60);
         self.imageView.frame = rect;
-        rect = CGRectMake(rect.size.width+20,CGRectGetHeight(self.bounds)*0.1,CGRectGetWidth(self.bounds)*0.5,CGRectGetHeight(self.bounds)*0.4);
+        rect = CGRectMake(rect.size.width+20,5,240,70);
         labelView.frame = rect;
-        rect.origin.y = rect.origin.y+ CGRectGetHeight(self.bounds)*0.3;
-        rect.size.height =  CGRectGetHeight(self.bounds)*0.5;
+        rect.origin.y = rect.origin.y+ 70;
+        rect.size.height = 20;
         detailLableView.textAlignment= UITextAlignmentLeft;
         labelView.textAlignment= UITextAlignmentLeft;
         detailLableView.frame = rect;
@@ -108,9 +108,9 @@
     [gradientLayer_ setContentsScale:[[UIScreen mainScreen] scale]];
     gradientLayer_.colors =@[cellColors[index],
     cellColors[index++]];
- 
-    NSLog(@"question = %@",questionObject[@"question"]);
-    NSString *title = questionObject[@"question"];
+   
+    NSString *key = [Helper isRightToLeft]? @"question":@"question_en";
+    NSString *title = questionObject[key];
     NSString *subtitle = questionObject[@"user_name"];
 
     self.labelView.text = title;

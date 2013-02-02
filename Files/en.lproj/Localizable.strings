@@ -23,10 +23,6 @@
 /* Conservation Status */
 "EX" = "Extinct";
 
-"Tylototriton verrucosus" = "Hymalayan Newt";
-
-"Testudo werneri" = "Negev Tortoise";
-
 /* Toggle camera button title */
 "Camera" = "Camera";
 
@@ -48,9 +44,6 @@
 /* No comment provided by engineer. */
 "Family" = "Family";
 
-/* Fun */
-"Fun" = "Fun";
-
 /* No comment provided by engineer. */
 "Habitat" = "Habitat";
 
@@ -60,17 +53,11 @@
 /* No comment provided by engineer. */
 "In the zoo" = "In the zoo";
 
-/* Video recording unavailable failure reason */
-"Movies recorded on this device will only contain audio. They will be accessible through iTunes file sharing." = "Movies recorded on this device will only contain audio. They will be accessible through iTunes file sharing.";
-
 /* News */
 "News" = "News";
 
 /* No Description */
 "No Description" = "No Description";
-
-/* OK button title */
-"OK" = "O.K";
 
 /* Capture still image button title */
 "Photo" = "Photo";
@@ -79,7 +66,7 @@
 "Record" = "Record";
 
 /* No comment provided by engineer. */
-"Sientific Name" = "Sientific Name";
+"Sientific Name" = "Scientific Name";
 
 /* No comment provided by engineer. */
 "Social Structure" = "Social Structure";
@@ -138,7 +125,7 @@
 "Album" = "Album";
 
 /* No comment provided by engineer. */
-"animalistic camera label" = "animalistic camera label";
+"animalistic camera label" = "Animalistic camera";
 
 /* No comment provided by engineer. */
 "City / Country" = "City / Country";
@@ -147,7 +134,7 @@
 "Email" = "Email";
 
 /* No comment provided by engineer. */
-"Exhibits animals" = "Exhibits animals";
+"Exhibits animals" = "Exhibit's animals";
 
 /* No comment provided by engineer. */
 "FaceBook" = "FaceBook";
@@ -156,40 +143,28 @@
 "Name" = "Name";
 
 /* No comment provided by engineer. */
-"O.K" = "O.K";
+"photo title" = "Photo from the Biblical Zoo";
 
 /* No comment provided by engineer. */
-"photo title" = "photo title";
+"Post Attantion" = "Attention";
 
 /* No comment provided by engineer. */
-"Post Attantion" = "Post Attantion";
-
-/* No comment provided by engineer. */
-"Post Label Text" = "Post Label Text";
-
-/* No comment provided by engineer. */
-"Post Missing Data Massege" = "Post Missing Data Massege";
+"Post Missing Data Massege" = "Please fill in all the fields";
 
 /* No comment provided by engineer. */
 "Post Suscess Massege" = "Thanks for sharing";
 
 /* No comment provided by engineer. */
-"Post Tanks" = "Post Tanks";
+"Post Tanks" = "Create your own sign and share it";
 
 /* No comment provided by engineer. */
 "Post" = "Post";
 
 /* No comment provided by engineer. */
-"sign maker label" = "sign maker label";
+"Tap to see animal" = "Tap to see exhibit data";
 
 /* No comment provided by engineer. */
-"simple camera label" = "simple camera label";
-
-/* No comment provided by engineer. */
-"Tap to see animal" = "Tap to see animal";
-
-/* No comment provided by engineer. */
-"PostLabel" = "Jokes, Songs & Interesting facts and more from Zoo visitors.";
+"PostLabel" = "Jokes, Songs, Interesting facts and more from Zoo visitors.";
 
 /* No comment provided by engineer. */
 "A.M" = "A.M";
@@ -213,16 +188,13 @@
 "Creating Exhibits" = "Creating Exhibits";
 
 /* No comment provided by engineer. */
-"Dissmis" = "Dissmis";
-
-/* No comment provided by engineer. */
 "Download Audio Guides" = "Download Audio Guides";
 
 /* No comment provided by engineer. */
 "Download Zoo Exhibits" = "Download Zoo Exhibits";
 
 /* No comment provided by engineer. */
-"Downloading Animals" = "Downloading Animals";
+"Downloading Animals" = "Downloading Animals Data";
 
 /* No comment provided by engineer. */
 "Email sent." = "Email sent.";
@@ -234,16 +206,16 @@
 "Event Created" = "Event Created";
 
 /* No comment provided by engineer. */
-"Exhibit animals" = "Exhibit animals";
+"Exhibit animals" = "Exhibit's animals";
 
 /* No comment provided by engineer. */
-"Failed to find your location " = "Failed to find your location ";
+"Failed to find your location" = "Failed to find your location";
 
 /* No comment provided by engineer. */
 "Flowing" = "Flowing";
 
 /* No comment provided by engineer. */
-"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo" = "If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo";
+"No Internet alert body" = "If you don't have an internet connection you can find an Internet access in the entrance to the zoo";
 
 /* No comment provided by engineer. */
 "Lively" = "Lively";
@@ -255,22 +227,13 @@
 "No Internet Connection" = "No Internet Connection";
 
 /* No comment provided by engineer. */
-"No Valeu" = "No Valeu";
-
-/* No comment provided by engineer. */
-"okay" = "O.K";
-
-/* No comment provided by engineer. */
-"Okay" = "O.K";
+"No Valeu" = "No Value";
 
 /* No comment provided by engineer. */
 "oops Error" = "oops Error";
 
 /* No comment provided by engineer. */
 "P.M" = "P.M";
-
-/* No comment provided by engineer. */
-"Post label" = "Post label";
 
 /* No comment provided by engineer. */
 "Problem Creating Event" = "Problem Creating Event";
@@ -291,10 +254,7 @@
 "There is a problem with this exhibit we will fix it as soon as possible" = "There is a problem with this exhibit we will fix it as soon as possible";
 
 /* No comment provided by engineer. */
-"Unable to send Email." = "Unable to send Email.";
-
-/* No comment provided by engineer. */
-"Update Audio Guides" = "Update Audio Guides";
+"Unable to send Email." = "Unable to send Email!";
 
 /* No comment provided by engineer. */
 "Update Zoo Exhibits" = "Tap to update exhibits!";
@@ -306,10 +266,10 @@
 "Yay!?" = "Yay!?";
 
 /* No comment provided by engineer. */
-"Attantion" = "Attantion";
+"Attantion" = "Attention";
 
 /* No comment provided by engineer. */
-"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors." = "Be the first to add an interesting fact, joke, song. any thing that might interest other visitors.";
+"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors." = "Be the first to add an interesting fact, joke, song or any thing that might interest other visitors.";
 
 /* No comment provided by engineer. */
 "Cancel" = "Cancel";
@@ -324,22 +284,22 @@
 "Connected as" = "Connected as";
 
 /* No comment provided by engineer. */
-"description" = "description";
+"description" = "Description";
 
 /* No comment provided by engineer. */
-"diet" = "diet";
+"diet" = "Diet";
 
 /* No comment provided by engineer. */
 "Done" = "Done";
 
 /* No comment provided by engineer. */
-"Event allready added" = "Event allready added";
+"Event allready added" = "Event already added";
 
 /* No comment provided by engineer. */
-"facebook connection messege" = "facebook connection messege";
+"facebook connection messege" = "Connect to FaceBook to share images and zoo signs with your friends.";
 
 /* No comment provided by engineer. */
-"FaceBook connection" = "FaceBook connection";
+"FaceBook connection" = "Connect to FaceBook to share images and zoo signs with your friends.";
 
 /* No comment provided by engineer. */
 "habitat" = "Habitat";
@@ -354,25 +314,22 @@
 "name" = "Name";
 
 /* No comment provided by engineer. */
-"No Posts For Animal" = "No Posts For Animal";
+"No Posts For Animal" = "No posts For this animal";
 
 /* No comment provided by engineer. */
 "Not now" = "Not now";
 
 /* No comment provided by engineer. */
-"Ok" = "O.K";
+"photo email body" = "We are having fun at the Jerusalem Biblical Zoo.";
 
 /* No comment provided by engineer. */
-"photo email body" = "photo email body";
+"photo email subject" = "An animalistic image from the Jerusalem Biblical Zoo.";
 
 /* No comment provided by engineer. */
-"photo email subject" = "photo email subject";
+"Question Suscess Massege" = "We got your question, we will publish the best questions in the app";
 
 /* No comment provided by engineer. */
-"Question Suscess Massege" = "Question Suscess Massege";
-
-/* No comment provided by engineer. */
-"Question Tanks" = "Question Tanks";
+"Question Tanks" = "Thank You";
 
 /* No comment provided by engineer. */
 "Questions" = "Questions";
@@ -381,7 +338,7 @@
 "Save to album" = "Save to album";
 
 /* No comment provided by engineer. */
-"Save to FaceBook" = "Save to FaceBook";
+"Save to FaceBook" = "Publish to FaceBook";
 
 /* No comment provided by engineer. */
 "Send a Question" = "Send a Question";
@@ -402,31 +359,19 @@
 "Unable to save image to Photo Album." = "Unable to save image to Photo Album.";
 
 /* No comment provided by engineer. */
-"Buy full app description" = "Buy full app description";
+"Buy full app map description" = "Buy the full app to view your location on the map.";
 
 /* No comment provided by engineer. */
-"Buy full app map description" = "Buy full app map description";
-
-/* No comment provided by engineer. */
-"Buy Full App" = "Buy Full App";
-
-/* No comment provided by engineer. */
-"Buy full version" = "Buy full version";
+"Buy Full App" = "Buy The Full App!";
 
 /* No comment provided by engineer. */
 "Buy Now" = "Buy Now";
 
 /* No comment provided by engineer. */
-"Buying Thanks" = "Thank you for buing the app. We hope you will enjoy it.";
+"Buying Thanks" = "Thank you for buying the app. We hope you will enjoy it.";
 
 /* No comment provided by engineer. */
 "Come visit us soon" = "Come visit us soon";
-
-/* No comment provided by engineer. */
-"Error retrieving location text" = "Error retrieving location text";
-
-/* No comment provided by engineer. */
-"Error retrieving location title" = "Error retrieving location title";
 
 /* No comment provided by engineer. */
 "Loading Video" = "Loading Video";
@@ -435,7 +380,7 @@
 "More" = "More";
 
 /* No comment provided by engineer. */
-"Perchase failed" = "Perchase failed";
+"Perchase failed" = "Purchase failed";
 
 /* nill */
 "Problem Loading Video" = "Problem Loading Video";
@@ -453,8 +398,86 @@
 "Finding your location" = "Finding your location";
 
 /* No comment provided by engineer. */
-"Buy full app" = "Buy full app";
+"Downloading Exhibits" = "Downloading Exhibits";
 
 /* No comment provided by engineer. */
-"Downloading Exhibits" = "Downloading Exhibits";
+"A graet image from [ENTER YOUR NAME HERE]!" = "A graet image from [ENTER YOUR NAME HERE]!";
+
+/* No comment provided by engineer. */
+"Ask a question" = "Ask a question";
+
+/* No comment provided by engineer. */
+"From Album" = "From Album";
+
+/* No comment provided by engineer. */
+"From Camera" = "From Camera";
+
+/* No comment provided by engineer. */
+"Generate Sign" = "Generate Sign";
+
+/* No comment provided by engineer. */
+"Great" = "Great";
+
+/* No comment provided by engineer. */
+"Zoo photographer email massege" = "Here is a great image we took while visiting the zoo. If you like it you can use it in your App and Website";
+
+/* No comment provided by engineer. */
+"Info" = "Visitors info";
+
+/* No comment provided by engineer. */
+"Launch" = "Launch";
+
+/* No comment provided by engineer. */
+"photo sharing text" = "A great photo from the Jerusalem Biblical Zoo.";
+
+/* No comment provided by engineer. */
+"Share sign text" = "A sign we made in the Jerusalem Biblical Zoo App!";
+
+/* No comment provided by engineer. */
+"There are no questions for this animal yet, Be the first to ask" = "There are no questions for this animal , Be the first to ask one and our experts will be happy to answer the bets ones!";
+
+/* No comment provided by engineer. */
+"We are in the Jerusalem Biblical Zoo" = "We are in the Jerusalem Biblical Zoo";
+
+/* No comment provided by engineer. */
+"Will start in 20 minutes" = "will start in 20 minutes";
+
+/* No comment provided by engineer. */
+"Your email is not configured." = "Your email is not configured.";
+
+/* nill */
+"Your notification had been set" = "Your notification has been set";
+
+/* No comment provided by engineer. */
+"Dismiss" = "Dismiss";
+
+/* No comment provided by engineer. */
+"location services error body" = "Go to your device Settings>Privacy>Location Services, and enable this app.";
+
+/* No comment provided by engineer. */
+"location services error title" = "Location Services Disabled";
+
+/* No comment provided by engineer. */
+"No questions alert body" = "There are no questions for this animal, Be the first to ask a question!";
+
+/* No comment provided by engineer. */
+"Buy full app description" = "Buy the full app to unlock this feature.";
+
+/* No comment provided by engineer. */
+"Later" = "Later";
+
+/* No comment provided by engineer. */
+"Connected as " = "Connected as ";
+
+/* No comment provided by engineer. */
+"Device connected to FaceBook" = "Device connected to FaceBook";
+
+/* No comment provided by engineer. */
+"Device dicconected from FaceBook" = "Device diconnected from FaceBook";
+
+/* No comment provided by engineer. */
+"Error retrieving location title" = "Error retrieving location title";
+
+/* No comment provided by engineer. */
+"simple camera label" = "simple camera label";
 

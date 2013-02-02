@@ -10,9 +10,7 @@
 
 #import "Exhibit.h"
 #import "Animal.h"
-#import "JerusalemBiblicalZooAppDelegate.h"
 #import "UIImage+Helper.h"
-#import <MapKit/MapKit.h>
 
 
 @implementation Exhibit

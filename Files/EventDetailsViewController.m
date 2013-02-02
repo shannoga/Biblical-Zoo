@@ -7,27 +7,27 @@
 //
 
 #import "EventDetailsViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import <EventKit/EventKit.h>
-#import "NSDate-Utilities.h"
-#import "Event.h"
+
 @interface EventDetailsViewController ()
 
 @end
 
 @implementation EventDetailsViewController
-@synthesize typeLabel = _typeLabel;
-@synthesize titleLabel = _titleLabel;
-@synthesize locationLabel = _LocationLabel;
-@synthesize dateLabel = _dateLabel;
-@synthesize timeLabel = _timeLabel;
-@synthesize descriptionView = _descriptionView;
-@synthesize iconView = _iconView;
-@synthesize callBtn = _callBtn;
-@synthesize saveBtn = _saveBtn;
+@synthesize typeLabel;
+@synthesize titleLabel;
+@synthesize locationLabel;
+@synthesize dateLabel;
+@synthesize timeLabel;
+@synthesize descriptionView;
+@synthesize iconView;
+@synthesize callBtn;
+@synthesize saveBtn;
+@synthesize shareButton;
 @synthesize event;
-
-
+@synthesize notifLabel;
+@synthesize callLabel;
+@synthesize shareLabel;
+@synthesize saveBtnBig;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,12 +59,19 @@
     
     if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:+11111"]]){
         self.callBtn.hidden = YES;
+        [self.callBtn removeFromSuperview];
+         self.callLabel.hidden = YES;
+        [self.callLabel removeFromSuperview];
+       // self.saveBtn.frame = CGRectOffset(self.saveBtn.frame, -90, 0);
+       // self.saveBtnBig.frame = CGRectOffset(self.saveBtnBig.frame, -90, 0);
+      //  self.notifLabel.frame = CGRectOffset(self.notifLabel.frame, -90, 0);
     }
-  
+#warning add in the future
+    self.shareLabel.hidden = YES;
+    self.shareButton.hidden =YES;
 }
 
--(IBAction)dissmis:(id)sender{
-    NSLog(@"Dissmis");
+-(IBAction)dismiss:(id)sender{
     [self dismissModalViewControllerAnimated:YES];
 }
 -(IBAction)callZoo:(id)sender{
@@ -75,17 +82,23 @@
 
 -(IBAction)saveToDiary:(id)sender{
     UILocalNotification *localNotification = [[UILocalNotification alloc] init]; //Create the localNotification object
-    NSDate *newDate = [[event.startDate toLocalTime] dateByAddingTimeInterval:-60*1];
-    [localNotification setFireDate:[[NSDate date] dateByAddingTimeInterval:10]];
+    NSDate *alertDate = [event.startDate dateByAddingTimeInterval:-1200];
+    [localNotification setFireDate:alertDate];
     NSLog(@"fire date = %@",localNotification.fireDate);
-    [localNotification setAlertAction:@"Launch"]; 
-    [localNotification setAlertBody:@"local notif test"];
-    [localNotification setSoundName:@"notification_sound"];
+    [localNotification setAlertAction:NSLocalizedString(@"Launch",nil)];
+    NSString * localString = NSLocalizedString(@"Will start in 20 minutes",nil);
+    NSString * str = [NSString stringWithFormat:@"%@ %@",event.title,localString];
+    [localNotification setAlertBody:str];
+    [localNotification setSoundName:@"notification_sound.aif"];
     [localNotification setHasAction: YES]; //Set that pushing the button will launch the application
     [localNotification setApplicationIconBadgeNumber:[[UIApplication sharedApplication] applicationIconBadgeNumber]+1];
     [localNotification setUserInfo:@{@"test":[self.event title]}];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification]; 
-
+    [BugSenseController sendCustomEventWithTag:@"seted alert to event"];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Great", nil)
+                                                    message:NSLocalizedString(@"Your notification had been set", nill) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+    [alert show];
 }
 
 -(IBAction)shareEvent:(id)sender{

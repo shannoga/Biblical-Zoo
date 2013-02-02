@@ -22,4 +22,5 @@
     #import "Helper.h"
     #import "CoreData+MagicalRecord.h"
     #import "MBProgressHUD.h"
+    #import <BugSense-iOS/BugSenseController.h>
 #endif

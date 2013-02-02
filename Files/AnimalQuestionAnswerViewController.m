@@ -21,21 +21,26 @@
 {
     [super viewDidLoad];
     NSString *directionalString;
-    NSString *quest = self.questionObject[@"question"];
-    if(quest != nil){
+    NSString *key = [Helper isRightToLeft]? @"question":@"question_en";
+    NSString *quest = self.questionObject[key];
+    if(quest != nil && [Helper isRightToLeft]){
         directionalString = [@"\u200F" stringByAppendingString:quest];
-    }else{
+    }else if([Helper isRightToLeft]){
         directionalString=@"";
+    }else{
+        directionalString=quest;
     }
-    
+
     [self.questionLabel setText:directionalString];
 
-    
-    NSString *answer = self.questionObject[@"answer"];
-    if(answer != nil){
+    key = [Helper isRightToLeft]? @"answer":@"answer_en";
+    NSString *answer = self.questionObject[key];
+    if(answer != nil && [Helper isRightToLeft]){
     directionalString = [@"\u200F" stringByAppendingString:answer];
-    }else{
+    }else if([Helper isRightToLeft]){
             directionalString=@"";
+    }else{
+         directionalString=quest;
     }
     self.answerTextView.text = directionalString;
     // Do any additional setup after loading the view from its nib.

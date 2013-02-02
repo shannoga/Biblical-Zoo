@@ -10,12 +10,11 @@
 #import "EventTableViewCell.h"
 #import "EventDetailsViewController.h"
 #import "SectionHeaderView.h"
-#import "NSDate-Utilities.h"
-#import "Madad.h"
+
 #import "MadadExplinationViewController.h"
 #import "Reachability.h"
 #import "CGICalendar.h"
-#define GOOGLE_CALENDAR_DAY_AMOUNT 14
+
 @interface EventsTableViewController ()
 // -(void)beginFetchingEventsFromCalendar:(GDataEntryCalendar *)calendar;
 @end
@@ -82,9 +81,9 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                              message:NSLocalizedString(@"No Internet alert body",nil)
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                               otherButtonTitles:nil];
 		[alert show];
     }
@@ -168,7 +167,8 @@
     self.tableView.delegate=self;
     
 
-    
+    self.tableView.backgroundColor = UIColorFromRGB(0x8C817B);
+
    
     //segmentedController
     segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];

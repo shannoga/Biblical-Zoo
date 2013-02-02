@@ -17,14 +17,16 @@
 
 - (void)viewDidLoad
 {
+    self.view.backgroundColor = UIColorFromRGB(0xF8EDDF);
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIWebView *web = [[UIWebView alloc] initWithFrame:CGRectMake(0, 40, 320, 440)];
+    UIWebView *web = [[UIWebView alloc] initWithFrame:CGRectMake(0, 70, 320, 410)];
     if(IS_IPHONE_5){
-        web.frame = CGRectMake(0, 40, 320, 528);
+        web.frame = CGRectMake(0, 70, 320, 508);
     }
+    NSString * fileName = [Helper isRightToLeft]? @"info":@"info_en";
     [web loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle]
-                                                                          pathForResource:@"info" ofType:@"html"]isDirectory:NO]]];
+                                                                          pathForResource:fileName ofType:@"html"]isDirectory:NO]]];
     [self.view addSubview:web];
 }
 

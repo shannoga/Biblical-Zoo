@@ -68,7 +68,6 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	
 	if ([[Helper currentLang] isEqualToString:@"en"]) {
         self.labelView.frame =         CGRectMake(10,6,CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.frame)/4);
         self.detailLableView.frame =   CGRectMake(10,CGRectGetMaxY(self.labelView.frame),CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.labelView.frame)*3);;

@@ -11,7 +11,9 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface FunAnimalImageOverlayViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate,UIActionSheetDelegate,PF_FBRequestDelegate>
+@interface FunAnimalImageOverlayViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate,UIActionSheetDelegate,PF_FBRequestDelegate,MBProgressHUDDelegate>{
+    MBProgressHUD *refreshHUD;
+}
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
 @property (nonatomic, strong) UIScrollView * overlayesScrollView;
 @property (nonatomic, strong) NSArray *overlayImages;

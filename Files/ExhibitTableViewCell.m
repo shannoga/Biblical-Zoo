@@ -7,7 +7,6 @@
 //
 
 #import "ExhibitTableViewCell.h"
-#import "Exhibit.h"
 #import "UIImage+Helper.h"
 
 @implementation ExhibitTableViewCell

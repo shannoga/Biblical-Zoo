@@ -10,7 +10,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-@interface SignForFreindViewController : UIViewController <UIScrollViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITextViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate>{
+@interface SignForFreindViewController : UIViewController <UIScrollViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITextViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate,MBProgressHUDDelegate>{
     IBOutlet TPKeyboardAvoidingScrollView *scrollView;
     IBOutlet UITextField *nameTF;
     IBOutlet UITextField *latinNameTF;
@@ -30,6 +30,8 @@
     
     BOOL shouldGoUp;
     BOOL fullscreen;
+    
+    MBProgressHUD * progressHUD;
 }
 @property (nonatomic,retain) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
 @property (nonatomic,retain) IBOutlet UITextField *nameTF;
@@ -51,7 +53,7 @@
 @property (nonatomic,retain)  UIImage *generatedImage;
 @property (nonatomic,retain) IBOutlet UIView *captureView;
 
-@property (nonatomic,retain) UIImageView * previewView;
+@property (nonatomic,retain) UIView * previewView;
 
 @property (nonatomic) BOOL fullscreen;
 -(IBAction)showSignPreview:(id)sender;

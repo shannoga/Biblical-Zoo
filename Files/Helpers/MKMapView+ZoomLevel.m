@@ -78,7 +78,7 @@
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
                   zoomLevel:(NSUInteger)zoomLevel
-                   animated:(BOOL)animated
+                   animated:(BOOL)animated 
 {
     // clamp large numbers to 28
     zoomLevel = MIN(zoomLevel, 28);
@@ -90,7 +90,25 @@
     // set the region like normal
     [self setRegion:region animated:animated];
 }
-
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+                  zoomLevel:(NSUInteger)zoomLevel
+                   animated:(BOOL)animated  completion:(void (^)(BOOL finished))completion{
+    
+        // clamp large numbers to 28
+        zoomLevel = MIN(zoomLevel, 28);
+        
+        // use the zoom level to compute the region
+        MKCoordinateSpan span = [self coordinateSpanWithMapView:self centerCoordinate:centerCoordinate andZoomLevel:zoomLevel];
+        MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, span);
+        
+        // set the region like normal
+        [self setRegion:region animated:animated];
+    
+        BOOL finished = YES;
+        if (completion) {
+            completion(finished);
+        }
+    }
 //KMapView cannot display tiles that cross the pole (as these would involve wrapping the map from top to bottom, something that a Mercator projection just cannot do).
 -(MKCoordinateRegion)coordinateRegionWithMapView:(MKMapView *)mapView
                                 centerCoordinate:(CLLocationCoordinate2D)centerCoordinate

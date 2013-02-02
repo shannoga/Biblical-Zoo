@@ -9,13 +9,9 @@
 #import "ExhibitsViewController.h"
 #import "AnimalViewController.h"
 #import "ExhibitAnimalsViewController.h"
-#import "Exhibit.h"
-#import "Animal.h"
 #import "OpeningScreenViewController.h"
-#import <CoreLocation/CoreLocation.h>
 #import "ExhibitTableViewCell.h"
 #import "UIView+i7Rotate360.h"
-#import "SSZipArchive.h"
 #import "Reachability.h"
 #import "ZooInfoViewController.h"
 
@@ -41,14 +37,15 @@
         if (DEBUG) {
             UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateAnimalsData)];
             self.navigationItem.rightBarButtonItem = barItem;
-            if(![Helper isLion]){
-                [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
-            }
-            
-            UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Info", nil) style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
-            self.navigationItem.leftBarButtonItem = infoBarItem;
-          
         }
+        
+        if(![Helper isLion]){
+            [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
+        }
+        
+        UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Info", nil) style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
+        self.navigationItem.leftBarButtonItem = infoBarItem;
+
     }
     return self;
 }
@@ -97,8 +94,8 @@
     UITextAlignment textAlign;
     
     if ([Helper isRightToLeft]) {
-        labelRect = CGRectMake(0, 0, 250, 60);
-        iconRect = CGRectMake(270, 15, 30, 30);
+        labelRect = CGRectMake(0, 7, 260, 60);
+        iconRect = CGRectMake(275, 15, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
         textAlign = UITextAlignmentRight;
     }else{
@@ -148,15 +145,14 @@
     exhibitsHasPendingUpdates =  [[NSUserDefaults standardUserDefaults] boolForKey:@"exhibitsNeedsUpdates"];
 
     if(![Helper isLion]){
-        self.headerButton.backgroundColor = UIColorFromRGB(0xFF6343);
+        self.headerButton.backgroundColor = UIColorFromRGB(0xC95000);
         [self.headerButton addTarget:self action:@selector(buyFullApp) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"302-Unlock.png"]];
-        self.headerButtonLabel.text = NSLocalizedString(@"Buy full app",nil);
+        self.headerButtonLabel.text = NSLocalizedString(@"Buy Full App",nil);
 
     }else if (exhibitsHasPendingUpdates) {
         // Do any additional setup after loading the view, typically from a nib.
         self.headerButton.backgroundColor = UIColorFromRGB(0x3A2E23);
-
         [self.headerButton addTarget:self action:@selector(updateAnimalsData) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"156-Cycle"]];
         if(exhibitsHasPendingUpdates)self.headerButtonLabel.text = NSLocalizedString(@"Update available for exhibits",nil);
@@ -183,7 +179,9 @@
 
 - (void)findNearestExhibit
 {
-    
+    BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
+    if (locationAllowed) {
+   
     [self.headerButtonIconView rotate360WithDuration:.5 repeatCount:100 timingMode:i7Rotate360TimingModeLinear];
     self.headerButtonLabel.text = NSLocalizedString(@"Finding your location",nil);
     
@@ -193,6 +191,14 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     [locationManager startUpdatingLocation];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
+                                                        message:NSLocalizedString(@"location services error body",nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
     
 }
 
@@ -264,7 +270,7 @@
 - (void)showExhibit:(Exhibit*)exhibit;
 {
     [self.headerButtonIconView.layer removeAllAnimations];
-    self.headerButtonLabel.text = NSLocalizedString(@"Show Nearest Exhibit",nil);
+    [self updateHeaderView];
     NSArray *animals = [exhibit localAnimals];
     if ([animals count]==1) {
         AnimalViewController *anialViewController = [[AnimalViewController alloc] init];
@@ -285,7 +291,7 @@
                               initWithTitle:NSLocalizedString(@"oops Error",nil)
                               message:NSLocalizedString(@"There is a problem with this exhibit we will fix it as soon as possible",nil)
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                               otherButtonTitles:nil];
         [alert show];
         
@@ -342,11 +348,13 @@
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     [self.headerButtonIconView.layer removeAllAnimations];
-    self.headerButtonLabel.text = NSLocalizedString(@"Show Nearest exhibit",nil);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil)
-                                                    message:NSLocalizedString(@"Failed to find your location ",nil)
+    [self updateHeaderView];
+    //Unable to determine your location
+    //Please check your location settings in the iphone settings
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
+                                                    message:NSLocalizedString(@"location services error body",nil)
                                                    delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"O.K",nil)
+                                          cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                           otherButtonTitles:nil, nil];
     [alert show];
 }
@@ -428,9 +436,9 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                              message:NSLocalizedString(@"No Internet alert body",nil)
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                               otherButtonTitles:nil];
         [alert show];
     }

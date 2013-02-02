@@ -7,8 +7,7 @@
 //
 
 #import "AnimalsImagesScrollView.h"
-#import "OMPageControl.h"
-#import "Animal.h"
+
 @implementation AnimalsImagesScrollView
 @dynamic animal;
 @synthesize scrollView;
@@ -22,9 +21,7 @@
         /* sets the images*/
         /*****************************************/
         ////load the images of the animal to the scroll view
-        NSLog(@"animal =%@",anAnimal.nameEn);
         NSArray *images = [NSArray arrayWithArray:[anAnimal images]];
-        NSLog(@"images = %@",images);
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         self.scrollView.contentSize =CGSizeMake(320*[images count], 190);
         self.scrollView.scrollEnabled=YES;

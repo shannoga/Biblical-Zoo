@@ -7,7 +7,6 @@
 //
 
 #import "AnimalUserPostsViewer.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation AnimalUserPostsViewer
 @synthesize postLabel;

@@ -9,8 +9,8 @@
 #import "SignForFreindViewController.h"
 #import "UIImage+Helper.h"
 #import "SignForFriendView.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
+#import <Social/Social.h>
+
 @interface SignForFreindViewController ()
 
 @end
@@ -41,6 +41,7 @@
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
         shouldGoUp = NO;
+        self.view.backgroundColor =UIColorFromRGB(0x3D3227);
     }
     return self;
 }
@@ -50,7 +51,7 @@
     [super viewDidLoad];
     scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), 700);
   
-    UIBarButtonItem *previewBtn = [[UIBarButtonItem alloc] initWithTitle:@"Create sign" style:UIBarButtonItemStyleDone  target:self action:@selector(showSignPreview:)];
+    UIBarButtonItem *previewBtn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Generate Sign",nil) style:UIBarButtonItemStyleDone  target:self action:@selector(showSignPreview:)];
     self.navigationItem.rightBarButtonItem = previewBtn;
     
 }
@@ -67,41 +68,62 @@
     [super viewDidAppear:animated];
 }
 
+
 -(void)showSignPreview:(id)sender{
-  
+   
     if(self.nameTF.text.length>0 && self.latinNameTF.text.length>0 && self.habitatTV.text.length>0 && self.dietTV.text.length>0 && self.socialStructureTV.text.length>0 && self.descriptionTV.text.length>0){
-        NSDictionary *signDic = @{
-        @"name":self.nameTF.text,
-        @"binomialName":self.latinNameTF.text,
-        @"habitat":self.habitatTV.text,
-        @"diet":self.dietTV.text,
-        @"social":self.socialStructureTV.text,
-        @"description":self.descriptionTV.text};
-        [self.view endEditing:YES];
-        self.generatedImage = [self createImage:signDic];
-        [self previewSign];
+        
+        
+            NSDictionary * signDic = @{
+            @"name":self.nameTF.text,
+            @"binomialName":self.latinNameTF.text,
+            @"habitat":self.habitatTV.text,
+            @"diet":self.dietTV.text,
+            @"social":self.socialStructureTV.text,
+            @"description":self.descriptionTV.text};
+            [self.view endEditing:YES];
+            self.generatedImage = [self createImageWithDic:signDic];
+            [self previewSignWithDic:signDic];
+        
+       
     }else{
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                            message:@"Fill all fields."
-                                          delegate:self cancelButtonTitle:@"Ok"
+                                          delegate:self cancelButtonTitle:@"Dismiss"
                                  otherButtonTitles:nil];
         [alert show];
     }
     
-    
 }
 
--(void)previewSign{
-    UIImage *previewImage  = self.generatedImage;
-    self.previewView = [[UIImageView alloc] initWithImage:previewImage];
-    self.previewView.frame = CGRectMake(5,0,224,144.8);
-    self.previewView.alpha =0;
+-(IBAction)showCamera:(id)sender{
+    //future feature
+}
+
+-(void)previewSignWithDic:dic{
+  
+    self.previewView = nil;
+    
+    
+    self.previewView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.previewView.alpha= 0;
+    self.previewView.backgroundColor = UIColorFromRGB(0x3D3227);
+    [self showHud];
+    UIView *imageView  = [[SignForFriendView alloc] initWithFrame:CGRectMake(0, 0, 2240, 1448) WithSignDic:dic];
+    CGAffineTransform transform = CGAffineTransformScale(imageView.transform, .15, .15);
+    imageView.transform = transform;
+    imageView.frame = CGRectOffset(imageView.frame, -imageView.frame.origin.x, -imageView.frame.origin.y+10);
+    [self.previewView addSubview:imageView];
+    
+    
     [self.view addSubview:self.previewView];
-    [UIView animateWithDuration:1 animations:^{
+   
+    [UIView animateWithDuration:2 animations:^{
        self.previewView.alpha =1;
     }];
     
     [self showSavingOptions];
+    [progressHUD hide:YES];
 }
 - (void)showSavingOptions
 {
@@ -123,14 +145,14 @@
     switch (buttonIndex) {
         case 1:
             [self saveToAlbum];
-            
+            [self showHud];
             break;
         case 2:
             [self displayComposerSheet];
             break;
         case 3:
             
-           // [self postWall];
+            [self postOnFacebook];
             break;
     }
     [UIView animateWithDuration:1 animations:^{
@@ -150,18 +172,19 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
+    [progressHUD hide:YES];
     UIAlertView *alert;
     
     // Unable to save the image
     if (error)
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                            message:NSLocalizedString(@"Unable to save image to Photo Album." ,nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Ok",nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                  otherButtonTitles:nil];
     else // All is well
         alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                            message:@"Image saved to Photo Album."
-                                          delegate:self cancelButtonTitle:@"Ok"
+                                          delegate:self cancelButtonTitle:@"Dismiss"
                                  otherButtonTitles:nil];
     [alert show];
 }
@@ -192,7 +215,7 @@
                            fileName:@"JerusalemBibilicalZoo.jpg"];
     
 	// Fill out the email body text
-	NSString *emailBody = @"We are in the jerusalem biblical zoo";
+	NSString *emailBody = NSLocalizedString(@"We are in the Jerusalem Biblical Zoo",nil);
 	[mailComposer setMessageBody:emailBody isHTML:NO];
 	
 	[self presentModalViewController:mailComposer animated:YES];
@@ -209,14 +232,14 @@
     if (result==MFMailComposeResultFailed){
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                            message:NSLocalizedString(@"Unable to send Email.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"O.K" ,nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
                                  otherButtonTitles:nil];
         [alert show];
     }
     else if(result==MFMailComposeResultSent){
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
                                            message:NSLocalizedString(@"Email sent.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"O.K",nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                  otherButtonTitles:nil];
         [alert show];
     }
@@ -225,13 +248,16 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
 }
 
 
 
--(UIImage*)createImage:(NSDictionary*)dic
+-(UIImage*)createImageWithDic:(NSDictionary*)dic
 {
     SignForFriendView *signview = [[SignForFriendView alloc] initWithFrame:CGRectMake(0, 0, 2240, 1448) WithSignDic:dic];
     UIImage *image = [UIImage imageWithView:signview];
@@ -239,7 +265,33 @@
     return image;
 }
 
-
+-(void)postOnFacebook{
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+            
+            SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            
+            SLComposeViewControllerCompletionHandler myBlock = ^(SLComposeViewControllerResult result){
+                if (result == SLComposeViewControllerResultCancelled) {
+                    NSLog(@"Cancelled"); 
+                } else{
+                    NSLog(@"Done");
+                }
+                [controller dismissViewControllerAnimated:YES completion:Nil];
+            };
+            controller.completionHandler =myBlock;
+            
+            NSString *localizedText = NSLocalizedString(@"Share sign text",nil);
+            [controller setInitialText:localizedText];
+            [controller addURL:[NSURL URLWithString:@"http://itunes.apple.com/app/id591193554"]];
+            [controller addImage:self.generatedImage];
+            
+            [self presentViewController:controller animated:YES completion:Nil];
+            
+    }else{
+       //add parse facebook share
+    }
+    
+}
 
 
 
@@ -329,10 +381,24 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self.scrollView adjustOffsetToIdealIfNeeded];
+   // [self.scrollView adjustOffsetToIdealIfNeeded];
 }
 
 
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+-(void)showHud{
+    progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progressHUD];
+    progressHUD.delegate = self;
+    [progressHUD show:YES];
+}
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD hides
+    [hud removeFromSuperview];
+	hud = nil;
+}
 
 @end
 

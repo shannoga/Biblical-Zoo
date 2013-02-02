@@ -11,7 +11,7 @@
 
 #define kDataTable 0
 #define kGeneralDescription 1
-#define kZooDescription 2
+#define kQuestions 2
 #define kMap 3
 #define kPosts 4
 #define kAudioGuide 5
@@ -43,17 +43,13 @@
        
             [buttonsArray addObject:flexItem];
       
-        
-        
-        
-        
-        if (hasZooDescription) {
-            btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"zoodes"] style:UIBarButtonItemStylePlain target:self action:@selector(buttonTapped:)];
-            btn.tag = kZooDescription;
+  
+            btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"248-QuestionCircleAlt"] style:UIBarButtonItemStylePlain target:self action:@selector(buttonTapped:)];
+            btn.tag = kQuestions;
             [buttonsArray addObject:btn];
           
             [buttonsArray addObject:flexItem];
-        }
+        
       
         if(hasMap){
             btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dis_map"] style:UIBarButtonItemStylePlain target:self action:@selector(buttonTapped:)];

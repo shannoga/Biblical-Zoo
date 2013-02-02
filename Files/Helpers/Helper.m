@@ -7,9 +7,8 @@
 //
 
 #import "Helper.h"
-#import "JerusalemBiblicalZooAppDelegate.h"
-#import "Animal.h"
 #import "NSFileManager+DirectoryLocations.h"
+#import "Exhibit.h"
 @implementation Helper
 
 +(JerusalemBiblicalZooAppDelegate*)appDelegate{
@@ -221,6 +220,28 @@
 +(NSString*)tempFilesPath{
     NSString *path =[[NSFileManager defaultManager] applicationTempDirectory];
     return path;
+
+}
+
++(BOOL)bugsenseOn{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"agreedBugsense"];
+}
+
++(void)setCurrentExhibit:(Exhibit*)exhibit{
+    [[[self appDelegate] mapController] setCenterLocationAndShowMapForExhibit:exhibit];
+}
++(BOOL)isRetina{
+    return  ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+             ([UIScreen mainScreen].scale == 2.0));
+}
++(NSString*)visitoresChannelName{
+    NSString *visitorsCahnnel;
+    if(![Helper isRightToLeft]){
+        visitorsCahnnel = @"Visitors_En";
+    }else{
+        visitorsCahnnel = @"Visitors_He";
+    }
+    return visitorsCahnnel;
 }
 
 @end

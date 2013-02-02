@@ -30,5 +30,9 @@
 +(NSString*)audioGuideFilesPath;
 +(NSString*)tempFilesPath;
 +(BOOL)isLion;
++(BOOL)bugsenseOn;
++(void)setCurrentExhibit:(Exhibit*)exhibit;
++(BOOL)isRetina;
++(NSString*)visitoresChannelName;
 @end
 

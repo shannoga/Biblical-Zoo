@@ -22,7 +22,7 @@
 @property (nonatomic, weak) Animal *animal;
 @property (nonatomic, strong) AnimalAudioGuideView *audioGuide;
 @property (nonatomic, retain)  AnimalPostView *postView;
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal;
+- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal withParentController:(AnimalViewController *)animalController;
 -(void)play;
 -(void)pause;
 -(void)stop;

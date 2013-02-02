@@ -5,11 +5,11 @@
    Copyright 2010 shani hajbi. All rights reserved. */
 
 /* conservation ststus localizable */
-"LC" = "Least Concern";
+"LC" = "ללא חשש";
 
 "NT" = "קרוב לאיום";
 
-"VU" = "Vulnerable";
+"VU" = "פגיע";
 
 /* Conservation Status */
 "EN" = "תלוי שימור";
@@ -22,10 +22,6 @@
 
 /* Conservation Status */
 "EX" = "נכחד";
-
-"Tylototriton verrucosus" = "Hymalayan Newt";
-
-"Testudo werneri" = "Negev Tortoise";
 
 /* Toggle camera button title */
 "Camera" = "מצלמה";
@@ -48,9 +44,6 @@
 /* No comment provided by engineer. */
 "Family" = "משפחה";
 
-/* Fun */
-"Fun" = "הפתעות";
-
 /* No comment provided by engineer. */
 "Habitat" = "סביבת מחיה";
 
@@ -60,17 +53,11 @@
 /* No comment provided by engineer. */
 "In the zoo" = "בגן החיות";
 
-/* Video recording unavailable failure reason */
-"Movies recorded on this device will only contain audio. They will be accessible through iTunes file sharing." = "No need";
-
 /* News */
 "News" = "חדשות";
 
 /* No Description */
 "No Description" = "חסר תיאור";
-
-/* OK button title */
-"OK" = "אישור";
 
 /* Capture still image button title */
 "Photo" = "תמונה";
@@ -156,16 +143,10 @@
 "Name" = "שם";
 
 /* No comment provided by engineer. */
-"O.K" = "אישור";
-
-/* No comment provided by engineer. */
 "photo title" = "כותרת התמונה";
 
 /* No comment provided by engineer. */
-"Post Attantion" = "יש להזין את כל הפרטים";
-
-/* No comment provided by engineer. */
-"Post Label Text" = "יש לכם בדיחה או עובדה מעניינת על חיה זו, שלחו אלינו ואנו נפרסם את הטובות ביותר.";
+"Post Attantion" = "שימו לב";
 
 /* No comment provided by engineer. */
 "Post Missing Data Massege" = "חובה למלא את כל השדות (תוכן, עיר ושם) !";
@@ -180,13 +161,7 @@
 "Post" = "פוסט";
 
 /* No comment provided by engineer. */
-"sign maker label" = "הוסיפו חברים לגן החיות";
-
-/* No comment provided by engineer. */
-"simple camera label" = "מצלמה";
-
-/* No comment provided by engineer. */
-"Tap to see animal" = "הקש בכדי לצפות בפרטים על החיה";
+"Tap to see animal" = "הקש בכדי לצפות בפרטים על התצוגה";
 
 /* No comment provided by engineer. */
 "PostLabel" = "עובדות מעניינות, שירים ובדיחות ממבקרי הגן.";
@@ -213,9 +188,6 @@
 "Creating Exhibits" = "מתקין תצוגות";
 
 /* No comment provided by engineer. */
-"Dissmis" = "שחרר";
-
-/* No comment provided by engineer. */
 "Download Audio Guides" = "הורד קבצי הדרכה קולית";
 
 /* No comment provided by engineer. */
@@ -237,13 +209,13 @@
 "Exhibit animals" = "חיות בתצוגה";
 
 /* No comment provided by engineer. */
-"Failed to find your location " = "איתור מיקומך נכשל";
+"Failed to find your location" = "איתור מיקומך נכשל";
 
 /* No comment provided by engineer. */
 "Flowing" = "זורם";
 
 /* No comment provided by engineer. */
-"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo" = "במידה ואין לכם גישה לאינטרנט תוכלו להתחבר לאינטרנט בכניסה לגן החיות.";
+"No Internet alert body" = "במידה ואין לכם גישה לאינטרנט תוכלו להתחבר לאינטרנט בכניסה לגן החיות.";
 
 /* No comment provided by engineer. */
 "Lively" = "שוקק";
@@ -256,12 +228,6 @@
 
 /* No comment provided by engineer. */
 "No Valeu" = "אין ערך";
-
-/* No comment provided by engineer. */
-"okay" = "אישור";
-
-/* No comment provided by engineer. */
-"Okay" = "אישור";
 
 /* No comment provided by engineer. */
 "oops Error" = "אופס… שגיאה !";
@@ -330,7 +296,10 @@
 "Event allready added" = "האירוע קיים כבר בלוח השנה שלך";
 
 /* No comment provided by engineer. */
-"FaceBook connection" = "חיבור לפייסבוק";
+"facebook connection messege" = "התחברו לפייסבוק בכדי לשתף תמונות ושלטים שתיצרו עם חבריכם.";
+
+/* No comment provided by engineer. */
+"FaceBook connection" = "התחברו לפייסבוק בכדי לשתף תמונות ושלטים שתיצרו עם חבריכם.";
 
 /* No comment provided by engineer. */
 "habitat" = "סביבת מחיה";
@@ -349,9 +318,6 @@
 
 /* No comment provided by engineer. */
 "Not now" = "לא כעת";
-
-/* No comment provided by engineer. */
-"Ok" = "אישור";
 
 /* No comment provided by engineer. */
 "photo email body" = "אנו מבקרים ונהנים בגן החיות התנכ\"י בירושלים ";
@@ -393,16 +359,10 @@
 "Unable to save image to Photo Album." = "שמירת התמונה נכשלה, אנא נסו שוב.";
 
 /* No comment provided by engineer. */
-"Buy full app description" = "באפליקציה המלאה תוכלו לצפות בכל תצוגות הגן, לנווט בעזרת המפה  ועוד.";
-
-/* No comment provided by engineer. */
 "Buy full app map description" = "רכשו את האפליקציה בכדי לראות את מיקומכם על המפה !";
 
 /* No comment provided by engineer. */
-"Buy Full App" = "תכונה זו אינה זמינה בגרסת הניסיון !";
-
-/* No comment provided by engineer. */
-"Buy full version" = "תכונה זו אינה זמינה בגרסת הניסיון !";
+"Buy Full App" = "רכוש את הגרסה המלאה!";
 
 /* No comment provided by engineer. */
 "Buy Now" = "קנה עכשיו";
@@ -412,12 +372,6 @@
 
 /* No comment provided by engineer. */
 "Come visit us soon" = "אנו  מצפים לראותכם בגן  בקרוב.";
-
-/* No comment provided by engineer. */
-"Error retrieving location text" = "ארעה שגיאה באיתור מיקומכם, אנא ודאו כי הגדרות המכשיר מאפשרות לאפליציה זו לקבל מידע על מיקומכם !";
-
-/* No comment provided by engineer. */
-"Error retrieving location title" = "איתור מיקומכם נכשל";
 
 /* No comment provided by engineer. */
 "Loading Video" = "טוען וידאו";
@@ -444,8 +398,80 @@
 "Finding your location" = "מאתר את מיקומכם ";
 
 /* No comment provided by engineer. */
-"Buy full app" = "רכוש את האפליקציה המלאה";
+"Downloading Exhibits" = "מוריד מידע תצוגות";
 
 /* No comment provided by engineer. */
-"Downloading Exhibits" = "מוריד מידע תצוגות";
+"A graet image from [ENTER YOUR NAME HERE]!" = "תמונה נהדרת מ [כתוב כאן את שמך]!";
+
+/* No comment provided by engineer. */
+"Ask a question" = "שאל שאלה!";
+
+/* No comment provided by engineer. */
+"From Album" = "אלבום תמונות";
+
+/* No comment provided by engineer. */
+"From Camera" = "מצלמה";
+
+/* No comment provided by engineer. */
+"Generate Sign" = "צור את השלט";
+
+/* No comment provided by engineer. */
+"Great" = "מעולה";
+
+/* No comment provided by engineer. */
+"Zoo photographer email massege" = "תמונה שצילמנו במהלך הביקור וחשבנו שתעניין אתכם. נשמח אם תפרסמו אותה באפליקציה או באתר של הגן.";
+
+/* No comment provided by engineer. */
+"Info" = "מידע למבקרים";
+
+/* No comment provided by engineer. */
+"Launch" = "פתח";
+
+/* No comment provided by engineer. */
+"photo sharing text" = "תמונה נהדרת מביקור בגן החיות התנכ\"י בירושלים";
+
+/* No comment provided by engineer. */
+"Share sign text" = "שלט שהכנו באפליקציית גן החיות התנכ\"י!";
+
+/* No comment provided by engineer. */
+"There are no questions for this animal yet, Be the first to ask" = "אין עדיין שאלות על חיה זו, היו הראשונים לשלוח שאלה והמומחים שלנו יענו לכם בשמחה !";
+
+/* No comment provided by engineer. */
+"We are in the Jerusalem Biblical Zoo" = "אנחנו נמצאים בגן החיות התנכ\"י בירושלים";
+
+/* No comment provided by engineer. */
+"Will start in 20 minutes" = "יתחיל בעוד 20 דקות";
+
+/* No comment provided by engineer. */
+"Your email is not configured." = "תיבת המייל שלך אינה מוגדרת במכשיר בו אתה משתמש!";
+
+/* nill */
+"Your notification had been set" = "התזכורת נקבעה בהצלחה, המשך ביקור נעים.";
+
+/* No comment provided by engineer. */
+"Dismiss" = "אישור";
+
+/* No comment provided by engineer. */
+"location services error body" = "כנס להגדרות > פרטיות > שירותי מיקום  ואפשר את האפליקציה הזו.";
+
+/* No comment provided by engineer. */
+"location services error title" = "שירותי מיקום מכובים";
+
+/* No comment provided by engineer. */
+"No questions alert body" = "לא נשאלו שאלות על חיה זו, היו הראשונים לשאול שאלה!";
+
+/* No comment provided by engineer. */
+"Buy full app description" = "רכוש את האפליקציה בכדי להשתמש בתכונה זו.";
+
+/* No comment provided by engineer. */
+"Later" = "לא כעת";
+
+/* No comment provided by engineer. */
+"Connected as " = "מחובר כ";
+
+/* No comment provided by engineer. */
+"Device connected to FaceBook" = "מכשיר זה מחובר לפייסבוק";
+
+/* No comment provided by engineer. */
+"Device dicconected from FaceBook" = "מכשיר זה אינו מחובר לפייסבוק";
 

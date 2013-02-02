@@ -175,7 +175,6 @@
     for (NSString * component in components) {
         
         NSArray * keyVal = [component componentsSeparatedByString:@"="];
-        NSLog(@"keyVal = %@",keyVal);
         if(keyVal.count>1){
         repaetDictionary[keyVal[0]] = keyVal[1];
         }
@@ -314,31 +313,32 @@
 
 -(NSArray*)colors{
     NSArray * cellColors;
-    NSLog(@"EventType = %d",[self.type integerValue]);
     switch ([self.type intValue]) {
         case kEventTypeFeeding:
-            cellColors = @[(id)[UIColorFromRGB(0x8C9544) CGColor],//feedings
-                          (id)[UIColorFromRGB(0x8C9544) CGColor]];
+            cellColors = @[(id)[UIColorFromRGB(0xDED4C8) CGColor],//feedings
+                          (id)[UIColorFromRGB(0xDED4C8) CGColor]];
+            //0x8C817B nice purple brown color
             break;
         case kEventTypeExhibition:
             cellColors = @[(id)[UIColorFromRGB(0xBDB38C) CGColor],
                           (id)[UIColorFromRGB(0xBDB38C) CGColor]];
             break;
         case kEventTypeKids:
-            cellColors = @[(id)[UIColorFromRGB(0x777A55) CGColor],//kids
-                          (id)[UIColorFromRGB(0x777A55) CGColor]];
+            cellColors = @[(id)[UIColorFromRGB(0xD4963E) CGColor],//kids
+                          (id)[UIColorFromRGB(0xD4963E) CGColor]];
             break;
         case kEventTypeMusic:
-            cellColors = @[(id)[UIColorFromRGB(0xBFAB27) CGColor],
-                          (id)[UIColorFromRGB(0xBFAB27) CGColor]];
+            //0x749FC1 nice blue 
+            cellColors = @[(id)[UIColorFromRGB(0x62736F) CGColor],
+                          (id)[UIColorFromRGB(0x62736F) CGColor]];
             break;
         case kEventTypeShow:
             cellColors = @[(id)(id)[UIColorFromRGB(0xBDB38C) CGColor],
                           (id)[UIColorFromRGB(0xBDB38C) CGColor]];
             break;
         case kEventTypeWorkShop:
-            cellColors = @[(id)[UIColorFromRGB(0xBDB38C) CGColor],
-                          (id)[UIColorFromRGB(0xBDB38C) CGColor]];
+            cellColors = @[(id)[UIColorFromRGB(0x7F7960) CGColor],
+                          (id)[UIColorFromRGB(0x7F7960) CGColor]];
             break;
             
     }

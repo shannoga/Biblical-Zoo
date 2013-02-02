@@ -8,7 +8,6 @@
 
 #import "Madad.h"
 #import "NSDate-Utilities.h"
-#import "JerusalemBiblicalZooAppDelegate.h"
 #import "CGICalendar.h"
 
 #define START_DATE @"DTSTART"

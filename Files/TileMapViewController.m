@@ -56,15 +56,12 @@
 #import "AnimalViewController.h"
 #import "ExhibitAnimalsViewController.h"
 #import "MapAnnotationView.h"
-
+#import "ExhibitAnnotation.h"
 @implementation TileMapViewController
 @synthesize locationManager;
-@synthesize currentLocation;
 @synthesize  mapAnnotations;
 @synthesize  services;
 @synthesize map;
-
-
 
 #pragma mark -
 
@@ -96,9 +93,9 @@
 {
  
     if([Helper isLion]){
-    [map setShowsUserLocation:YES];
+        [map setShowsUserLocation:YES];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app map description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dissmis", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app map description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Later", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
         [alert show];
     }
     
@@ -112,14 +109,7 @@
         CLLocationCoordinate2DMake(31.751065,35.181082)
 	};	   
     
-    CLLocationCoordinate2D coordsBg2[5]={
-		CLLocationCoordinate2DMake(31.78,35.2),
-		CLLocationCoordinate2DMake(31.72,35.2),
-		CLLocationCoordinate2DMake(31.72,35.14),
-		CLLocationCoordinate2DMake(31.78,35.14),
-        CLLocationCoordinate2DMake(31.78,35.2)
-	};
-    
+ 
     
     
     bg=[MKPolygon polygonWithCoordinates:coordsBg count:5];
@@ -230,7 +220,6 @@
         }
         [locationManager startUpdatingLocation];
     }
-    
 
 }
 
@@ -457,7 +446,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"You are out of the zoo",nil)
                                                             message:NSLocalizedString(@"Come visit us soon",nil)
                                                            delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Dissmis",nil)
+                                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                                   otherButtonTitles:nil];
             [alert show];
         });
@@ -473,16 +462,41 @@
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error retrieving location title",nil)
-                                                        message:[error description]
-                                                       delegate:NSLocalizedString(@"Error retrieving location text",nil)
-                                              cancelButtonTitle:NSLocalizedString(@"Dissmis",nil)
-                                              otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
+                                                        message:NSLocalizedString(@"location services error body",nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              otherButtonTitles:nil, nil];
         [alert show];
     }
 }
 
+-(void)setCenterLocationAndShowMapForExhibit:(Exhibit *)exhibit{
+    
+    [self.navigationController.tabBarController setSelectedIndex:2];
+   
+    CLLocationCoordinate2D location =  CLLocationCoordinate2DMake([exhibit.latitude doubleValue], [exhibit.longitude doubleValue]);
+    [self.map setCenterCoordinate:location zoomLevel:17 animated:YES];
+  [self performSelector:@selector(showAnnotationForExhibit:) withObject:exhibit afterDelay:1];
+    
+    
+    
 
+}
+-(void)showAnnotationForExhibit:(Exhibit*)exhibit{
+    
+    for (ExhibitAnnotation *annotation in self.map.annotations) {
+        if (MKMapRectContainsPoint(self.map.visibleMapRect, MKMapPointForCoordinate(annotation.coordinate)))
+        {
+            if (annotation.exhibit == exhibit) {
+                [self openAnnotation:annotation];
+            }
+        }
+    }
+    
+   
 
+   
+}
 
 @end

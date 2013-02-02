@@ -31,9 +31,14 @@
 @property (nonatomic, strong) IBOutlet UIImageView *iconView;
 @property (nonatomic, strong) IBOutlet UIButton *callBtn;
 @property (nonatomic, strong) IBOutlet UIButton *saveBtn;
+@property (nonatomic, strong) IBOutlet UIButton *saveBtnBig;
+@property (nonatomic, strong) IBOutlet UIButton *shareButton;
+@property (nonatomic, strong) IBOutlet UILabel *notifLabel;
+@property (nonatomic, strong) IBOutlet UILabel *shareLabel;
+@property (nonatomic, strong) IBOutlet UILabel *callLabel;
 
 -(IBAction)callZoo:(id)sender;
 -(IBAction)saveToDiary:(id)sender;
 -(IBAction)shareEvent:(id)sender;
--(IBAction)dissmis:(id)sender;
+-(IBAction)dismiss:(id)sender;
 @end

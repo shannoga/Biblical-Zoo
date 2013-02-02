@@ -7,7 +7,6 @@
 //
 
 #import "CapturedImageViewController.h"
-#import <QuartzCore/QuartzCore.h>
 
 
 @implementation CapturedImageViewController

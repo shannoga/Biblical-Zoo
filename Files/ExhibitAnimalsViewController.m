@@ -7,10 +7,9 @@
 //
 
 #import "ExhibitAnimalsViewController.h"
-#import "Animal.h"
-#import "Exhibit.h"
 #import "AnimalViewController.h"
 #import "AnimalTableViewCell.h"
+
 @interface ExhibitAnimalsViewController ()
 
 @end
@@ -85,7 +84,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.translucent =NO;
-    self.tableView.backgroundColor = UIColorFromRGB(0x95bdc2);
+    self.tableView.backgroundColor = UIColorFromRGB(0x7F7960);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = UIColorFromRGBA(0xffffff, .2);
     self.tableView.rowHeight = 60;
@@ -158,7 +157,7 @@
                           initWithTitle:NSLocalizedString(@"oops Error",nil)
                           message:NSLocalizedString(@"There is a problem with this exhibit we will fix it as soon as possible",nil)
                           delegate:nil
-                          cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                          cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                           otherButtonTitles:nil];
     [alert show];
 }

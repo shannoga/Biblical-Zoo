@@ -7,7 +7,6 @@
 //
 #import <MapKit/MapKit.h>
 #import "ExhibitAnnotation.h"
-#import "Exhibit.h"
 
 @implementation ExhibitAnnotation 
 @synthesize exhibit;
@@ -36,6 +35,7 @@
 {
     return  NSLocalizedString(@"Tap to see animal", nil);
 }
+
 
 
 @end

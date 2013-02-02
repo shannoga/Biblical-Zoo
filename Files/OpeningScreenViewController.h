@@ -8,19 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OpeningScreenViewController : UIViewController<MBProgressHUDDelegate>{
-    IBOutlet UIImageView * imageview;
-    IBOutlet UIButton * madad;
-    IBOutlet UIButton * enter;
-    MBProgressHUD *HUD;
-    MBProgressHUD *refreshHUD;
-    IBOutlet UISegmentedControl *langSwitch;
+@interface OpeningScreenViewController : UIViewController{
+
     
 }
 @property (nonatomic,retain) IBOutlet UIImageView * imageview;
 @property (nonatomic,retain) IBOutlet UIButton * madad;
-@property (nonatomic,retain) IBOutlet UIButton * enter;
-@property (nonatomic,retain) IBOutlet UIButton * info;
+@property (nonatomic,retain) IBOutlet UIButton * enterBtn;
+@property (nonatomic,retain) IBOutlet UIButton * directionsBtn;
 -(IBAction)showMadad:(id)sender;
 -(IBAction)enter:(id)sender;
 -(IBAction)showInfo:(id)sender;

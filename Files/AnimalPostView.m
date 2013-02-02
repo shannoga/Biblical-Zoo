@@ -7,10 +7,8 @@
 //
 
 #import "AnimalPostView.h"
-#import "Animal.h"
 #import "AnimalUserPostsViewer.h"
-#import <QuartzCore/QuartzCore.h>
-#import "AnimalAddPostView.h"
+
 
 @implementation AnimalPostView
 @synthesize viewPosts;
@@ -37,7 +35,7 @@
         
         
         buttonsBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-        buttonsBackgroundView.backgroundColor = UIColorFromRGB(0x3B2F24);
+        buttonsBackgroundView.backgroundColor = UIColorFromRGB(0xC95000);
         [self addSubview:buttonsBackgroundView];
 
         
@@ -87,7 +85,7 @@
         postExplainLabel.backgroundColor = [UIColor clearColor];
         postExplainLabel.textColor = UIColorFromRGB(0x281502);
         postExplainLabel.editable = NO;
-        if(![Helper isRightToLeft]) {
+        if([Helper isRightToLeft]) {
             postExplainLabel.font = [UIFont fontWithName:@"ArialHebrew" size:14];
         }else{
             postExplainLabel.font = [UIFont fontWithName:@"Futura" size:14];
@@ -158,7 +156,7 @@
                                               initWithTitle:NSLocalizedString(@"No Posts For Animal",nil)
                                               message:NSLocalizedString(@"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors.",nil)
                                               delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                               otherButtonTitles:nil];
                         [alert show];
                     }
@@ -177,9 +175,9 @@
           
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"If you don't have intenrt services you can find an Internet acsses in the enternce to the zoo",nil)
+                                  message:NSLocalizedString(@"No Internet alert body",nil)
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"okay",nil)
+                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                   otherButtonTitles:nil];
             [alert show];
             }

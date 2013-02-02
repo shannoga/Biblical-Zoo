@@ -21,12 +21,10 @@
 
 -(void)initializePlayer{
     NSString *fileName = [NSString stringWithFormat:@"%@_%@",animal.nameEn,[Helper isRightToLeft]?@"he":@"en"];
-    NSLog(@"file name = %@",fileName);
     fileName = [[fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"m4a"];//[path stringByAppendingPathComponent:@"lion.m4a"];
     
     if([[NSFileManager defaultManager] fileExistsAtPath:path]){
-        NSLog(@"path = %@",path);
         NSURL *fileUrl = [NSURL fileURLWithPath:path];
         
         NSError *error;
@@ -39,11 +37,8 @@
         } else {
             
             //Make sure the system follows our playback status
-            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-            [[AVAudioSession sharedInstance] setActive: YES error: nil];
-            [[AVAudioSession sharedInstance] setDelegate:self];
+           
             //Load the audio into memory
-            [self.player prepareToPlay];
             label.text = @"Ready";
         }
     }else{
@@ -62,47 +57,58 @@
 
         UIButton *btn = [[UIButton alloc] init];
         [btn setFrame:CGRectMake(self.bounds.size.width/2-70, 30, 140, 140)];
-        btn.backgroundColor = UIColorFromRGB(0x5E939D);
+        btn.backgroundColor = UIColorFromRGB(0xC95000);
         btn.layer.cornerRadius = btn.bounds.size.width/2;
         btn.tag =kPlay;
         [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
         self.playButton = btn;
         [self addSubview:self.playButton];
         
+        UIImageView *playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"play.png"]];
+        playImage.frame = CGRectMake(35, 30, 80, 80);
+        [self.playButton addSubview:playImage];
+        
         btn = [[UIButton alloc] init];
         [btn setFrame:CGRectMake(15, 70, 60, 60)];
         btn.backgroundColor = UIColorFromRGB(0x3B2F24);
-         btn.layer.cornerRadius = btn.bounds.size.width/2;
+        btn.layer.cornerRadius = btn.bounds.size.width/2;
         btn.tag =kStop;
         [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
-     
         [self addSubview:btn];
+        
+        playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"stop.png"]];
+        playImage.frame = CGRectMake(15, 15, 30, 30);
+        [btn addSubview:playImage];
         
         btn = [[UIButton alloc] init];
         [btn setFrame:CGRectMake(245, 70, 60, 60)];
-         btn.backgroundColor = UIColorFromRGB(0x3B2F24);
-         btn.layer.cornerRadius = btn.bounds.size.width/2;
+        btn.backgroundColor = UIColorFromRGB(0x3B2F24);
+        btn.layer.cornerRadius = btn.bounds.size.width/2;
         btn.tag =kPause;
         [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
-  
         [self addSubview:btn];
         
+        playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"pouse.png"]];
+        playImage.frame = CGRectMake(15, 15, 30, 30);
+        [btn addSubview:playImage];
         
         self.progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(40, 180, 240, 40)];
         self.progressSlider.maximumValue =1;
         self.progressSlider.minimumValue =0;
         self.progressSlider.value = 0;
         self.progressSlider.thumbTintColor = UIColorFromRGB(0x48382E);
-        self.progressSlider.minimumTrackTintColor = UIColorFromRGB(0x5E939D);
+        self.progressSlider.minimumTrackTintColor = UIColorFromRGB(0xC95000);
         self.progressSlider.maximumTrackTintColor = UIColorFromRGB(0x3B2F24);
         [self.progressSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview: self.progressSlider];
         
-        label = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 100, 50)];
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+        label.font = [UIFont fontWithName:@"Futura" size:14];
         label.textAlignment = UITextAlignmentCenter;
+        label.textColor = UIColorFromRGB(0x3B2F24);
         label.backgroundColor = [UIColor clearColor];
         [self addSubview:label];
-        [self initializePlayer];
+       
    
     }
     return self;
@@ -120,8 +126,17 @@
     }
 }
 -(void)play{
+    if (self.player==nil) {
+        [self initializePlayer];
+    }
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    [[AVAudioSession sharedInstance] setDelegate:self];
+    [self.player prepareToPlay];
+
     [self.player play];
     self.player.delegate = self;
+    
      label.text = @"Playing";
     [self.playButton.layer addAnimation:[Animations pulseAnimation:1.05] forKey:@"pulse"];
     sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateSlider) userInfo:nil repeats:YES];
@@ -147,6 +162,8 @@
     label.text = @"Paused";
 }
 -(void)stop{
+    [[AVAudioSession sharedInstance] setActive: NO error: nil];
+    [[AVAudioSession sharedInstance] setDelegate:nil];
     [self.player stop];
     [self.player setCurrentTime:0];
     [self.playButton.layer removeAllAnimations];

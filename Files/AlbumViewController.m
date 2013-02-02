@@ -28,7 +28,6 @@
 
 - (IBAction)refresh:(id)sender
 {
-    NSLog(@"Showing Refresh HUD");
     refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:refreshHUD];
 	
@@ -162,7 +161,7 @@
     else{
         // Device has no camera
        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device has no camera" delegate:self cancelButtonTitle:@"O.K" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device has no camera" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
         [alert show];
     }
 }

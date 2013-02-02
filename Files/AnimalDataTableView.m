@@ -83,17 +83,35 @@
 #pragma mark - Table view data source
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    NSString *key = tableViewdata[indexPath.row][0];
     if (indexPath.row==1 && [animal.verse length]>0) {
         
         NSString *str = animal.verse;
         CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
         NSLog(@"%f",size.height);
-        return size.height + 60;
+        return size.height + 40;
         
        // return 120;
+    }else if ([animal.diet length]>0 && [key isEqualToString:NSLocalizedString(@"Diet",nil)]){
+        
+        NSString *str = animal.diet;
+        CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
+        NSLog(@"%f",size.height);
+        return size.height + 40;
+    }else if ([animal.socialStructure length]>0 && [key isEqualToString:NSLocalizedString(@"Social Structure",nil)]){
+        
+        NSString *str = animal.socialStructure;
+        CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
+        NSLog(@"%f",size.height);
+        return size.height + 40;
+    }else if ([animal.habitat length]>0 && [key isEqualToString:NSLocalizedString(@"Habitat",nil)]){
+        
+        NSString *str = animal.habitat;
+        CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
+        NSLog(@"%f",size.height);
+        return size.height + 40;
     }
-    return 60;
+    return 70;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

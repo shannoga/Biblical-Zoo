@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Animal.h"
 #import "Animations.h"
-#import "Helper.h"
+
 @implementation ConservasionStatusIndicator
 @synthesize animal;
 

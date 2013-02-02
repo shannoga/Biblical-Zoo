@@ -48,18 +48,20 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-
+#import "Exhibit.h"
 @interface TileMapViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate,UIAlertViewDelegate> {
     MKMapRect lastGoodMapRect;
     BOOL manuallyChangingMapRect;
     MKPolygon *bg;
     MKCoordinateRegion lastGoodRegion;
+    
 }
 @property (nonatomic,unsafe_unretained) IBOutlet MKMapView *map;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation *currentLocation;
 @property (nonatomic, strong) NSMutableArray *mapAnnotations;
 @property (nonatomic, strong) NSArray *services;
+
+-(void)setCenterLocationAndShowMapForExhibit:(Exhibit*)exhibit;
 
 @end
 

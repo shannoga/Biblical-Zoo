@@ -103,7 +103,7 @@
 -(void)sendPost{
     if (![self verifyPost]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Attantion", nil)
-                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"O.K", nil) otherButtonTitles:nil];
+                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -117,10 +117,9 @@
     NSString * userNameAndCity = [NSString stringWithFormat:@"%@, %@",self.userName.text,self.cityField.text];
     userPost[@"user"] = userNameAndCity;
     userPost[@"animal_id"] = self.animal.objectId;
-    userPost[@"visible"] = @YES;
+    userPost[@"visible"] = @NO;
     
-    [userPost saveInBackground];
-    //[userPost saveEventually];
+    [userPost saveEventually];
     
     [self.postView resignFirstResponder];
     [self.cityField resignFirstResponder];
@@ -128,7 +127,7 @@
     [self notifEditingEnd];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Tanks", nil)
-                                                    message:NSLocalizedString(@"Post Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"O.K", nil) otherButtonTitles:nil];
+                                                    message:NSLocalizedString(@"Post Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
     [alert show];
     
 }

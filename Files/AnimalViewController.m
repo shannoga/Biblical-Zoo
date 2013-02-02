@@ -13,9 +13,10 @@
 #import "AnimalViewToolbar.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "Exhibit.h"
+#import "AnimalQuestionsCell.h"
+
 #define kDataTable 0
 #define kGeneralDescription 1
-//#define kZooDescription 2
 #define kMap 2
 #define kAudioGuide 3
 #define kPosts 4
@@ -56,10 +57,17 @@
                                                      name:@"PostEditingEnded"
                                                    object:nil];
         
+        UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"088-Map_white.png"] style:UIBarButtonItemStyleDone target:self action:@selector(showOnMap)];
+        
+        self.navigationItem.rightBarButtonItem = mapButton;
+        
     }
     return self;
 }
 
+-(void)showOnMap{
+    [Helper setCurrentExhibit:self.animal.exhibit];
+}
 
 - (void)toggleFullscreen {
      if(!IS_IPHONE_5){
@@ -77,7 +85,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if(!IS_IPHONE_5){
+    self.navigationController.navigationBar.translucent =YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
     [self performSelector:@selector(toggleFullscreen) withObject:nil afterDelay:.5];
+    
     //Once the view has loaded then we can register o begin recieving controls and we can become the first responder
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
@@ -160,15 +173,14 @@
     [scroolKeyboardView addSubview:imagesScrollView];
 	
       if(IS_IPHONE_5){
-          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 218, 320, 240) withAnimal:self.animal];
+          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 218, 320, 240) withAnimal:self.animal withParentController:self];
                                                     
       }else{
-          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 210, 320, 220) withAnimal:self.animal];
+          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 210, 320, 220) withAnimal:self.animal withParentController:self];
       }
     self.animalDataScrollView.scrollsToTop = NO;
     self.animalDataScrollView.scrollEnabled =NO;
     self.animalDataScrollView.delegate = self;
-    self.animalDataScrollView.parentController = self;
     [scroolKeyboardView addSubview:animalDataScrollView];
     
  
@@ -192,6 +204,7 @@
 }
 
 
+
 - (void) receivePostEditingNotification:(NSNotification *) notification
 {
     if ([[notification name] isEqualToString:@"PostEditingStarted"]){
@@ -205,7 +218,7 @@
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    if ([[touch.view superclass] isSubclassOfClass:[UIControl class]] || !toolbarEnabeld) {
+    if ([[touch.view superclass] isSubclassOfClass:[UIControl class]] || !toolbarEnabeld || [touch.view.superview isKindOfClass:[AnimalQuestionsCell class]]) {
         return NO;
     }
     return YES;
@@ -214,8 +227,7 @@
 {
     [super viewDidUnload];
      [[NSNotificationCenter defaultCenter] removeObserver:self];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

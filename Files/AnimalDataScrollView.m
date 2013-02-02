@@ -15,17 +15,20 @@
 #import "AnimalViewController.h"
 #import "AnimalQuestionsTableView.h"
 #import "Exhibit.h"
+#import "AnimalSpecificQuestionsTableView.h"
+
 @implementation AnimalDataScrollView
 @synthesize animal;
 @synthesize audioGuide;
 @synthesize parentController;
 @synthesize postView;
 
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal
+- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal withParentController:(AnimalViewController *)animalController
 {
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.parentController = animalController;
         
         
         self.contentSize =CGSizeMake(320*6, IS_IPHONE_5? 240 : 226);
@@ -53,14 +56,19 @@
         [self addSubview:descriptionView];
         
         
+     
+        
        //future feature
         /*****************************************/
-        /*Zoo Description view*/
+        /*AnimalSpecificQuestionsTableView view*/
         /*****************************************/
       
-         AnimalDescriptionWebView *zooDescriptionView = [[AnimalDescriptionWebView alloc] initWithFrame:CGRectMake(640, 0, 320, self.contentSize.height) withAnimal:anAnimal];
-        [self addSubview:zooDescriptionView];
-          
+        // AnimalDescriptionWebView *zooDescriptionView = [[AnimalDescriptionWebView alloc] initWithFrame:CGRectMake(640, 0, 320, self.contentSize.height) withAnimal:anAnimal];
+       // [self addSubview:zooDescriptionView];
+        AnimalSpecificQuestionsTableView *animalQuestionsView = [[AnimalSpecificQuestionsTableView alloc] initWithFrame:CGRectMake(640, 0, 320, self.contentSize.height) withAnimal:anAnimal withParentController:self.parentController];
+        
+        [self addSubview:animalQuestionsView];
+        
         
         /*****************************************/
         /* map view*/

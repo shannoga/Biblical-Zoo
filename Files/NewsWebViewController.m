@@ -7,10 +7,7 @@
 //
 
 #import "NewsWebViewController.h"
-#import <Parse/Parse.h>
-#import "NSData+Encoding.h"
 #import <QuartzCore/QuartzCore.h>
-#import "LBYouTubePlayerController.h"
 
 @implementation NewsWebViewController
 @synthesize news;
@@ -121,12 +118,12 @@
 	[descriptionView loadHTMLString:html baseURL:baseURL];  
 	[scrollView addSubview:descriptionView];
     
-	
+	/*
     self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                                                           target:self
                                                                                           action:@selector(share)];
     
-   
+   */
 }
 
 #pragma mark -
@@ -139,7 +136,7 @@
 -(void)youTubePlayerViewController:(LBYouTubePlayerController *)controller failedExtractingYouTubeURLWithError:(NSError *)error{
     NSLog(@"Error extracting video error = %@",[error description]);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Attantion", nil)
-                                                    message:NSLocalizedString(@"Problem Loading Video", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"O.K", nil) otherButtonTitles:nil];
+                                                    message:NSLocalizedString(@"Problem Loading Video", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
     [alert show];
 }
 

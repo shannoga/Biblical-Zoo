@@ -8,7 +8,6 @@
 
 #import "Animal.h"
 #import "Exhibit.h"
-#import "JerusalemBiblicalZooAppDelegate.h"
 
 @implementation Animal
 
@@ -56,7 +55,7 @@
              if ([availableKeys containsObject:key]) {
                  [animalEntity setValue:animal[key] forKey:key];
              }
-            if ([Helper isEnglish]) {
+            if (![Helper isRightToLeft]) {
                 animalEntity.nameEn = animal[@"name"];
             }
             animalEntity.createdAt = animal.createdAt;

@@ -2,8 +2,7 @@
 
 #import "SectionHeaderView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Event.h"
-#import "Madad.h"
+
 
 @implementation SectionHeaderView
 @synthesize dateLabelView;

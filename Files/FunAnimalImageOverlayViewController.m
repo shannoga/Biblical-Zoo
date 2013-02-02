@@ -7,10 +7,10 @@
 //
 
 #import "FunAnimalImageOverlayViewController.h"
-#import "ImageOverLayHandleViewController.h"
 #import "UIImage+Helper.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import <Social/Social.h>
 
 #define kNext 0
 #define kPrev 1
@@ -184,6 +184,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             [self.view addSubview:self.imagePicker.view];
             [self.view addSubview:closeButton];
             self.imagePicker.view.transform = CGAffineTransformIdentity;
+            self.capturedImageViewController = nil;
+            [[self.uniteImagesView subviews] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [obj removeFromSuperview];
+            }];
            
         }
     } completion:^(BOOL finished) {
@@ -204,7 +208,7 @@ finishedSavingWithError:(NSError *)error
                               initWithTitle: @"Save failed"
                               message: @"Failed to save image"
                               delegate: nil
-                              cancelButtonTitle:@"OK"
+                              cancelButtonTitle:@"Dismiss"
                               otherButtonTitles:nil];
         [alert show];
     }
@@ -272,24 +276,30 @@ finishedSavingWithError:(NSError *)error
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
+    [refreshHUD hide:YES];
     UIAlertView *alert;
     
     // Unable to save the image
     if (error)
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                            message:NSLocalizedString(@"Unable to save image to Photo Album." ,nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Ok",nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                  otherButtonTitles:nil];
     else // All is well
         alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                            message:@"Image saved to Photo Album."
-                                          delegate:self cancelButtonTitle:@"Ok"
+                                          delegate:self cancelButtonTitle:@"Dismiss"
                                  otherButtonTitles:nil];
     [alert show];
 }
 
 
-
+-(void)showHud{
+    refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:refreshHUD];
+    refreshHUD.delegate = self;
+    [refreshHUD show:YES];
+}
 
 #pragma mark -
 #pragma mark Compose Mail
@@ -297,6 +307,8 @@ finishedSavingWithError:(NSError *)error
 // Displays an email composition interface inside the application. Populates all the Mail fields.
 -(void)displayComposerSheet
 {
+    [refreshHUD hide:YES];
+    if ([MFMailComposeViewController canSendMail]){
     self.imagesContainer.alpha=1;
 	MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
 	mailComposer.mailComposeDelegate = self;
@@ -314,7 +326,18 @@ finishedSavingWithError:(NSError *)error
 	[mailComposer setMessageBody:emailBody isHTML:YES];
     
 	
-	[self presentModalViewController:mailComposer animated:YES];
+        [self presentViewController:mailComposer animated:YES completion:^{[refreshHUD hide:YES];}];
+   
+    
+    }else{
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                                             message:NSLocalizedString(@"Your email is not configured.",nil)
+                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+                                                   otherButtonTitles:nil];
+            [alert show];
+        
+        
+    }
 }
 
 
@@ -328,14 +351,14 @@ finishedSavingWithError:(NSError *)error
     if (result==MFMailComposeResultFailed){
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                            message:NSLocalizedString(@"Unable to send Email.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"O.K" ,nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
                                  otherButtonTitles:nil];
         [alert show];
     }
     else if(result==MFMailComposeResultSent){
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
                                            message:NSLocalizedString(@"Email sent.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"O.K",nil)
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                  otherButtonTitles:nil];
         [alert show];
     }
@@ -348,37 +371,68 @@ finishedSavingWithError:(NSError *)error
 #pragma mark FaceBook
 
 -(void)postWall{
+     UIImage *image = [UIImage imageWithView:self.uniteImagesView];
     
-    if ([PFUser currentUser] && // Check if a user is cached
-        [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
-    {
-        
-        UIImage *image = [UIImage imageWithView:self.uniteImagesView];
-        
-        NSData *imageData = UIImageJPEGRepresentation(image, 100);
-        
-        NSString *massege = NSLocalizedString(@"photo title", nil);
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       massege, @"message",
-                                       imageData, @"picture",
-                                       @"Get the app on - http://itunes.com/apps/jerusalemBiblicalZoo", @"caption",
-                                       @"Jerusalem Biblical Zoo", @"name",
-                                       nil];
-        [[PFFacebookUtils facebook] requestWithGraphPath:@"me/photos" andParams:params andHttpMethod:@"POST" andDelegate:self];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EROR"
-                                                        message:@"You are not loged in to Facebook"
-                                                       delegate:self cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:@"Login", nil];
-        
-        alert.tag = 1;
-        [alert show];
-    }
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+            
+                        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                        
+                        SLComposeViewControllerCompletionHandler myBlock = ^(SLComposeViewControllerResult result){
+                            if (result == SLComposeViewControllerResultCancelled) {
+                                
+                                NSLog(@"Cancelled");
+                                
+                            } else
+                                
+                            {
+                                NSLog(@"Done");
+                            }
+                            
+                            [controller dismissViewControllerAnimated:YES completion:Nil];
+                        };
+                        controller.completionHandler =myBlock;
+                        
+                        NSString *localizedText = NSLocalizedString(@"photo sharing text",nil);
+                        [controller setInitialText:localizedText];
+                        [controller addURL:[NSURL URLWithString:@"http://itunes.apple.com/app/id591193554"]];
+                        [controller addImage:image];
+                        [self presentViewController:controller animated:YES completion:^{
+                            [refreshHUD hide:YES];
+                        }];
+            
+            
+        }else{
+            if ([PFUser currentUser] && // Check if a user is cached
+                [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
+            {
+                
+               
+                
+                NSData *imageData = UIImageJPEGRepresentation(image, 100);
+                
+                NSString *massege = NSLocalizedString(@"photo title", nil);
+                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                               massege, @"message",
+                                               imageData, @"picture",
+                                               @"Get the app on - http://itunes.com/apps/jerusalemBiblicalZoo", @"caption",
+                                               @"Jerusalem Biblical Zoo", @"name",
+                                               nil];
+                [[PFFacebookUtils facebook] requestWithGraphPath:@"me/photos" andParams:params andHttpMethod:@"POST" andDelegate:self];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EROR"
+                                                                message:@"You are not loged in to Facebook"
+                                                               delegate:self cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles:@"Login", nil];
+                
+                alert.tag = 1;
+                [alert show];
+            }
+        }
 }
 
 
 -(void)showBuyFullAppAlert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dissmis", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Later", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
     alert.tag = 2;
     [alert show];
 }
@@ -410,14 +464,15 @@ finishedSavingWithError:(NSError *)error
     
 }
 -(void)request:(PF_FBRequest *)request didLoad:(id)result{
+     [refreshHUD hide:YES];
     NSLog(@" [result objectForKey] = %@", result[@"post_id"]);
     NSLog(@"result class %@",[result class]);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sucsses"
                                                     message:@"Image posted on Facebook."
-                                                   delegate:self cancelButtonTitle:@"Ok"
+                                                   delegate:self cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:nil];
     [alert show];
-    
+   
     
     
 }
@@ -425,9 +480,10 @@ finishedSavingWithError:(NSError *)error
     NSLog(@"%@",request);
 }
 -(void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error{
+     [refreshHUD hide:YES];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed"
                                                     message:@"Uploading to FaceBook Failed, Please try again."
-                                                   delegate:self cancelButtonTitle:@"Ok"
+                                                   delegate:self cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:nil];
     [alert show];
     NSLog(@"%@",[error description]);
@@ -438,6 +494,7 @@ finishedSavingWithError:(NSError *)error
     switch (buttonIndex) {
         case 1:
             [self saveToAlbum];
+             [self showHud];
             
             break;
         case 2:
@@ -446,14 +503,19 @@ finishedSavingWithError:(NSError *)error
         case 3:
             
             [self postWall];
+             [self showHud];
             break;
     }
+   
 }
 
-// NSLog(@"image size = %@",NSStringFromCGSize(photoImage.size));
-//2160 3840
-//CGSize size= photoImage.size;
-//UIImage *croppedImage = [photoImage crop:CGRectMake((size.height / 4), (size.width / 3),
-//   (size.height / 4), (size.width /3))];
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD hides
+    [hud removeFromSuperview];
+	hud = nil;
+}
 
 @end
