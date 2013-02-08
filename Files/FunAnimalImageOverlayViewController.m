@@ -11,6 +11,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Social/Social.h>
+#import "Reachability.h"
 
 #define kNext 0
 #define kPrev 1
@@ -65,7 +66,6 @@
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSavingOptions)];
     UIBarButtonItem *takePhoto = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(toggleImagePicker)];
-    share.tintColor = UIColorFromRGB(0xBDB38C);
     self.toolbar  = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 436, 320, 44)];
     [self.toolbar setItems:@[takePhoto,flexItem,previewButton,flexItem,share]];
     
@@ -294,12 +294,6 @@ finishedSavingWithError:(NSError *)error
 }
 
 
--(void)showHud{
-    refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:refreshHUD];
-    refreshHUD.delegate = self;
-    [refreshHUD show:YES];
-}
 
 #pragma mark -
 #pragma mark Compose Mail
@@ -322,12 +316,12 @@ finishedSavingWithError:(NSError *)error
                            fileName:@"JerusalemBibilicalZoo.jpg"];
     
 	// Fill out the email body text
-	NSString *emailBody = NSLocalizedString(@"photo email body",nil);
+	NSString *emailBody = NSLocalizedString(@"We are in the Jerusalem Biblical Zoo - http://itunes.apple.com/app/id591193554",nil);
 	[mailComposer setMessageBody:emailBody isHTML:YES];
     
 	
         [self presentViewController:mailComposer animated:YES completion:^{[refreshHUD hide:YES];}];
-   
+    
     
     }else{
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
@@ -381,11 +375,20 @@ finishedSavingWithError:(NSError *)error
                             if (result == SLComposeViewControllerResultCancelled) {
                                 
                                 NSLog(@"Cancelled");
+                                [refreshHUD hide:YES];
                                 
                             } else
                                 
                             {
                                 NSLog(@"Done");
+                                [refreshHUD hide:YES];
+                                UIAlertView *alert = [[UIAlertView alloc]
+                                                      initWithTitle:NSLocalizedString(@"Success",nil)
+                                                      message:NSLocalizedString(@"Email Sent",nil)
+                                                      delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                      otherButtonTitles:nil];
+                                [alert show];
                             }
                             
                             [controller dismissViewControllerAnimated:YES completion:Nil];
@@ -402,26 +405,60 @@ finishedSavingWithError:(NSError *)error
             
             
         }else{
+            Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+            
+            if(![reach isReachable]){
+                [refreshHUD hide:YES];
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
+                                      message:NSLocalizedString(@"No Internet alert body",nil)
+                                      delegate:nil
+                                      cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                      otherButtonTitles:nil];
+                [alert show];
+                return;
+            }
+            
             if ([PFUser currentUser] && // Check if a user is cached
                 [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
             {
+                [refreshHUD show:YES];
+                NSData *imageData = UIImageJPEGRepresentation(image, 30);
                 
-               
-                
-                NSData *imageData = UIImageJPEGRepresentation(image, 100);
-                
-                NSString *massege = NSLocalizedString(@"photo title", nil);
+                NSString *massege = NSLocalizedString(@"Sign from the Jerusalem Biblical Zoo, Get the app on - http://itunes.com/apps/id591193554", nil);
                 NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                massege, @"message",
-                                               imageData, @"picture",
-                                               @"Get the app on - http://itunes.com/apps/jerusalemBiblicalZoo", @"caption",
-                                               @"Jerusalem Biblical Zoo", @"name",
+                                               imageData, @"source",
+                                               NSLocalizedString(@"Sign from the Jerusalem Biblical Zoo, Get the app on iTunes - http://itunes.com/apps/id591193554",nil), @"name",
                                                nil];
-                [[PFFacebookUtils facebook] requestWithGraphPath:@"me/photos" andParams:params andHttpMethod:@"POST" andDelegate:self];
+                
+                [self performPublishAction:^{
+                    [PF_FBRequestConnection startWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST"
+                                             completionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+                                                 [refreshHUD hide:YES];
+                                                 if(!error){
+                                                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
+                                                                                                 message:NSLocalizedString(@"Image posted on Facebook.",nil)
+                                                                                                delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                                                       otherButtonTitles:nil];
+                                                 [alert show];
+                                                 }else{
+                                                     NSLog(@"error = %@",[error debugDescription]);
+                                                     NSLog(@"error description= %@",[error description]);
+                                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failed",nil)
+                                                                                                     message:NSLocalizedString(@"Please try again later",nil)
+                                                                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                                                           otherButtonTitles:nil];
+                                                     [alert show];
+                                                 }
+                                             }];
+                }];
+             
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EROR"
-                                                                message:@"You are not loged in to Facebook"
-                                                               delegate:self cancelButtonTitle:@"Dismiss"
+                [refreshHUD hide:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"EROR",nil)
+                                                                message:NSLocalizedString(@"You are not loged in to Facebook",nil)
+                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
                                                       otherButtonTitles:@"Login", nil];
                 
                 alert.tag = 1;
@@ -430,6 +467,25 @@ finishedSavingWithError:(NSError *)error
         }
 }
 
+// Convenience method to perform some action that requires the "publish_actions" permissions.
+- (void) performPublishAction:(void (^)(void)) action {
+    // we defer request for permission to post to the moment of post, then we check for the permission
+    NSLog(@"premissions = %@",PF_FBSession.activeSession.permissions);
+    if ([PF_FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
+        // if we don't already have the permission, then we request it now
+        [PF_FBSession.activeSession reauthorizeWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                                      defaultAudience:PF_FBSessionDefaultAudienceFriends completionHandler:^(PF_FBSession *session, NSError *error) {
+                                                          if (!error) {
+                                                              action();
+                                                          }else{
+                                                              NSLog(@"error = %@",[error debugDescription]);
+                                                          }
+                                                          //For this example, ignore errors (such as if user cancels).
+                                                      }];
+    } else {
+        action();
+    }
+}
 
 -(void)showBuyFullAppAlert{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Later", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
@@ -456,18 +512,12 @@ finishedSavingWithError:(NSError *)error
             
     }
 }
--(void)request:(PF_FBRequest *)request didLoadRawResponse:(NSData *)data{
-    //NSLog(@"data = %@",data);
-}
--(void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response{
-    //NSLog(@"response = %@",[response description]);
-    
-}
+
 -(void)request:(PF_FBRequest *)request didLoad:(id)result{
      [refreshHUD hide:YES];
     NSLog(@" [result objectForKey] = %@", result[@"post_id"]);
     NSLog(@"result class %@",[result class]);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sucsses"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                                     message:@"Image posted on Facebook."
                                                    delegate:self cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:nil];
@@ -494,7 +544,7 @@ finishedSavingWithError:(NSError *)error
     switch (buttonIndex) {
         case 1:
             [self saveToAlbum];
-             [self showHud];
+            [self showHudWithText:NSLocalizedString(@"Saving, please wate",nil)];
             
             break;
         case 2:
@@ -503,11 +553,25 @@ finishedSavingWithError:(NSError *)error
         case 3:
             
             [self postWall];
-             [self showHud];
+            [self showHudWithText:NSLocalizedString(@"Posting, please wate",nil)];
             break;
     }
    
 }
+
+-(void)showHudWithText:(NSString*)str{
+    if(refreshHUD == nil){
+        refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        refreshHUD.delegate = self;
+    }
+    if (str!=nil) {
+        refreshHUD.labelText = str;
+    }
+    [self.view addSubview:refreshHUD];
+    
+    [refreshHUD show:YES];
+}
+
 
 #pragma mark -
 #pragma mark MBProgressHUDDelegate methods

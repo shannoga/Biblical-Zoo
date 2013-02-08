@@ -6,6 +6,7 @@
 
 @interface JerusalemBiblicalZooAppDelegate : NSObject <UIApplicationDelegate,CLLocationManagerDelegate,UIAlertViewDelegate> {
     CLLocationManager *locationManager;
+    BOOL subscribedAsVisitor;
 }
 //core data
 
@@ -13,6 +14,6 @@
 @property (nonatomic, strong)  UITabBarController *tabBarController;
 @property (nonatomic,retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) TileMapViewController *mapController;
-- (void)subscribeFinished:(NSNumber *)result error:(NSError *)error;
+@property (nonatomic, retain) CLRegion *zooRegion;
 -(void)buyFullApp;
 @end

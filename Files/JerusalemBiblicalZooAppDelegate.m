@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    subscribedAsVisitor = NO;
     //set up core data
     [self setUpMagicalRecord];
     //set up parse
@@ -32,10 +32,11 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
    // NSLog(@"notifications = %@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
- 
+  
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
+    
     
     [self setUpTabBarControllers];
     
@@ -52,6 +53,7 @@
     if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app did launch"];
     return YES;
 }
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [[NSUserDefaults standardUserDefaults] setBool:YES   forKey:@"answeredBugsense"];
@@ -82,21 +84,41 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-
     CLLocation * mapCenterLocation = [[CLLocation alloc] initWithLatitude:31.746233 longitude:35.174095];
     if( [newLocation distanceFromLocation:mapCenterLocation]<1000){
-        NSLog(@"user is in zoo");
-        [self subscribeForVisitorNotification];
+        if (!subscribedAsVisitor) {
+            [self subscribeForVisitorNotification];
+        }
+        
+        [self startMonitoringZooRegion];
+         [locationManager stopUpdatingLocation];
         
     }else{
-        NSLog(@"user is not in the zoo");
-       [self unsubscribeForVisitorNotification];
+        if (subscribedAsVisitor) {
+            [self unsubscribeForVisitorNotification];
+        }
+        [self stopMonitoringZooRegion];
         [locationManager stopUpdatingLocation];
+     
+        
     }
    
 
 }
+-(CLRegion*)zooRegion{
+    if(_zooRegion==nil){
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(31.746233, 35.174095);
+    
+    _zooRegion = [[CLRegion alloc] initCircularRegionWithCenter:center
+                                                               radius:1000
+                                                           identifier:@"zooRegion"];
+    }
+    return _zooRegion;
+}
+-(void)stopMonitoringZooRegion{
+    [locationManager stopMonitoringForRegion:_zooRegion];
 
+}
 -(void)startMonitoringZooRegion
 {
     BOOL monitoring = NO;
@@ -118,12 +140,8 @@
         NSLog( @"region monitoring is not available" );
     }
     if( !monitoring ) return;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(31.746233, 35.174095);
-    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:center
-                                                               radius:1000
-                                                           identifier:@"zooRegion"];
-    NSLog( @"trying to start monitoring for region %@", region );
-    [locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBest];
+  
+    [locationManager startMonitoringForRegion:_zooRegion desiredAccuracy:kCLLocationAccuracyBest];
 }
 
 -(void)locationManager:(CLLocationManager*)manager didStartMonitoringForRegion:(CLRegion*)region
@@ -136,6 +154,7 @@ monitoringDidFailForRegion:(CLRegion *)region
               withError:(NSError *)error
 {
     NSLog( @"region monitoring failed" );
+    [locationManager stopMonitoringForRegion:region];
 }
 
 -(void) locationManager:(CLLocationManager*)manager didEnterRegion:(CLRegion*)region
@@ -148,24 +167,35 @@ monitoringDidFailForRegion:(CLRegion *)region
     NSLog( @"did exit region" );
     [locationManager stopMonitoringForRegion:region];
     [locationManager stopUpdatingLocation];
+    [self unsubscribeForVisitorNotification];
     //add alert for bye bye
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Bye Bye",nil)
+                                                    message:NSLocalizedString(@"We hope to see you back soon",nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Dismiss"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 -(void)subscribeForVisitorNotification{
-     
+    Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    if([reach isReachable]){
     [PFPush subscribeToChannelInBackground:[Helper visitoresChannelName] block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Successfully subscribed to the Visitors channel.");
+            subscribedAsVisitor = YES;
         } else {
             NSLog(@"Failed to subscribe to the Visitors channel.");
         }
     }];
+    }
     
 }
 -(void)unsubscribeForVisitorNotification{
    
     [PFPush unsubscribeFromChannelInBackground:[Helper visitoresChannelName]  block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            subscribedAsVisitor = NO;
             NSLog(@"Successfully Unsubscribed to the Visitors channel.");
         } else {
             NSLog(@"Failed to Unsubscribe to the Visitors channel.");
@@ -176,7 +206,9 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     if(error.code == kCLErrorDenied) {
+        [self stopMonitoringZooRegion];
         [locationManager stopUpdatingLocation];
+
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
                                                         message:NSLocalizedString(@"location services error body",nil)
                                                        delegate:self
@@ -184,6 +216,7 @@ monitoringDidFailForRegion:(CLRegion *)region
                                               otherButtonTitles:nil, nil];
           [alert show];
     }else{
+        [self stopMonitoringZooRegion];
         [locationManager stopUpdatingLocation];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
                                                         message:NSLocalizedString(@"location services error body",nil)
@@ -195,6 +228,7 @@ monitoringDidFailForRegion:(CLRegion *)region
 }
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     if (status == kCLAuthorizationStatusDenied) {
+        [self stopMonitoringZooRegion];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"location services error title"
                                                         message:@"location services error body"
                                                        delegate:nil
@@ -293,7 +327,7 @@ monitoringDidFailForRegion:(CLRegion *)region
   
     
     EventsTableViewController *eventsTableViewController = [[EventsTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    eventsTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Events", nil) image:[UIImage imageNamed:@"020-Appointment"] tag:1];
+    eventsTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Events", nil) image:[UIImage imageNamed:@"events"] tag:1];
     nc = [[UINavigationController alloc]initWithRootViewController:eventsTableViewController];
 	[localViewControllersArray addObject:nc];
     
@@ -346,24 +380,7 @@ monitoringDidFailForRegion:(CLRegion *)region
         NSLog(@"Cannot check for updates");
     }
   
-   /*
-    
-    //Check for audio guide updates
-    PFObject * audioGuidesUpdatesCount = [query getObjectWithId:@"HX306BH3sH"];
-    NSInteger audioGuidesUpdatesNumberOnServer = [audioGuidesUpdatesCount[@"updateNumber"] intValue];
-    NSInteger audioGuidesUpdatesNumberOnLocal =  [[NSUserDefaults standardUserDefaults] integerForKey:@"audioGuideLocalUpdateIndex"];
-    
-    NSLog(@"server = %i    |    local = %i",audioGuidesUpdatesNumberOnServer,audioGuidesUpdatesNumberOnLocal);
-    if(audioGuidesUpdatesNumberOnServer > audioGuidesUpdatesNumberOnLocal){
-        NSLog(@"Found updates for AudioGuides");
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"audioGuidesNeedsUpdates"];
-        [[NSUserDefaults standardUserDefaults] setInteger:audioGuidesUpdatesNumberOnServer forKey:@"audioGuidesPendingUpdateNumber"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-    }else{
-        NSLog(@"No updates for AudioGuides");
-    }
-    */
+  
 }
 
 -(NSString *)applicationDocumentsDirectory {
@@ -424,7 +441,6 @@ monitoringDidFailForRegion:(CLRegion *)region
                 NSLog(@"Failed to subscribe to the AllUsers channel.");
             }
         }];
-    
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -448,6 +464,7 @@ monitoringDidFailForRegion:(CLRegion *)region
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
+   
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -456,17 +473,12 @@ monitoringDidFailForRegion:(CLRegion *)region
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+   
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    //check for updates
-    Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    if([reach isReachable]){
-        [self checkForUpdates];
-    }else{
-        NSLog(@"Cannot check for updates");
-    }
+    [self startLocationServices];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -474,24 +486,16 @@ monitoringDidFailForRegion:(CLRegion *)region
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [locationManager stopMonitoringSignificantLocationChanges];
-    NSString *visitorsCahnnel;
-    if(![Helper isRightToLeft]){
-        visitorsCahnnel = @"Visitors_En";
-    }else{
-        visitorsCahnnel = @"Visitors_He";
-    }
-    [PFPush unsubscribeFromChannelInBackground:visitorsCahnnel block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Successfully Unsubscribed to the Visitors channel.");
-        } else {
-            NSLog(@"Failed to Unsubscribe to the Visitors channel.");
-        }
-    }];
+    [self stopMonitoringZooRegion];
+    [locationManager stopUpdatingLocation];
+     if (subscribedAsVisitor) {
+         [self unsubscribeForVisitorNotification];
+     }
     [MagicalRecord cleanUp];
 }
 

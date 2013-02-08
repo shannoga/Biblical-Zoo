@@ -23,6 +23,7 @@
         postLabel.textAlignment = [Helper isRightToLeft]?UITextAlignmentRight:UITextAlignmentLeft;
         postLabel.backgroundColor = [UIColor clearColor];
         postLabel.textColor = UIColorFromRGB(0x281502);
+        postLabel.scrollEnabled=YES;
         if(![Helper isRightToLeft]) {
             postLabel.font = [UIFont fontWithName:@"ArialHebrew" size:16];
         }else{

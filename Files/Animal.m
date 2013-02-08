@@ -93,7 +93,7 @@
         animalNewEntity.createdAt = animal.createdAt;
         animalNewEntity.updatedAt = animal.updatedAt;
         animalNewEntity.objectId = animal.objectId;
-        if (local == @"en") {
+        if ([local isEqual: @"en"]) {
          animalNewEntity.nameEn = animal[@"name"];
         }
   
@@ -135,7 +135,7 @@
 }
 
 -(UIImage*)distributaionMap{
-    #warning fix to return the map
+//Todo  fix to return the map
     return [UIImage imageNamed:@""];
 }
 

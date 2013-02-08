@@ -32,6 +32,7 @@
     BOOL fullscreen;
     
     MBProgressHUD * progressHUD;
+   
 }
 @property (nonatomic,retain) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
 @property (nonatomic,retain) IBOutlet UITextField *nameTF;
@@ -49,11 +50,10 @@
 @property (nonatomic,retain) IBOutlet UIImageView *thumbnailImageView;
 @property (nonatomic,retain) IBOutlet UIButton *showCameraBtn;
 @property (nonatomic,retain) IBOutlet UITextView *socialStructureTV;
-
-@property (nonatomic,retain)  UIImage *generatedImage;
+@property (nonatomic,retain) UIImage *generatedImage;
 @property (nonatomic,retain) IBOutlet UIView *captureView;
 
-@property (nonatomic,retain) UIView * previewView;
+@property (nonatomic,retain) UIImageView * previewView;
 
 @property (nonatomic) BOOL fullscreen;
 -(IBAction)showSignPreview:(id)sender;

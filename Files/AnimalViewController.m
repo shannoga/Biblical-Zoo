@@ -14,6 +14,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "Exhibit.h"
 #import "AnimalQuestionsCell.h"
+#import "AnimalPostView.h"
 
 #define kDataTable 0
 #define kGeneralDescription 1
@@ -94,6 +95,8 @@
     //Once the view has loaded then we can register o begin recieving controls and we can become the first responder
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
+    
+   
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -200,7 +203,13 @@
     if ([[self.animal generalExhibitDescription] boolValue]) {
         [self userTappedOnbuttonWithIndex:1];
     }
-   
+    if (!IS_IPHONE_5) {
+        UIButton * mapButton = [[UIButton alloc] initWithFrame:CGRectMake(280, 170, 30, 30)];
+        [mapButton setImage:[UIImage imageNamed:@"088-Map_brown_bg@2x.png"]  forState:UIControlStateNormal];
+        [mapButton addTarget:self action:@selector(showOnMap) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:mapButton];
+    }
+    
 }
 
 
@@ -218,7 +227,9 @@
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+  
     if ([[touch.view superclass] isSubclassOfClass:[UIControl class]] || !toolbarEnabeld || [touch.view.superview isKindOfClass:[AnimalQuestionsCell class]]) {
+        
         return NO;
     }
     return YES;

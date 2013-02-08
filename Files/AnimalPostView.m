@@ -33,7 +33,6 @@
         
         self.animal = anAnimal;
         
-        
         buttonsBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
         buttonsBackgroundView.backgroundColor = UIColorFromRGB(0xC95000);
         [self addSubview:buttonsBackgroundView];
@@ -97,8 +96,7 @@
      
             
         
-        postViewer = [[AnimalUserPostsViewer alloc] initWithFrame:CGRectMake(0, 54, 320, 300)];
-        postViewer.userInteractionEnabled = NO;
+        postViewer = [[AnimalUserPostsViewer alloc] initWithFrame:CGRectMake(0, 54, 320, 160)];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(receivePostEditingNotification:)

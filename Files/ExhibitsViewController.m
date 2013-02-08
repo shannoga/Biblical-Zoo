@@ -34,11 +34,12 @@
     self = [super initWithStyle:style];
     if (self) {
         self.title = NSLocalizedString(@"Exhibits",nil);
+        /*
         if (DEBUG) {
             UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateAnimalsData)];
             self.navigationItem.rightBarButtonItem = barItem;
         }
-        
+        */
         if(![Helper isLion]){
             [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
         }

@@ -437,9 +437,6 @@
 "There are no questions for this animal yet, Be the first to ask" = "אין עדיין שאלות על חיה זו, היו הראשונים לשלוח שאלה והמומחים שלנו יענו לכם בשמחה !";
 
 /* No comment provided by engineer. */
-"We are in the Jerusalem Biblical Zoo" = "אנחנו נמצאים בגן החיות התנכ\"י בירושלים";
-
-/* No comment provided by engineer. */
 "Will start in 20 minutes" = "יתחיל בעוד 20 דקות";
 
 /* No comment provided by engineer. */
@@ -474,4 +471,70 @@
 
 /* No comment provided by engineer. */
 "Device dicconected from FaceBook" = "מכשיר זה אינו מחובר לפייסבוק";
+
+/* No comment provided by engineer. */
+"Error retrieving location title" = "לא ניתן לאתר את מיקומך";
+
+/* No comment provided by engineer. */
+"Bye Bye" = "להתראות";
+
+/* No comment provided by engineer. */
+"We hope to see you back soon" = "אנו מקווים לראותכם שוב בקרוב.";
+
+/* No comment provided by engineer. */
+"Email Sent" = "המייל נשלח בהצלחה";
+
+/* No comment provided by engineer. */
+"EROR" = "שגיאה";
+
+/* No comment provided by engineer. */
+"facebbok sign title" = "שלט שיצרנו באפליקצית גן החיות התנכ\"י";
+
+/* No comment provided by engineer. */
+"Failed" = "נכשלנו :(";
+
+/* No comment provided by engineer. */
+"Fill all fields." = "יש למלא את כל השדות";
+
+/* No comment provided by engineer. */
+"Generating your sign" = "יוצר את השלט";
+
+/* No comment provided by engineer. */
+"Get the app on - http://itunes.com/apps/jerusalemBiblicalZoo" = " הורידו את האפליקציה בקישור - http://itunes.com/apps/jerusalemBiblicalZoo";
+
+/* No comment provided by engineer. */
+"Image from the Jerusalem Biblical Zoo, Get the app on iTunes - http://itunes.com/apps/id591193554" = "תמונה מגן החיות התנכ\"י, הורידו את האפליקציה בקישור - iTunes - http://itunes.com/apps/id591193554";
+
+/* No comment provided by engineer. */
+"Image posted on Facebook." = "התמונה פורסמה בפייסבוק.";
+
+/* No comment provided by engineer. */
+"Image saved to Photo Album." = "התמונה נשמרה לאלבום התמונות במכשירך.";
+
+/* No comment provided by engineer. */
+"Jerusalem Biblical Zoo" = "גן החיות התנכ\"י";
+
+/* No comment provided by engineer. */
+"Please try again later" = "אנא נסו שוב ";
+
+/* No comment provided by engineer. */
+"Posted to FaceBook" = "פורסם בפייסבוק";
+
+/* No comment provided by engineer. */
+"Posting, please wate" = "מפרסם, נא להמתין";
+
+/* No comment provided by engineer. */
+"Saving, please wate" = "שולח, נא להמתין";
+
+/* No comment provided by engineer. */
+"Sign from the Jerusalem Biblical Zoo, Get the app on - http://itunes.com/apps/id591193554" = "שלט מגן החיות התנכ\"י, השיגו את האפליקציה בקישור - http://itunes.com/apps/id591193554";
+
+/* No comment provided by engineer. */
+"Sign from the Jerusalem Biblical Zoo, Get the app on iTunes - http://itunes.com/apps/id591193554" = "שלט מגן החיות התנכ\"י, השיגו את האפליקציה בקישור - http://itunes.com/apps/id591193554";
+
+/* No comment provided by engineer. */
+"We are in the Jerusalem Biblical Zoo - http://itunes.apple.com/app/id591193554" = "אנו נמצאים בגן החיות התנכ\"י - http://itunes.apple.com/app/id591193554";
+
+/* No comment provided by engineer. */
+"You are not loged in to Facebook" = "אינך מחובר לפייסבוק, אנא התחבר בכדי שתוכל להשתמש בתכונה זו.";
 

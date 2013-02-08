@@ -231,8 +231,8 @@
     [[[self appDelegate] mapController] setCenterLocationAndShowMapForExhibit:exhibit];
 }
 +(BOOL)isRetina{
-    return  ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-             ([UIScreen mainScreen].scale == 2.0));
+        return ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))?1:0;
+    
 }
 +(NSString*)visitoresChannelName{
     NSString *visitorsCahnnel;
@@ -243,5 +243,8 @@
     }
     return visitorsCahnnel;
 }
+
+
+    
 
 @end

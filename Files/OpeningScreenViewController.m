@@ -44,21 +44,9 @@
    
     NSInteger time = [dateInStringFormated intValue];
     if (time >= 9 && time < 17) {
-        if ([Helper isRightToLeft]) {
-            if (IS_IPHONE_5) {
-                self.imageview.image = [UIImage imageNamed:@"Default-568h.png"];
-            }else{
-                self.imageview.image = [UIImage imageNamed:@"Default.png"];
-                
-            }
-        }else{
-            if (IS_IPHONE_5) {
-                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_en_5"];
-            }else{
-                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_en"];
-                
-            }
-        }
+        
+                self.imageview.image = [UIImage imageNamed:@"Opening.png"];
+   
     }else{
         if ([Helper isRightToLeft]) {
             if (IS_IPHONE_5) {

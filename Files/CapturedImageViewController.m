@@ -50,9 +50,11 @@
         [self.capturedImageView addGestureRecognizer:pinchRecognizer];
         [self.capturedImageView addGestureRecognizer:panRecognizer];
         [self.capturedImageView addGestureRecognizer:rotationRecognizer];
- 
-    self.capturedImageView.transform = CGAffineTransformScale(self.capturedImageView.transform, .3, .3);
-    self.capturedImageView.transform = CGAffineTransformTranslate(self.capturedImageView.transform, 0, -80);
+    if (![Helper isRetina]) {
+        self.capturedImageView.transform = CGAffineTransformScale(self.capturedImageView.transform, .3, .3);
+        self.capturedImageView.transform = CGAffineTransformTranslate(self.capturedImageView.transform, 0, -80);
+
+    }
     [[self view] addSubview:self.capturedImageView];
 
 }

@@ -10,6 +10,7 @@
 #import "AnimalQuestionsCell.h"
 #import "AnimalQuestionAnswerViewController.h"
 #import "AnimalViewController.h"
+#import "Reachability.h"
 
 @implementation AnimalSpecificQuestionsTableView
 @synthesize animal;
@@ -34,6 +35,12 @@
         dataTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [dataTableView setCanCancelContentTouches:YES];
         [self addSubview:dataTableView];
+        
+        Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+        
+        if(![reach isReachable]){
+            [self indicateNoInternetForTableView:dataTableView];
+        }else{
         
         self.animal = anAnimal;
         self.tableViewdata = [NSArray array];
@@ -60,9 +67,56 @@
             }
         }];
         
-    
+        }
     }
     return self;
+}
+
+-(void)indicateNoInternetForTableView:(UITableView*)table{
+    CGRect labelRect;
+    CGRect iconRect;
+    CGRect secondRect;
+    UIFont * font;
+    UIFont *secondFont;
+    UITextAlignment textAlign;
+    CGFloat height = 50;
+    if ([Helper isRightToLeft]) {
+        labelRect = CGRectMake(0, 0, 320, 50);
+        secondRect = CGRectMake(20, 45, 280, 40);
+        iconRect = CGRectMake(265, 10, 30, 30);
+        font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
+        secondFont = [UIFont fontWithName:@"ArialHebrew" size:14];
+        textAlign = UITextAlignmentCenter;
+    }else{
+        labelRect = CGRectMake(0, 0, 320, 50);
+        secondRect = CGRectMake(20, 45, 280, 40);
+        iconRect = CGRectMake(25, 10, 30, 30);
+        font = [UIFont fontWithName:@"Futura" size:20];
+        secondFont = [UIFont fontWithName:@"Futura" size:14];
+        textAlign = UITextAlignmentCenter;
+    }
+    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, height)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    UIButton * headerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    headerButton.frame = CGRectMake(0, 0, 320, 60);
+    
+    UIImageView *headerButtonIconView = [[UIImageView alloc] initWithFrame:iconRect];
+    
+    UILabel * headerButtonLabel = [[UILabel alloc] initWithFrame:labelRect];
+    headerButtonLabel.backgroundColor = [UIColor clearColor];
+    headerButtonLabel.textColor = [UIColor whiteColor];
+    headerButtonLabel.font= font;
+    
+    headerButtonLabel.textAlignment = textAlign;
+  
+    [headerButton addSubview:headerButtonLabel];
+    [headerButton addSubview:headerButtonIconView];
+    [headerView addSubview:headerButton];
+    
+    headerView.backgroundColor = UIColorFromRGB(0xC95000);
+    [headerButton addTarget:self action:@selector(goToQuestions) forControlEvents:UIControlEventTouchUpInside];
+    headerButtonLabel.text = NSLocalizedString(@"No Internet Connection",nil);
+    table.tableHeaderView = headerView;
 }
 
 -(void)indicateNoQuestionsForTableView:(UITableView*)table forNoQuestions:(BOOL)noQuestions{

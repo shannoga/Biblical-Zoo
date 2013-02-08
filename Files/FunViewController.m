@@ -260,17 +260,9 @@
             [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
         {
             [self requestUserData];
-            NSLog(@"[PFFacebookUtils session] = %@",[PFFacebookUtils session]);
-          //  [self loginToFacebook];
-            /*
-            [PFFacebookUtils reauthorizeUser:[PFUser currentUser] withPublishPermissions:@[@"publish_stream"] audience:PF_FBSessionDefaultAudienceFriends block:^(BOOL succeeded, NSError *error) {
-                    if (succeeded) {
-                        [self requestUserData];
-                    }else{
-                        NSLog(@"Problem autorizing user");
-                    }
-            }];
-               */
+            [self toggleFacebookView];
+     
+           
         }else{
             if([Helper isLion]){
             //set alert to connect to facebook
@@ -400,6 +392,8 @@
                                         [self toggleFacebookButton];
                                     }];
     
+   
+    
 
 }
 
@@ -415,23 +409,23 @@
     // Create request for user's Facebook data
     NSString *requestPath = @"me/?fields=name,location";
     
-    // Send request to Facebook
+ 
     PF_FBRequest *request = [PF_FBRequest requestForGraphPath:requestPath];
     [request startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
+            // handle successful response
             NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
             
             NSString *name = userData[@"name"];
             NSLog(@"location %@",userData[@"location"]);
             facebookName.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"Connected as", nil),name];
-          
-           
-        }else{
-            NSLog(@"Error request = %@",[error description]);
+        } else if ([error.userInfo[PF_FBErrorParsedJSONResponseKey][@"body"][@"error"][@"type"] isEqualToString:@"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+            NSLog(@"The facebook session was invalidated");
+            [self logoutFacebook];
+        } else {
+            NSLog(@"Some other error: %@", error);
         }
     }];
-    
-    
 }
 
 -(void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {

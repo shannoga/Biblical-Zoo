@@ -40,7 +40,7 @@
     }else if([Helper isRightToLeft]){
             directionalString=@"";
     }else{
-         directionalString=quest;
+         directionalString=answer;
     }
     self.answerTextView.text = directionalString;
     // Do any additional setup after loading the view from its nib.

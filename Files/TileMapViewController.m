@@ -110,6 +110,9 @@
 	};	   
     
  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveNotif:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActiveNotif:) name:UIApplicationWillResignActiveNotification object:nil];
+
     
     
     bg=[MKPolygon polygonWithCoordinates:coordsBg count:5];
@@ -145,6 +148,16 @@
 
     [self allAction:self];
     
+}
+
+-(void)appDidBecomeActiveNotif:(NSNotification*)notif
+{
+    [locationManager startUpdatingLocation];
+}
+
+-(void)appWillResignActiveNotif:(NSNotification*)notif
+{
+    [locationManager stopUpdatingLocation];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
