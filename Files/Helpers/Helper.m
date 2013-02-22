@@ -50,11 +50,9 @@
 +(NSBundle*)getBundleForLang:(NSString*)lang{
     // find the path to the bundle based on the locale
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Localizable" ofType:@"strings" inDirectory:nil forLocalization:lang];
-    NSLog(@"bundlePath = %@",bundlePath);
     
     // load it!
     NSBundle *langBundle = [[NSBundle alloc] initWithPath:[bundlePath stringByDeletingLastPathComponent]];
-    NSLog(@"langBundle = %@",langBundle);
     return langBundle;
 }
 
@@ -63,16 +61,36 @@
     return langBundle;
 }
 
-+(NSString*)settingsLang{
-    NSString *lang = [[NSUserDefaults standardUserDefaults] stringForKey:@"lang"];
-    if (!lang) {
-        [[NSUserDefaults standardUserDefaults] setObject:[Helper currentLang] forKey:@"lang"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        lang = [Helper currentLang];
++(NSBundle*)localizationBundle{
+    NSString *path;
+    
+    if ([self appLang]==kHebrew) {
+        path = [[NSBundle mainBundle] pathForResource:@"he" ofType:@"lproj"];
+    }else{
+        path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"lproj"];
     }
+	
+	return [NSBundle bundleWithPath:path];
+}
+
++(NSString*) languageSelectedStringForKey:(NSString*) key
+{
+	NSBundle* languageBundle = [self localizationBundle];
+	NSString* str=[languageBundle localizedStringForKey:key value:@"" table:nil];
+	return str;
+}
+
++(Langs)appLang{
+    NSInteger lang = [[NSUserDefaults standardUserDefaults] integerForKey:@"lang"];
     return lang;
 }
 
++(BOOL)isLangRTL{
+    if ([self appLang]==kHebrew) {
+        return YES;
+    }
+    return NO;
+}
 
 
 +(NSString *)obfuscate:(NSString *)string withKey:(NSString *)key

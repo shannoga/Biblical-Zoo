@@ -3,10 +3,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "TileMapViewController.h"
+#import <StoreKit/StoreKit.h>
+#import "MBProgressHUD.h"
 
-@interface JerusalemBiblicalZooAppDelegate : NSObject <UIApplicationDelegate,CLLocationManagerDelegate,UIAlertViewDelegate> {
+@interface JerusalemBiblicalZooAppDelegate : NSObject <UIApplicationDelegate,CLLocationManagerDelegate,UIAlertViewDelegate,SKPaymentTransactionObserver> {
     CLLocationManager *locationManager;
     BOOL subscribedAsVisitor;
+    MBProgressHUD *HUD;
 }
 //core data
 
@@ -15,5 +18,6 @@
 @property (nonatomic,retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) TileMapViewController *mapController;
 @property (nonatomic, retain) CLRegion *zooRegion;
--(void)buyFullApp;
+-(void)buyFullApp:(BOOL)restore;
+-(void)refreshViewControllersAfterLangChange;
 @end

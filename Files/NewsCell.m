@@ -56,12 +56,15 @@ return self;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-        if (![Helper isRightToLeft]) {
+        if ([Helper appLang]==kEnglish) {
             CGRect rect = CGRectMake(10,(self.bounds.size.height-86)/2, 86, 86);
             self.imageView.frame = rect;
             rect = CGRectMake(rect.size.width+20,CGRectGetHeight(self.bounds)*0.1,CGRectGetWidth(self.bounds)*0.5,CGRectGetHeight(self.bounds)*0.4);	
             labelView.frame = rect;
-            rect.origin.y = rect.origin.y+ CGRectGetHeight(self.bounds)*0.3;
+            UIFont *font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
+
+            labelView.font = font;
+            rect.origin.y = rect.origin.y+ CGRectGetHeight(self.bounds)*0.36;
             rect.size.height =  CGRectGetHeight(self.bounds)*0.5;
             detailLableView.textAlignment= UITextAlignmentLeft;
             labelView.textAlignment= UITextAlignmentLeft;
@@ -71,7 +74,10 @@ return self;
             
             CGRect rect = CGRectMake(self.bounds.size.width-96,(self.bounds.size.height-86)/2, 86, 86);
             self.imageView.frame = rect;
-            rect = CGRectMake(5, 4, 210, 20);
+            rect = CGRectMake(5, 10, 210, 20);
+            UIFont *font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:16];
+            
+            labelView.font = font;
             labelView.frame = rect;
             labelView.textAlignment = UITextAlignmentRight;
             rect.origin.y = rect.origin.y+ 20;
@@ -110,14 +116,14 @@ gradientLayer_.colors =@[cellColors[index],
 
 
     
-    NSString *title = [[Helper currentLang] isEqualToString:@"en"]? newsObject[@"title"]:newsObject[@"title_he"];
-    NSString *subtitle = [[Helper currentLang] isEqualToString:@"en"]? newsObject[@"subtitle"]:newsObject[@"subtitle_he"];
+    NSString *title = [Helper appLang] == kEnglish? newsObject[@"title"]:newsObject[@"title_he"];
+    NSString *subtitle = [Helper appLang] == kEnglish? newsObject[@"subtitle"]:newsObject[@"subtitle_he"];
     
     self.labelView.text = title;
     self.detailLableView.text =subtitle;
     
-    if(newsObject[@"thumbnail"]!= [NSNull null]){
-        PFFile *thumbnail = newsObject[@"thumbnail"];
+    if(newsObject[@"main_image"]!= [NSNull null]){
+        PFFile *thumbnail = newsObject[@"main_image"];
         self.imageView.file = thumbnail;
         [self.imageView loadInBackground];
     }

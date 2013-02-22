@@ -24,36 +24,36 @@
         tableViewdata = [[NSMutableArray alloc] init];
         
         if ([animal.name length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Name",nil),animal.name]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Name"],animal.name]];
         }
         
         if ([animal.verse length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"In the Bible",nil),animal.verse]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the Bible"],animal.verse]];
         }
         if ([animal.bioClass length]>0) {
             
-            [tableViewdata addObject:@[NSLocalizedString(@"Class",nil),NSLocalizedString(animal.bioClass,nil)]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Class"],[Helper languageSelectedStringForKey:animal.bioClass]]];
         }
         if ([animal.family length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Family",nil),animal.family]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Family"],animal.family]];
         }
         if ([animal.binomialName length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Sientific Name",nil),animal.binomialName]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Sientific Name"],animal.binomialName]];
         }
         if ([animal.conservationStatus length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Conservation Status",nil),NSLocalizedString(animal.conservationStatus,nil)]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Conservation Status"],[Helper languageSelectedStringForKey:animal.conservationStatus]]];
         }
         if ([animal.habitat length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Habitat",nil),animal.habitat]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Habitat"],animal.habitat]];
         }
         if ([animal.diet length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Diet",nil),animal.diet]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Diet"],animal.diet]];
         }
         if ([animal.socialStructure length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"Social Structure",nil),animal.socialStructure]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Social Structure"],animal.socialStructure]];
         } 
         if ([animal.zooItems length]>0) {
-            [tableViewdata addObject:@[NSLocalizedString(@"In the zoo",nil),animal.zooItems]];
+            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the zoo"],animal.zooItems]];
         }
         
        
@@ -92,19 +92,19 @@
         return size.height + 40;
         
        // return 120;
-    }else if ([animal.diet length]>0 && [key isEqualToString:NSLocalizedString(@"Diet",nil)]){
+    }else if ([animal.diet length]>0 && [key isEqualToString:[Helper languageSelectedStringForKey:@"Diet"]]){
         
         NSString *str = animal.diet;
         CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
         NSLog(@"%f",size.height);
         return size.height + 40;
-    }else if ([animal.socialStructure length]>0 && [key isEqualToString:NSLocalizedString(@"Social Structure",nil)]){
+    }else if ([animal.socialStructure length]>0 && [key isEqualToString:[Helper languageSelectedStringForKey:@"Social Structure"]]){
         
         NSString *str = animal.socialStructure;
         CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];
         NSLog(@"%f",size.height);
         return size.height + 40;
-    }else if ([animal.habitat length]>0 && [key isEqualToString:NSLocalizedString(@"Habitat",nil)]){
+    }else if ([animal.habitat length]>0 && [key isEqualToString:[Helper languageSelectedStringForKey:@"Habitat"]]){
         
         NSString *str = animal.habitat;
         CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Futura" size:18] constrainedToSize:CGSizeMake(300, 999) lineBreakMode:UILineBreakModeWordWrap];

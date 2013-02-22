@@ -22,4 +22,5 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,retain) NSArray *calendarsUrls;
+-(void)updateCalendar;
 @end

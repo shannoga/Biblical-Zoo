@@ -50,11 +50,14 @@
         [self.capturedImageView addGestureRecognizer:pinchRecognizer];
         [self.capturedImageView addGestureRecognizer:panRecognizer];
         [self.capturedImageView addGestureRecognizer:rotationRecognizer];
-    if (![Helper isRetina]) {
-        self.capturedImageView.transform = CGAffineTransformScale(self.capturedImageView.transform, .3, .3);
+    
+    NSLog(@"apturedImageView.bounds = %@",NSStringFromCGRect(capturedImageView.bounds));
+    if (capturedImageView
+        .bounds.size.width > 400) {
+     capturedImageView.transform = CGAffineTransformScale(self.capturedImageView.transform, .3, .3);
         self.capturedImageView.transform = CGAffineTransformTranslate(self.capturedImageView.transform, 0, -80);
-
     }
+    
     [[self view] addSubview:self.capturedImageView];
 
 }

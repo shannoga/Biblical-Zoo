@@ -20,7 +20,7 @@
 @synthesize playButton;
 
 -(void)initializePlayer{
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@",animal.nameEn,[Helper isRightToLeft]?@"he":@"en"];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@",animal.nameEn,[Helper appLang]==kHebrew?@"he":@"en"];
     fileName = [[fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"m4a"];//[path stringByAppendingPathComponent:@"lion.m4a"];
     

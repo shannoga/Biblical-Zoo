@@ -15,7 +15,7 @@
 
 @property (strong,nonatomic) UIScrollView *scrollView;
 @property  (strong,nonatomic) PFObject *news;
-@property  (strong,nonatomic) LBYouTubePlayerController * controller;
+@property  (strong,nonatomic) LBYouTubePlayerController * youtubeController;
 - (id)initWithObject:(PFObject*)newsToSet;
 
 @end

@@ -49,16 +49,16 @@
     
     switch (madadval) {
         case kMadadCalm:
-            return NSLocalizedString(@"Calm",nil);
+            return [Helper languageSelectedStringForKey:@"Calm"];
             break;
         case kMadadFlowing:
-            return NSLocalizedString(@"Flowing",nil);
+            return [Helper languageSelectedStringForKey:@"Flowing"];
             break;
         case kMadadLively:
-            return NSLocalizedString(@"Lively",nil);
+            return [Helper languageSelectedStringForKey:@"Lively"];
             break;
         case kMadadBusy:
-            return NSLocalizedString(@"Busy",nil);
+            return [Helper languageSelectedStringForKey:@"Busy"];
             break;
             case kMadadNone:
              return @"";
@@ -111,7 +111,7 @@
 		label.backgroundColor =[UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
 		self.morningTitle = label;
-        self.morningTitle.text = NSLocalizedString(@"A.M", nil);
+        self.morningTitle.text = [Helper languageSelectedStringForKey:@"A.M"];
 		[self addSubview:self.morningTitle];
         
         label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -119,7 +119,7 @@
 		label.backgroundColor =[UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
 		self.afterNoneTitle = label;
-        self.afterNoneTitle.text = NSLocalizedString(@"P.M", nil);
+        self.afterNoneTitle.text = [Helper languageSelectedStringForKey:@"P.M"];
 		[self addSubview:self.afterNoneTitle];
         
     }
@@ -130,10 +130,10 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
     
-    UIFont *font = [Helper isRightToLeft]? [UIFont fontWithName:@"ArialHebrew-Bold" size:16] :[UIFont fontWithName:@"Futura" size:14] ;
+    UIFont *font = [Helper appLang]==kHebrew? [UIFont fontWithName:@"ArialHebrew-Bold" size:16] :[UIFont fontWithName:@"Futura" size:14] ;
     self.dateLabelView.font = font;
-	self.dateLabelView.textAlignment = [Helper isRightToLeft]? UITextAlignmentRight : UITextAlignmentLeft;
-    self.dateLabelView.frame = CGRectMake([Helper isRightToLeft]? 110 : 6 ,0,200,CGRectGetHeight(self.frame));
+	self.dateLabelView.textAlignment = [Helper appLang]==kHebrew? UITextAlignmentRight : UITextAlignmentLeft;
+    self.dateLabelView.frame = CGRectMake([Helper appLang]==kHebrew? 110 : 6 ,0,200,CGRectGetHeight(self.frame));
     
     self.morning.text = [self textForMadad:amVal];
     self.morning.backgroundColor =[self colorForMadad:amVal];
@@ -144,7 +144,7 @@
     self.afterNoneTitle.textColor = [self textColorForTitles:pmVal];
     
     CGFloat height = CGRectGetHeight(self.frame)-20;
-    if([Helper isRightToLeft]){
+    if([Helper appLang]==kHebrew){
         self.afterNone.frame = CGRectMake( 0 ,20,60,height);
          self.afterNoneTitle.frame = CGRectMake( 0 ,0,60,height);
         

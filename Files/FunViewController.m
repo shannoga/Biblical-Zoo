@@ -39,7 +39,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"More",nil);
+        self.title = [Helper languageSelectedStringForKey:@"More"];
         
         if(SYSTEM_VERSION_LESS_THAN(@"6.0")){
             facebookButton = [[UIBarButtonItem alloc] initWithTitle:@"Facebook" style:UIBarButtonItemStyleDone  target:self action:@selector(loginToFacebook)];
@@ -62,7 +62,7 @@
 
 -(IBAction)opsenSignGenerator:(id)sender{
     if([Helper isLion]){
-    SignForFreindViewController *signController = [[SignForFreindViewController alloc] initWithNibName:@"SignForFreindViewController" bundle:nil];
+    SignForFreindViewController *signController = [[SignForFreindViewController alloc] initWithNibName:@"SignForFreindViewController" bundle:[Helper localizationBundle]];
     [self.navigationController pushViewController:signController animated:YES];
       return;
     
@@ -88,9 +88,9 @@
     if([Helper isLion]){
         if ([UIImagePickerController isSourceTypeAvailable:
              UIImagePickerControllerSourceTypeCamera]){
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:
-                                          NSLocalizedString(@"From Camera", nil),
-                                          NSLocalizedString(@"From Album", nil),
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:[Helper languageSelectedStringForKey:@"Cancel"] otherButtonTitles:
+                                          [Helper languageSelectedStringForKey:@"From Camera"],
+                                          [Helper languageSelectedStringForKey:@"From Album"],
                                           nil];
             [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }else{
@@ -164,8 +164,8 @@
         MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
         mailComposer.mailComposeDelegate = self;
 
-        [mailComposer setSubject:NSLocalizedString(@"A graet image from [ENTER YOUR NAME HERE]!",nil)];
-        [mailComposer setToRecipients:@[@"tsurischoffman@gmail.com"]];
+        [mailComposer setSubject:[Helper languageSelectedStringForKey:@"A graet image from [ENTER YOUR NAME HERE]!"]];
+        [mailComposer setToRecipients:@[@"biblicalzoo@gmail.com"]];
         NSData *data = UIImageJPEGRepresentation(image, 100);
 
         //NSInteger mb = [data length] / (1024*1024);
@@ -174,14 +174,14 @@
                                fileName:@"JerusalemBibilicalZoo.jpg"];
 
         // Fill out the email body text
-        NSString *emailBody = NSLocalizedString(@"Zoo photographer email massege",nil);
+        NSString *emailBody = [Helper languageSelectedStringForKey:@"Zoo photographer email massege"];
         [mailComposer setMessageBody:emailBody isHTML:NO];
 
         [self.navigationController presentModalViewController:mailComposer animated:YES];
     }else{
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                           message:NSLocalizedString(@"Your email is not configured.",nil)
-                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                           message:[Helper languageSelectedStringForKey:@"Your email is not configured."]
+                                          delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
         [alert show];
     }
@@ -195,16 +195,16 @@
 
     // Unable to save the image
     if (result==MFMailComposeResultFailed){
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                           message:NSLocalizedString(@"Unable to send Email.",nil)
-                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                           message:[Helper languageSelectedStringForKey:@"Unable to send Email."]
+                                          delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
         [alert show];
     }
     else if(result==MFMailComposeResultSent){
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
-                                           message:NSLocalizedString(@"Email sent.",nil)
-                                          delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Success"]
+                                           message:[Helper languageSelectedStringForKey:@"Email sent."]
+                                          delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
         [alert show];
     }
@@ -267,11 +267,11 @@
             if([Helper isLion]){
             //set alert to connect to facebook
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"FaceBook connection",nil)
-                                  message:NSLocalizedString(@"facebook connection messege",nil)
+                                  initWithTitle:[Helper languageSelectedStringForKey:@"FaceBook connection"]
+                                  message:[Helper languageSelectedStringForKey:@"facebook connection messege"]
                                   delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"Not now",nil)
-                                  otherButtonTitles:NSLocalizedString(@"Connect",nil), nil];
+                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Not now"]
+                                  otherButtonTitles:[Helper languageSelectedStringForKey:@"Connect"], nil];
             alert.tag=1;
             [alert show];
             }
@@ -284,7 +284,7 @@
 
 
 -(void)showBuyFullAppAlert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
     alert.tag=2;
     [alert show];
 }
@@ -292,7 +292,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(alertView.tag == 2){
         if (buttonIndex==1) {
-            [[Helper appDelegate] buyFullApp];
+            [[Helper appDelegate] buyFullApp:NO];
         }
     }else if (alertView.tag==1){
         if (buttonIndex==1) {
@@ -356,9 +356,9 @@
     }];
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
     {
-        self.facebookName.text = NSLocalizedString(@"Device connected to FaceBook",nil);
+        self.facebookName.text = [Helper languageSelectedStringForKey:@"Device connected to FaceBook"];
     }else{
-        self.facebookName.text = NSLocalizedString(@"Device dicconected from FaceBook",nil);
+        self.facebookName.text = [Helper languageSelectedStringForKey:@"Device dicconected from FaceBook"];
     }
 }
 
@@ -418,7 +418,7 @@
             
             NSString *name = userData[@"name"];
             NSLog(@"location %@",userData[@"location"]);
-            facebookName.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"Connected as", nil),name];
+            facebookName.text = [NSString stringWithFormat:@"%@ %@",[Helper languageSelectedStringForKey:@"Connected as"],name];
         } else if ([error.userInfo[PF_FBErrorParsedJSONResponseKey][@"body"][@"error"][@"type"] isEqualToString:@"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
             NSLog(@"The facebook session was invalidated");
             [self logoutFacebook];
@@ -492,7 +492,7 @@
                                                                options:kNilOptions
                                                                  error:nil];
             if(dic!=nil){
-            self.facebookName.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"Connected as ", nil),dic[@"name"]];
+            self.facebookName.text = [NSString stringWithFormat:@"%@ %@",[Helper languageSelectedStringForKey:@"Connected as "],dic[@"name"]];
             }
         }
         

@@ -21,11 +21,11 @@
 {
     [super viewDidLoad];
     NSString *directionalString;
-    NSString *key = [Helper isRightToLeft]? @"question":@"question_en";
+    NSString *key = [Helper appLang]==kHebrew? @"question":@"question_en";
     NSString *quest = self.questionObject[key];
-    if(quest != nil && [Helper isRightToLeft]){
+    if(quest != nil && [Helper appLang]==kHebrew){
         directionalString = [@"\u200F" stringByAppendingString:quest];
-    }else if([Helper isRightToLeft]){
+    }else if([Helper appLang]==kHebrew){
         directionalString=@"";
     }else{
         directionalString=quest;
@@ -33,11 +33,11 @@
 
     [self.questionLabel setText:directionalString];
 
-    key = [Helper isRightToLeft]? @"answer":@"answer_en";
+    key = [Helper appLang]==kHebrew? @"answer":@"answer_en";
     NSString *answer = self.questionObject[key];
-    if(answer != nil && [Helper isRightToLeft]){
+    if(answer != nil && [Helper appLang]==kHebrew){
     directionalString = [@"\u200F" stringByAppendingString:answer];
-    }else if([Helper isRightToLeft]){
+    }else if([Helper appLang]==kHebrew){
             directionalString=@"";
     }else{
          directionalString=answer;

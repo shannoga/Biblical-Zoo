@@ -24,7 +24,7 @@
     if(IS_IPHONE_5){
         web.frame = CGRectMake(0, 70, 320, 508);
     }
-    NSString * fileName = [Helper isRightToLeft]? @"info":@"info_en";
+    NSString * fileName = [Helper appLang]==kHebrew? @"info":@"info_en";
     [web loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle]
                                                                           pathForResource:fileName ofType:@"html"]isDirectory:NO]]];
     [self.view addSubview:web];

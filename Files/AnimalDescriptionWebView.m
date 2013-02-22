@@ -37,7 +37,7 @@
         
         NSString *dir = @"ltr";
         NSString *langClass = @"";
-        if ([[Helper currentLang] isEqualToString:@"he"]) {
+        if ([Helper appLang] == kHebrew) {
             dir = @"rtl";
             langClass = @"dirrtl";
         }
@@ -54,7 +54,7 @@
         NSURL *baseURL = [NSURL fileURLWithPath:path];
         
         NSString *html =[NSString stringWithFormat:@"<!DOCTYPE html><html lang=\"%@\" dir=\"%@\"><head><link rel=\"stylesheet\"  href=\"%@\" type=\"text/css\" /></head><body><section class=\"%@\">%@</section><br><br></body></html>",
-                         [Helper currentLang],dir,cssPath,langClass,anAnimal.generalDescription];
+                         [Helper appLang] == kEnglish?@"en":@"he",dir,cssPath,langClass,anAnimal.generalDescription];
          NSString *new = [html stringByReplacingOccurrencesOfString:@"\\"  withString:@""];  
         
         new = [new stringByReplacingOccurrencesOfString:@"u2013"  withString:@"-"];  

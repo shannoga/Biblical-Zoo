@@ -22,10 +22,10 @@
 // required if you set the MKPinAnnotationView's "canShowCallout" property to YES
 - (NSString *)title
 {
-    if (![Helper isRightToLeft]) {
-        return exhibit.nameEn;
+    if ([Helper appLang]==kHebrew) {
+        return exhibit.name;
     }
-    return exhibit.name;
+    return exhibit.nameEn;
 }
 
 
@@ -33,7 +33,7 @@
 // optional
 - (NSString *)subtitle
 {
-    return  NSLocalizedString(@"Tap to see animal", nil);
+    return  [Helper languageSelectedStringForKey:@"Tap to see animal"];
 }
 
 

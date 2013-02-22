@@ -47,7 +47,7 @@
         PFQuery *query = [PFQuery queryWithClassName:@"AnimalQuestions"];
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
         [query whereKey:@"animal_en_name" equalTo:anAnimal.nameEn];
-        NSString * key = [Helper isRightToLeft]?@"visible":@"visible_en";
+        NSString * key = [Helper appLang]==kHebrew?@"visible":@"visible_en";
         [query whereKey:key equalTo:@YES];
         [query orderByDescending:@"createdAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -75,21 +75,18 @@
 -(void)indicateNoInternetForTableView:(UITableView*)table{
     CGRect labelRect;
     CGRect iconRect;
-    CGRect secondRect;
     UIFont * font;
     UIFont *secondFont;
     UITextAlignment textAlign;
     CGFloat height = 50;
-    if ([Helper isRightToLeft]) {
+    if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 0, 320, 50);
-        secondRect = CGRectMake(20, 45, 280, 40);
         iconRect = CGRectMake(265, 10, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
         secondFont = [UIFont fontWithName:@"ArialHebrew" size:14];
         textAlign = UITextAlignmentCenter;
     }else{
         labelRect = CGRectMake(0, 0, 320, 50);
-        secondRect = CGRectMake(20, 45, 280, 40);
         iconRect = CGRectMake(25, 10, 30, 30);
         font = [UIFont fontWithName:@"Futura" size:20];
         secondFont = [UIFont fontWithName:@"Futura" size:14];
@@ -115,7 +112,7 @@
     
     headerView.backgroundColor = UIColorFromRGB(0xC95000);
     [headerButton addTarget:self action:@selector(goToQuestions) forControlEvents:UIControlEventTouchUpInside];
-    headerButtonLabel.text = NSLocalizedString(@"No Internet Connection",nil);
+    headerButtonLabel.text = [Helper languageSelectedStringForKey:@"No Internet Connection"];
     table.tableHeaderView = headerView;
 }
 
@@ -127,7 +124,7 @@
     UIFont *secondFont;
     UITextAlignment textAlign;
     CGFloat height = noQuestions? 100:50;
-    if ([Helper isRightToLeft]) {
+    if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 0, 320, 50);
         secondRect = CGRectMake(20, 45, 280, 40);
         iconRect = CGRectMake(265, 10, 30, 30);
@@ -175,8 +172,8 @@
     headerView.backgroundColor = UIColorFromRGB(0xC95000);
     [headerButton addTarget:self action:@selector(goToQuestions) forControlEvents:UIControlEventTouchUpInside];
     [headerButtonIconView setImage:[UIImage imageNamed:@"248-QuestionCircleAlt_2.png"]];
-    headerButtonLabel.text = NSLocalizedString(@"Ask a question",nil);
-    headerButtonLabel2.text = NSLocalizedString(@"No questions alert body",nil);
+    headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Ask a question"];
+    headerButtonLabel2.text = [Helper languageSelectedStringForKey:@"No questions alert body"];
     table.tableHeaderView = headerView;
 }
 
@@ -227,7 +224,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
         PFObject *questionObject = (self.tableViewdata)[indexPath.row];
-        AnimalQuestionAnswerViewController * answerController = [[AnimalQuestionAnswerViewController alloc] initWithNibName:@"AnimalQuestionAnswerViewController" bundle:nil];
+        AnimalQuestionAnswerViewController * answerController = [[AnimalQuestionAnswerViewController alloc] initWithNibName:@"AnimalQuestionAnswerViewController" bundle:[Helper localizationBundle]];
         answerController.questionObject = questionObject;
     [self.parentController.navigationController setNavigationBarHidden:NO animated:NO];
     self.parentController.navigationController.navigationBar.translucent =NO;

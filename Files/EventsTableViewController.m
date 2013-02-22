@@ -29,7 +29,7 @@
     if (self) {
         // Custom initialization
         
-        self.title = NSLocalizedString(@"Events",nil); 
+        self.title = [Helper languageSelectedStringForKey:@"Events"];
         
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateCalendar)];
         self.navigationItem.rightBarButtonItem = barItem;
@@ -80,10 +80,10 @@
     
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"No Internet alert body",nil)
+                              initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                              message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                               otherButtonTitles:nil];
 		[alert show];
     }
@@ -178,7 +178,7 @@
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_music_small.png"] atIndex:0 animated:NO];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_kids_small.png"] atIndex:0 animated:NO];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_feeding_small.png"] atIndex:0 animated:NO];
-    [segmentedControl insertSegmentWithTitle:NSLocalizedString(@"All",@"") atIndex:0 animated:NO];
+    [segmentedControl insertSegmentWithTitle:[Helper languageSelectedStringForKey:@"All"] atIndex:0 animated:NO];
     self.navigationItem.titleView = segmentedControl;
     [segmentedControl addTarget:self
                          action:@selector(reloadTableViewAfterSegmentedControllerChange:)
@@ -269,7 +269,7 @@
     headerView.userInteractionEnabled = YES;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper currentLang]]];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper appLang] == kEnglish?@"en":@"he"]];
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
     NSDate *date = [dateFormatter dateFromString:[sectionInfo name]];
     
@@ -287,7 +287,7 @@
 }
 
 -(void)madadExplination{
-    MadadExplinationViewController *madadExplination = [[MadadExplinationViewController alloc] initWithNibName:@"MadadExplinationViewController" bundle:nil];
+    MadadExplinationViewController *madadExplination = [[MadadExplinationViewController alloc] initWithNibName:@"MadadExplinationViewController" bundle:[Helper localizationBundle]];
     [self.navigationController pushViewController:madadExplination animated:YES];
 }
 
@@ -325,7 +325,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    EventDetailsViewController *detailViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:nil];
+    EventDetailsViewController *detailViewController = [[EventDetailsViewController alloc] initWithNibName:@"EventDetailsViewController" bundle:[Helper localizationBundle]];
     detailViewController.event = [self.fetchedResultsController objectAtIndexPath:indexPath];
    // [self.navigationController pushViewController:detailViewController animated:YES];
    
@@ -433,7 +433,7 @@
         
         
         UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-        if([Helper isRightToLeft]){
+        if([Helper appLang]==kHebrew){
             [iconView setFrame:CGRectMake(170, 10, 40, 40)];
         }
         [iconView setImage:[UIImage imageNamed:@"156-Cycle"]];
@@ -443,14 +443,14 @@
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor whiteColor];
         
-        if([Helper isRightToLeft]){
+        if([Helper appLang]==kHebrew){
             [label setFrame:CGRectMake(0, 10, 250, 40)];
             label.font= [UIFont fontWithName:@"ArialBold" size:18];
             label.textAlignment = UITextAlignmentRight;
         }else{
             label.font= [UIFont fontWithName:@"Futura" size:20];
         }
-        label.text = NSLocalizedString(@"Tap To Load Events",nil);
+        label.text = [Helper languageSelectedStringForKey:@"Tap To Load Events"];
         [headerView addSubview:label];
         
         self.tableView.tableHeaderView = headerView;

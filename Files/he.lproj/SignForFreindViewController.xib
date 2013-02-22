@@ -283,7 +283,7 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<object class="NSCustomResource" key="IBUIImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">Icon.png</string>
+											<string key="NSResourceName">zoo_logo300.png</string>
 										</object>
 									</object>
 									<object class="IBUITextField" id="858564020">
@@ -361,7 +361,6 @@
 												<string key="NSFrame">{{13, 37}, {295, 200}}</string>
 												<reference key="NSSuperview" ref="401100597"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<object class="NSColor" key="IBUIBackgroundColor">
 													<int key="NSColorSpace">1</int>
@@ -945,8 +944,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">Icon.png</string>
-			<string key="NS.object.0">{57, 57}</string>
+			<string key="NS.key.0">zoo_logo300.png</string>
+			<string key="NS.object.0">{150, 150}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

@@ -20,11 +20,11 @@
         
         postLabel = [[UITextView alloc] init];
         postLabel.textColor = [UIColor brownColor];
-        postLabel.textAlignment = [Helper isRightToLeft]?UITextAlignmentRight:UITextAlignmentLeft;
+        postLabel.textAlignment = [Helper appLang]==kHebrew?UITextAlignmentRight:UITextAlignmentLeft;
         postLabel.backgroundColor = [UIColor clearColor];
         postLabel.textColor = UIColorFromRGB(0x281502);
         postLabel.scrollEnabled=YES;
-        if(![Helper isRightToLeft]) {
+        if([Helper appLang]==kEnglish) {
             postLabel.font = [UIFont fontWithName:@"ArialHebrew" size:16];
         }else{
             postLabel.font = [UIFont fontWithName:@"Futura" size:16];

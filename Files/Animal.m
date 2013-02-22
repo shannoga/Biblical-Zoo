@@ -55,7 +55,7 @@
              if ([availableKeys containsObject:key]) {
                  [animalEntity setValue:animal[key] forKey:key];
              }
-            if (![Helper isRightToLeft]) {
+            if ([Helper appLang]==kEnglish ) {
                 animalEntity.nameEn = animal[@"name"];
             }
             animalEntity.createdAt = animal.createdAt;
@@ -97,7 +97,7 @@
          animalNewEntity.nameEn = animal[@"name"];
         }
   
-        animalNewEntity.local = [Helper currentLang];
+        animalNewEntity.local = [Helper appLang] == kEnglish? @"en":@"he";
         Exhibit *exhibitForNewAnimal = [Exhibit findExhibitWithId:animal[@"exhibitId"]];
         if (exhibitForNewAnimal) {
             animalNewEntity.exhibit = exhibitForNewAnimal;

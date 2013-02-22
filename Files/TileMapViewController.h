@@ -56,7 +56,7 @@
     MKCoordinateRegion lastGoodRegion;
     
 }
-@property (nonatomic,unsafe_unretained) IBOutlet MKMapView *map;
+@property (nonatomic,strong)  MKMapView *map;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) NSMutableArray *mapAnnotations;
 @property (nonatomic, strong) NSArray *services;

@@ -246,13 +246,13 @@
     if ([titels count]) {
         
         NSString *title;
-        if ([Helper isRightToLeft]) {
+        if ([Helper appLang]==kHebrew) {
             title = titels[0];
         }else{
             if ([titels count]>1){
                 title = titels[1]; 
             }else{
-                 title = NSLocalizedString(@"No Valeu", nil);
+                 title = [Helper languageSelectedStringForKey:@"No Valeu"];
             }
         }
         return title;
@@ -371,10 +371,10 @@
     NSDate *otherDate = [cal dateFromComponents:components];
     
     if([today isEqualToDate:otherDate]) {
-		formattedDateString = NSLocalizedString(@"Today", nil);
+		formattedDateString = [Helper languageSelectedStringForKey:@"Today"];
     }else{
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper currentLang]]];
+        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper appLang] == kEnglish?@"en":@"he"]];
 		formattedDateString = [dateFormatter stringFromDate:self.startDate];
     }
     return formattedDateString;
@@ -402,7 +402,7 @@
     NSDate *localDate = [self.startDate toLocalTime];
   
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper currentLang]]];
+        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper appLang]==kHebrew?@"he":@"en"]];
         [dateFormatter setDateStyle:NSDateFormatterFullStyle];
 		formattedDateString = [dateFormatter stringFromDate:localDate];
     

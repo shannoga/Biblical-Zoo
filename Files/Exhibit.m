@@ -46,7 +46,7 @@
   
     NSArray *allAnimals = [[self animals] allObjects];
     
-     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"local == %@",![Helper isRightToLeft]?@"en":@"he"];
+     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"local == %@",[Helper appLang]==kHebrew?@"he":@"en"];
     allAnimals = [allAnimals filteredArrayUsingPredicate:predicate];
 
     return allAnimals;

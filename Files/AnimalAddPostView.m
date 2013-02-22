@@ -25,14 +25,14 @@
         [self addSubview:self.postView];
         
         self.userName = [[UITextField alloc] initWithFrame:CGRectMake(10, 180, 130, 25)];
-        self.userName.placeholder = NSLocalizedString(@"Name", nil);
+        self.userName.placeholder = [Helper languageSelectedStringForKey:@"Name"];
         self.userName.backgroundColor = [UIColor whiteColor];
         self.userName.delegate=self;
         self.userName.layer.cornerRadius = 5;
         [self addSubview:self.userName];
         
         self.cityField = [[UITextField alloc] initWithFrame:CGRectMake(180, 180, 130, 25)];
-        self.cityField.placeholder = NSLocalizedString(@"City / Country", nil);
+        self.cityField.placeholder = [Helper languageSelectedStringForKey:@"City / Country"];
         self.cityField.backgroundColor = [UIColor whiteColor];
         self.cityField.delegate = self;
         self.cityField.layer.cornerRadius = 5;
@@ -45,7 +45,7 @@
         UIBarButtonItem *flexButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(resignKeyboard)];
         
-        UIBarButtonItem *postBtn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Post", nil) style:UIBarButtonItemStyleDone target:self action:@selector(sendPost)];
+        UIBarButtonItem *postBtn = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post"] style:UIBarButtonItemStyleDone target:self action:@selector(sendPost)];
         
         
         NSArray *itemsArray = @[doneButton,flexButton,postBtn];
@@ -102,8 +102,8 @@
 
 -(void)sendPost{
     if (![self verifyPost]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Attantion", nil)
-                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Attantion"]
+                                                        message:[Helper languageSelectedStringForKey:@"Post Missing Data Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -126,8 +126,8 @@
     [self.userName resignFirstResponder];
     [self notifEditingEnd];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Tanks", nil)
-                                                    message:NSLocalizedString(@"Post Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Tanks"]
+                                                    message:[Helper languageSelectedStringForKey:@"Post Suscess Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
     [alert show];
     
 }

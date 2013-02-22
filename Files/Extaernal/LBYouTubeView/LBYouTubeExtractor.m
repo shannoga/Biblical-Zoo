@@ -216,15 +216,15 @@ NSInteger const LBYouTubePlayerExtractorErrorCodeNoJSONData   =    3;
 }
 
 -(void)_didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL {
-    //if (self.delegate) {
+    if (self.delegate) {
         [self.delegate youTubeExtractor:self didSuccessfullyExtractYouTubeURL:videoURL];
-   // }
+    }
 }
 
 -(void)_failedExtractingYouTubeURLWithError:(NSError *)error {
-   // if (self.delegate) {
+    if (self.delegate) {
         [self.delegate youTubeExtractor:self failedExtractingYouTubeURLWithError:error];
-   // }
+    }
 }
 
 #pragma mark -

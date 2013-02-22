@@ -57,7 +57,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (![Helper isRightToLeft]) {
+    if ([Helper appLang]==kEnglish) {
         CGRect rect = CGRectMake(10,(self.bounds.size.height-60)/2, 60, 60);
         self.imageView.frame = rect;
         rect = CGRectMake(rect.size.width+20,5,240,70);
@@ -109,7 +109,7 @@
     gradientLayer_.colors =@[cellColors[index],
     cellColors[index++]];
    
-    NSString *key = [Helper isRightToLeft]? @"question":@"question_en";
+    NSString *key = [Helper appLang]==kHebrew? @"question":@"question_en";
     NSString *title = questionObject[key];
     NSString *subtitle = questionObject[@"user_name"];
 

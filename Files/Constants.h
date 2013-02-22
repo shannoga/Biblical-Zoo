@@ -16,6 +16,11 @@ typedef enum EventTypes : NSUInteger{
     kEventTypeWorkShop
 }EventTypes;
 
+typedef enum Langs : NSUInteger{
+    kEnglish,
+    kHebrew
+}Langs;
+
 /*
  *  Detect iphone 5 Macro
  */

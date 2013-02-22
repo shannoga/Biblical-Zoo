@@ -74,30 +74,29 @@
     return 30.0f;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         // Custom initialization
-        self.title =  NSLocalizedString(@"Map", @"Map");
+        self.title =  [Helper languageSelectedStringForKey:@"Map"];
      [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
+       
     }
     return self;
 }
 
 -(void)unlock{
-    [map setShowsUserLocation:YES];
+    [self.map setShowsUserLocation:YES];
 }
 
 - (void)viewDidLoad
 {
- 
-    if([Helper isLion]){
-        [map setShowsUserLocation:YES];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app map description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Later", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
-        [alert show];
-    }
+    [super viewDidLoad];
+    
+     self.map = [[MKMapView alloc] initWithFrame:self.view.frame];
+    self.map.delegate = self;
+    [self.view addSubview:self.map];
     
     NSString *tileDirectory = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Tiles"];
     
@@ -116,17 +115,17 @@
     
     
     bg=[MKPolygon polygonWithCoordinates:coordsBg count:5];
-	[map addOverlay:bg];
+	[self.map addOverlay:bg];
     
     TileOverlay *overlay = [[TileOverlay alloc] initWithTileDirectory:tileDirectory];
-    [map addOverlay:overlay];
+    [self.map addOverlay:overlay];
 
-    MKMapRect visibleRect = [map mapRectThatFits:bg.boundingMapRect];
+    MKMapRect visibleRect = [self.map mapRectThatFits:bg.boundingMapRect];
     visibleRect.size.width /= 2;
     visibleRect.size.height /= 2;
     visibleRect.origin.x += visibleRect.size.width/1.5;
     visibleRect.origin.y += visibleRect.size.height/2.2;
-    map.visibleMapRect = visibleRect;
+    self.map.visibleMapRect = visibleRect;
     
     if([CLLocationManager locationServicesEnabled]){
         locationManager = [[CLLocationManager alloc] init];
@@ -145,8 +144,7 @@
 		[self.mapAnnotations insertObject:exhibitAnnotation atIndex:i];
         i++;
     }
-
-    [self allAction:self];
+    [self addAllAnnotations:self];
     
 }
 
@@ -162,7 +160,7 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==1) {
-        [[Helper appDelegate] buyFullApp];
+        [[Helper appDelegate] buyFullApp:NO];
     }
 }
 
@@ -192,6 +190,7 @@
         }
        
         pinView.scale = scale;
+        pinView.exhibit = exhibit;
         [pinView setNeedsDisplay];
         
        // UIImage *pinImage = [exhibit.mapIcon normalize];
@@ -224,7 +223,15 @@
 {
     [super viewWillAppear:animated];
     
+    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    if([Helper isLion]){
+        [self.map setShowsUserLocation:YES];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app map description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Later"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
+        [alert show];
+    }
     
     if([CLLocationManager locationServicesEnabled]){
         if (locationManager==nil) {
@@ -273,10 +280,11 @@
     [self.map addAnnotation:(self.mapAnnotations)[0]];
 }
 
-- (void)allAction:(id)sender
+- (void)addAllAnnotations:(id)sender
 {
     [self.map removeAnnotations:self.map.annotations];  // remove any annotations that exist
     [self.map addAnnotations:self.mapAnnotations];
+    
 }
 
 
@@ -327,12 +335,12 @@
     if ([annotation isKindOfClass:[ExhibitAnnotation class]])
     {
 		static NSString* exhibitAnnotationIdentifier = @"exhibitAnnotation"; 
-		MKPinAnnotationView* pinView =
-		(MKPinAnnotationView *)[theMapView dequeueReusableAnnotationViewWithIdentifier:exhibitAnnotationIdentifier];
-        if (!pinView)
+		MapAnnotationView* annotationView =
+		(MapAnnotationView *)[theMapView dequeueReusableAnnotationViewWithIdentifier:exhibitAnnotationIdentifier];
+        if (!annotationView)
         {
             ExhibitAnnotation *exhibitAnnotation = (ExhibitAnnotation*)annotation;
-            MapAnnotationView *annotationView = [[MapAnnotationView alloc] initWithAnnotation:exhibitAnnotation
+            annotationView = [[MapAnnotationView alloc] initWithAnnotation:exhibitAnnotation
                                                                             reuseIdentifier:exhibitAnnotationIdentifier];
             annotationView.canShowCallout = YES;
             
@@ -345,10 +353,12 @@
                                          [TileMapViewController annotationPadding],
                                          [TileMapViewController annotationPadding]).size;
             maxSize.height -= self.navigationController.navigationBar.frame.size.height + [TileMapViewController calloutHeight];
-            if (resizeRect.size.width > maxSize.width)
+            if (resizeRect.size.width > maxSize.width){
                 resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
-            if (resizeRect.size.height > maxSize.height)
+            }
+            if (resizeRect.size.height > maxSize.height){
                 resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
+            }
             
             
             [self formatAnnotationView:annotationView forMapView:theMapView withExhibit:exhibit];
@@ -365,9 +375,12 @@
         }
         else
         {
-            pinView.annotation = annotation;
+            ExhibitAnnotation *exhibitAnnotation = (ExhibitAnnotation*)annotation;
+             Exhibit *exhibit = (Exhibit*)exhibitAnnotation.exhibit;
+            [self formatAnnotationView:annotationView forMapView:theMapView withExhibit:exhibit];
+            annotationView.annotation = annotation;
         }
-        return pinView;
+        return annotationView;
     }
   
     return nil;
@@ -411,7 +424,7 @@
         if ([annotation isKindOfClass:[ExhibitAnnotation class]])
         {
             // try to retrieve an existing pin view first
-            MKAnnotationView *pinView = [mapView viewForAnnotation:annotation];
+            MapAnnotationView *pinView = (MapAnnotationView*)[mapView viewForAnnotation:annotation];
             //Format the pin view
             [self formatAnnotationView:pinView forMapView:mapView withExhibit:annotation.exhibit];
         }
@@ -456,10 +469,10 @@
         if([Helper isLion]){
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"You are out of the zoo",nil)
-                                                            message:NSLocalizedString(@"Come visit us soon",nil)
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"You are out of the zoo"]
+                                                            message:[Helper languageSelectedStringForKey:@"Come visit us soon"]
                                                            delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                   otherButtonTitles:nil];
             [alert show];
         });
@@ -475,10 +488,10 @@
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
-                                                        message:NSLocalizedString(@"location services error body",nil)
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                        message:[Helper languageSelectedStringForKey:@"location services error body"]
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -497,7 +510,7 @@
 
 }
 -(void)showAnnotationForExhibit:(Exhibit*)exhibit{
-    
+   
     for (ExhibitAnnotation *annotation in self.map.annotations) {
         if (MKMapRectContainsPoint(self.map.visibleMapRect, MKMapPointForCoordinate(annotation.coordinate)))
         {

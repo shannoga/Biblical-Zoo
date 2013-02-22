@@ -68,7 +68,7 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	if ([[Helper currentLang] isEqualToString:@"en"]) {
+	if ([Helper appLang] == kEnglish) {
         self.labelView.frame =         CGRectMake(10,6,CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.frame)/4);
         self.detailLableView.frame =   CGRectMake(10,CGRectGetMaxY(self.labelView.frame),CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.labelView.frame)*3);;
     }else{
@@ -109,7 +109,7 @@
         UIImage *consevertionImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",abviration]];
         self.conservationIcon.image = consevertionImage;
         
-        if([[Helper currentLang] isEqualToString:@"en"]){
+        if([Helper appLang] == kEnglish){
            self.conservationIcon.frame = CGRectMake(180,5,[consevertionImage size].width, [consevertionImage size].height);
         }else{
            self.conservationIcon.frame = CGRectMake(10,5,[consevertionImage size].width, [consevertionImage size].height);

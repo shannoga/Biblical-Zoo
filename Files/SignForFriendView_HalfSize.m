@@ -53,7 +53,7 @@
     CGContextSetFillColorWithColor(context, UIColorFromRGB(0x007E00).CGColor);
     CGContextFillRect(context, rectangle);
     
-    if (![Helper isRightToLeft]) {
+    if ([Helper appLang]==kEnglish) {
         
         //zoo symbole
         [[UIImage imageNamed:@"zoo_logo300"] drawAtPoint:CGPointMake(100/2, 40/2)];
@@ -116,11 +116,11 @@
         //habitat
         //habitat title
         [[UIColor blackColor] set];
-        [NSLocalizedString(@"habitat",nil) drawInRect:CGRectMake(150/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
+        [[Helper languageSelectedStringForKey:@"habitat"] drawInRect:CGRectMake(150/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         //habitat title
-        [NSLocalizedString(@"diet",nil) drawInRect:CGRectMake(800/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
+        [[Helper languageSelectedStringForKey:@"diet"] drawInRect:CGRectMake(800/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         //habitat title
-        [NSLocalizedString(@"social structure",nil) drawInRect:CGRectMake(1500/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
+        [[Helper languageSelectedStringForKey:@"social structure"] drawInRect:CGRectMake(1500/2, 400/2, 600/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         
         // [[UIColor whiteColor] set];
         [signDic[@"habitat"] drawInRect:CGRectMake(150/2, 500/2, 600/2, 300/2) withFont:textFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
@@ -128,7 +128,7 @@
         [signDic[@"social"]  drawInRect:CGRectMake(1500/2, 500/2, 600/2, 300/2) withFont:textFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         
         [[UIColor whiteColor] set];
-        [NSLocalizedString(@"description",nil) drawInRect:CGRectMake(100/2, 900/2, 2000/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
+        [[Helper languageSelectedStringForKey:@"description"] drawInRect:CGRectMake(100/2, 900/2, 2000/2, 100/2) withFont:titleFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         
         [signDic[@"description"]  drawInRect:CGRectMake(100/2, 1000/2, 2000/2, 300/2) withFont:textFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentRight];
         
@@ -143,9 +143,9 @@
     
     // Unable to save the image
     if (error)
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                           message:NSLocalizedString(@"Unable to save image to Photo Album." ,nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                           message:[Helper languageSelectedStringForKey:@"Unable to save image to Photo Album."]
+                                          delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
     else // All is well
         alert = [[UIAlertView alloc] initWithTitle:@"Success"

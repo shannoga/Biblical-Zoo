@@ -14,25 +14,34 @@
 
 +(JerusalemBiblicalZooAppDelegate*)appDelegate;
 +(NSManagedObjectContext*)appContext;
-+(void)saveContext;
-    
+
++(Langs)appLang;
+
 +(UIColor*)conservationStatusColor:(Animal*)animal;
-+(NSString *)obfuscate:(NSString *)string withKey:(NSString *)key;
-+ (BOOL)isDeviceAniPad;
-+(NSString*)currentLang;
+
++(BOOL)isDeviceAniPad;
 +(BOOL)isEnglish;
 +(BOOL)isRightToLeft;
-+ (float)degreesToRadians:(float)degrees;
-+(NSString*)settingsLang;
++(BOOL)isLion;
++(BOOL)bugsenseOn;
++(BOOL)isRetina;
++(BOOL)isLangRTL;
++(NSString*) languageSelectedStringForKey:(NSString*) key;
++(float)degreesToRadians:(float)degrees;
+
+
 +(NSBundle*)getBundleForLang:(NSString*)lang;
 +(NSBundle*)currentBundle;
++(NSBundle*)localizationBundle;
++(NSString *)obfuscate:(NSString *)string withKey:(NSString *)key;
 +(NSString*)deviceLang;
 +(NSString*)audioGuideFilesPath;
 +(NSString*)tempFilesPath;
-+(BOOL)isLion;
-+(BOOL)bugsenseOn;
-+(void)setCurrentExhibit:(Exhibit*)exhibit;
-+(BOOL)isRetina;
++(NSString*)currentLang;
 +(NSString*)visitoresChannelName;
+
++(void)setCurrentExhibit:(Exhibit*)exhibit;
++(void)saveContext;
+
 @end
 

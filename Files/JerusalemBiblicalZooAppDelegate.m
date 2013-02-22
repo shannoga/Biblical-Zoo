@@ -26,12 +26,11 @@
     //set the appearence of the app
     [self setUpAppearence];
     //start tracking user location
-    [self startLocationServices];
+#warning check for next realese 
+    //[self startLocationServices];
     //check for updates
     [self checkForUpdates];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    //[[UIApplication sharedApplication] cancelAllLocalNotifications];
-   // NSLog(@"notifications = %@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
   
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
@@ -45,12 +44,15 @@
     BOOL agreed = [[NSUserDefaults standardUserDefaults] boolForKey:@"agreedBugsense"];
     
     if(!askedUser){
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Help us better this app" message:@"Do you agree to send us data abpult the app functionality" delegate:self cancelButtonTitle:nil otherButtonTitles:@"No Thanks",@"O.K", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please let us improve!" message:@"By taping confirm below you permit the app to send us crash reports, log files and basic usage statistics. This data is completely anonymous and will be used only to improve this app." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Deny",@"Confirm", nil];
     [alert show];
     }else if(agreed){
         [BugSenseController sharedControllerWithBugSenseAPIKey:@"e12a5b10"];
     }
     if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app did launch"];
+    
+  
+    
     return YES;
 }
 
@@ -169,8 +171,8 @@ monitoringDidFailForRegion:(CLRegion *)region
     [locationManager stopUpdatingLocation];
     [self unsubscribeForVisitorNotification];
     //add alert for bye bye
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Bye Bye",nil)
-                                                    message:NSLocalizedString(@"We hope to see you back soon",nil)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Bye Bye"]
+                                                    message:[Helper languageSelectedStringForKey:@"We hope to see you back soon"]
                                                    delegate:nil
                                           cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:nil];
@@ -209,19 +211,19 @@ monitoringDidFailForRegion:(CLRegion *)region
         [self stopMonitoringZooRegion];
         [locationManager stopUpdatingLocation];
 
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
-                                                        message:NSLocalizedString(@"location services error body",nil)
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                        message:[Helper languageSelectedStringForKey:@"location services error body"]
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil, nil];
           [alert show];
     }else{
         [self stopMonitoringZooRegion];
         [locationManager stopUpdatingLocation];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
-                                                        message:NSLocalizedString(@"location services error body",nil)
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                        message:[Helper languageSelectedStringForKey:@"location services error body"]
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -283,6 +285,8 @@ monitoringDidFailForRegion:(CLRegion *)region
         [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"answeredBugsense"];
         [[NSUserDefaults standardUserDefaults] setBool:NO   forKey:@"exhibitsNeedsUpdates"];
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"exhibitLocalUpdateIndex"];
+        [[NSUserDefaults standardUserDefaults] setInteger:kHebrew forKey:@"lang"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
 }
@@ -305,44 +309,57 @@ monitoringDidFailForRegion:(CLRegion *)region
     //[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
     // Use the product identifier from iTunes to register a handler.
-    [PFPurchase addObserverForProduct:@"Pro" block:^(SKPaymentTransaction *transaction) {
+    [PFPurchase addObserverForProduct:@"com.shannoga.biblicalzoo" block:^(SKPaymentTransaction *transaction) {
+        [HUD hide:YES];
         // Write business logic that should run once this product is purchased.
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Lion"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"unlock-feature" object:nil]];
+        
         if([Helper bugsenseOn]) [BugSenseController sendCustomEventWithTag:@"app purchesed"];
         if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app purchesed"];
+        
+        // Run UI logic that informs user the product has been purchased, such as displaying an alert view.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Thank You"] message:[Helper languageSelectedStringForKey:@"Buying Thanks"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil, nil];
+        [alert show];
     }];
 
 }
 -(void)setUpTabBarControllers{
     
     // Create a tabbar controller and an array to contain the view controllers
-    self.tabBarController = [[UITabBarController alloc] init];
-	
+    if (!self.tabBarController) {
+        self.tabBarController = [[UITabBarController alloc] init];
+        
+    }
+    self.tabBarController.viewControllers  = @[];
+    
     NSMutableArray *localViewControllersArray = [NSMutableArray array];
     
     ExhibitsViewController *exhibitsViewController = [[ExhibitsViewController alloc] initWithStyle:UITableViewStylePlain];
-    exhibitsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Exhibits", nil) image:[UIImage imageNamed:@"exhibits"] tag:0];
+    exhibitsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Exhibits"] image:[UIImage imageNamed:@"exhibits"] tag:0];
     UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:exhibitsViewController];
 	[localViewControllersArray addObject:nc];
     
   
     
     EventsTableViewController *eventsTableViewController = [[EventsTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    eventsTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Events", nil) image:[UIImage imageNamed:@"events"] tag:1];
+    eventsTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Events"] image:[UIImage imageNamed:@"events"] tag:1];
     nc = [[UINavigationController alloc]initWithRootViewController:eventsTableViewController];
 	[localViewControllersArray addObject:nc];
     
-    self.mapController = [[TileMapViewController alloc] initWithNibName:@"TileMapViewController" bundle:nil];
-    self.mapController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Map", nil) image:[UIImage imageNamed:@"088-Map"] tag:2];
+    self.mapController = [[TileMapViewController alloc] init];
+    self.mapController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Map"] image:[UIImage imageNamed:@"088-Map"] tag:2];
     nc = [[UINavigationController alloc]initWithRootViewController:self.mapController];
 	[localViewControllersArray addObject:nc];
     
     NewsListViewController *news = [[NewsListViewController alloc] init];
-    news.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"News", nil) image:[UIImage imageNamed:@"121-Mic"] tag:3];
+    news.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"News"] image:[UIImage imageNamed:@"121-Mic"] tag:3];
     nc = [[UINavigationController alloc]initWithRootViewController:news];
 	[localViewControllersArray addObject:nc];
     
-    FunViewController * funViewController = [[FunViewController alloc] initWithNibName:@"FunViewController" bundle:nil];
-    funViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"More", nil) image:[UIImage imageNamed:@"056-PlusCircle"] tag:4];
+    FunViewController * funViewController = [[FunViewController alloc] initWithNibName:@"FunViewController" bundle:[Helper localizationBundle]];
+    funViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"More"] image:[UIImage imageNamed:@"056-PlusCircle"] tag:4];
     nc = [[UINavigationController alloc]initWithRootViewController:funViewController];
 	[localViewControllersArray addObject:nc];
     
@@ -355,8 +372,13 @@ monitoringDidFailForRegion:(CLRegion *)region
     
     // make the window visible
     [self.window makeKeyAndVisible];
+    
+    [eventsTableViewController updateCalendar];
 }
 
+-(void)refreshViewControllersAfterLangChange{
+    [self setUpTabBarControllers];
+}
 -(void)checkForUpdates{
     Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     if([reach isReachable]){
@@ -391,23 +413,43 @@ monitoringDidFailForRegion:(CLRegion *)region
 }
 
 
--(void)buyFullApp{
-    [PFPurchase buyProduct:@"com.shannoga.biblicalzoo" block:^(NSError *error) {
-        if (!error) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Lion"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"unlock-feature" object:nil]];
-            // Run UI logic that informs user the product has been purchased, such as displaying an alert view.
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank You", nil) message:NSLocalizedString(@"Buying Thanks", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
-            [alert show];
-        }else{
-            NSLog(@"error = %@",[error description]);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert", nil) message:NSLocalizedString(@"Perchase failed", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
+-(void)buyFullApp:(BOOL)restore{
+   
+    if (!restore) {
+        HUD = [[MBProgressHUD alloc] initWithWindow:self.window];
+        [self.window addSubview:HUD];
+        [HUD removeFromSuperViewOnHide];
+        [HUD show:YES];
+        HUD.labelText = [Helper languageSelectedStringForKey:@"Purchasing"];
+        [PFPurchase buyProduct:@"com.shannoga.biblicalzoo" block:^(NSError *error) {
+            if (error) {
+                [HUD hide:YES];
+                NSLog(@"error = %@",[error debugDescription]);
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Alert"] message:[Helper languageSelectedStringForKey:@"Perchase failed"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    }else{
+         [PFPurchase restore];
+    }
+    
+  
 }
 
+// required by protocol
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+}
+
+// this is to get the total number of products to restore
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+   
+}
+
+-(void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
+    [HUD hide:YES];
+}
 
 ///////////////////////////////////////////////////////////
 // Uncomment these two methods if you are using Facebook
@@ -429,7 +471,7 @@ monitoringDidFailForRegion:(CLRegion *)region
     
     NSString *allUsersCahnnel;
     
-    if(![Helper isRightToLeft]){
+    if([Helper appLang]==kEnglish){
          allUsersCahnnel = @"All_Users_En";
     }else{
          allUsersCahnnel = @"All_Users_He";
@@ -478,7 +520,7 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self startLocationServices];
+   // [self startLocationServices];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

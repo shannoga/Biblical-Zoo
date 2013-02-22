@@ -40,10 +40,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        if (![Helper isRightToLeft]) {
-            overlayImages = @[[UIImage imageNamed:@"lion_overlay_en"],[UIImage imageNamed:@"zoo_overlay_en"]];
-        }else{
+        if ([Helper appLang]==kHebrew) {
             overlayImages = @[[UIImage imageNamed:@"lion_overlay_he"],[UIImage imageNamed:@"zoo_overlay_he"]];
+        }else{
+             overlayImages = @[[UIImage imageNamed:@"lion_overlay_en"],[UIImage imageNamed:@"zoo_overlay_en"]];
         }
     }
     if(![Helper isLion]){
@@ -59,7 +59,7 @@
     self.imagesContainer = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     self.imagesContainer.userInteractionEnabled = NO;
 
-    self.previewButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Move and Scale",nil) style:UIBarButtonItemStyleDone target:self action:@selector(tooglePreviewEdit:)];
+    self.previewButton = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Move and Scale"] style:UIBarButtonItemStyleDone target:self action:@selector(tooglePreviewEdit:)];
     self.previewButton.tag = kPreview;
     
     // Custom initialization
@@ -231,11 +231,11 @@ finishedSavingWithError:(NSError *)error
     if (self.imagesContainer.alpha < 1) {
         self.imagesContainer.alpha=1;
         self.imagesContainer.userInteractionEnabled = YES;
-        previewButton.title = NSLocalizedString(@"Move and Scale",nil);
+        previewButton.title = [Helper languageSelectedStringForKey:@"Move and Scale"];
     }else{
         self.imagesContainer.alpha=.7;
         self.imagesContainer.userInteractionEnabled = NO;
-        previewButton.title = NSLocalizedString(@"Done",nil);
+        previewButton.title = [Helper languageSelectedStringForKey:@"Done"];
     }
 }
 
@@ -248,10 +248,10 @@ finishedSavingWithError:(NSError *)error
 - (void)showSavingOptions
 {
         UIActionSheet *sheet;
-        sheet =[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:
-                NSLocalizedString(@"Save to album", nil),
-                NSLocalizedString(@"Send email", nil),
-                NSLocalizedString(@"Save to FaceBook",nil),
+        sheet =[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:[Helper languageSelectedStringForKey:@"Cancel"] otherButtonTitles:
+                [Helper languageSelectedStringForKey:@"Save to album"],
+                [Helper languageSelectedStringForKey:@"Send email"],
+                [Helper languageSelectedStringForKey:@"Save to FaceBook"],
                 nil];
         
         
@@ -281,9 +281,9 @@ finishedSavingWithError:(NSError *)error
     
     // Unable to save the image
     if (error)
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                           message:NSLocalizedString(@"Unable to save image to Photo Album." ,nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                           message:[Helper languageSelectedStringForKey:@"Unable to save image to Photo Album."]
+                                          delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
     else // All is well
         alert = [[UIAlertView alloc] initWithTitle:@"Success"
@@ -307,7 +307,7 @@ finishedSavingWithError:(NSError *)error
 	MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
 	mailComposer.mailComposeDelegate = self;
 	
-	[mailComposer setSubject:NSLocalizedString(@"photo email subject",nil)];
+	[mailComposer setSubject:[Helper languageSelectedStringForKey:@"photo email subject"]];
 	UIImage *image = [UIImage imageWithView:self.uniteImagesView];
     
     NSData *data = UIImageJPEGRepresentation(image, 100);
@@ -316,7 +316,7 @@ finishedSavingWithError:(NSError *)error
                            fileName:@"JerusalemBibilicalZoo.jpg"];
     
 	// Fill out the email body text
-	NSString *emailBody = NSLocalizedString(@"We are in the Jerusalem Biblical Zoo - http://itunes.apple.com/app/id591193554",nil);
+	NSString *emailBody = [Helper languageSelectedStringForKey:@"We are in the Jerusalem Biblical Zoo - http://itunes.apple.com/app/id591193554"];
 	[mailComposer setMessageBody:emailBody isHTML:YES];
     
 	
@@ -324,9 +324,9 @@ finishedSavingWithError:(NSError *)error
     
     
     }else{
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                                             message:NSLocalizedString(@"Your email is not configured.",nil)
-                                                            delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                                             message:[Helper languageSelectedStringForKey:@"Your email is not configured."]
+                                                            delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                    otherButtonTitles:nil];
             [alert show];
         
@@ -343,16 +343,16 @@ finishedSavingWithError:(NSError *)error
     
     // Unable to save the image
     if (result==MFMailComposeResultFailed){
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                           message:NSLocalizedString(@"Unable to send Email.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss" ,nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Error"]
+                                           message:[Helper languageSelectedStringForKey:@"Unable to send Email."]
+                                          delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
         [alert show];
     }
     else if(result==MFMailComposeResultSent){
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
-                                           message:NSLocalizedString(@"Email sent.",nil)
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+        alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Success"]
+                                           message:[Helper languageSelectedStringForKey:@"Email sent."]
+                                          delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                  otherButtonTitles:nil];
         [alert show];
     }
@@ -383,10 +383,10 @@ finishedSavingWithError:(NSError *)error
                                 NSLog(@"Done");
                                 [refreshHUD hide:YES];
                                 UIAlertView *alert = [[UIAlertView alloc]
-                                                      initWithTitle:NSLocalizedString(@"Success",nil)
-                                                      message:NSLocalizedString(@"Email Sent",nil)
+                                                      initWithTitle:[Helper languageSelectedStringForKey:@"Success"]
+                                                      message:[Helper languageSelectedStringForKey:@"Email Sent"]
                                                       delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                      cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                       otherButtonTitles:nil];
                                 [alert show];
                             }
@@ -395,7 +395,7 @@ finishedSavingWithError:(NSError *)error
                         };
                         controller.completionHandler =myBlock;
                         
-                        NSString *localizedText = NSLocalizedString(@"photo sharing text",nil);
+                        NSString *localizedText = [Helper languageSelectedStringForKey:@"photo sharing text"];
                         [controller setInitialText:localizedText];
                         [controller addURL:[NSURL URLWithString:@"http://itunes.apple.com/app/id591193554"]];
                         [controller addImage:image];
@@ -410,10 +410,10 @@ finishedSavingWithError:(NSError *)error
             if(![reach isReachable]){
                 [refreshHUD hide:YES];
                 UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                      message:NSLocalizedString(@"No Internet alert body",nil)
+                                      initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                                      message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                                       delegate:nil
-                                      cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                      cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                       otherButtonTitles:nil];
                 [alert show];
                 return;
@@ -425,11 +425,11 @@ finishedSavingWithError:(NSError *)error
                 [refreshHUD show:YES];
                 NSData *imageData = UIImageJPEGRepresentation(image, 30);
                 
-                NSString *massege = NSLocalizedString(@"Sign from the Jerusalem Biblical Zoo, Get the app on - http://itunes.com/apps/id591193554", nil);
+                NSString *massege = [Helper languageSelectedStringForKey:@"Sign from the Jerusalem Biblical Zoo, Get the app on - http://itunes.com/apps/id591193554"];
                 NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                massege, @"message",
                                                imageData, @"source",
-                                               NSLocalizedString(@"Sign from the Jerusalem Biblical Zoo, Get the app on iTunes - http://itunes.com/apps/id591193554",nil), @"name",
+                                               [Helper languageSelectedStringForKey:@"Sign from the Jerusalem Biblical Zoo, Get the app on iTunes - http://itunes.com/apps/id591193554"], @"name",
                                                nil];
                 
                 [self performPublishAction:^{
@@ -437,17 +437,17 @@ finishedSavingWithError:(NSError *)error
                                              completionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
                                                  [refreshHUD hide:YES];
                                                  if(!error){
-                                                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success",nil)
-                                                                                                 message:NSLocalizedString(@"Image posted on Facebook.",nil)
-                                                                                                delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Success"]
+                                                                                                 message:[Helper languageSelectedStringForKey:@"Image posted on Facebook."]
+                                                                                                delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                                                        otherButtonTitles:nil];
                                                  [alert show];
                                                  }else{
                                                      NSLog(@"error = %@",[error debugDescription]);
                                                      NSLog(@"error description= %@",[error description]);
-                                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failed",nil)
-                                                                                                     message:NSLocalizedString(@"Please try again later",nil)
-                                                                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Failed"]
+                                                                                                     message:[Helper languageSelectedStringForKey:@"Please try again later"]
+                                                                                                    delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                                                            otherButtonTitles:nil];
                                                      [alert show];
                                                  }
@@ -456,9 +456,9 @@ finishedSavingWithError:(NSError *)error
              
             }else{
                 [refreshHUD hide:YES];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"EROR",nil)
-                                                                message:NSLocalizedString(@"You are not loged in to Facebook",nil)
-                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"EROR"]
+                                                                message:[Helper languageSelectedStringForKey:@"You are not loged in to Facebook"]
+                                                               delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                                       otherButtonTitles:@"Login", nil];
                 
                 alert.tag = 1;
@@ -488,7 +488,7 @@ finishedSavingWithError:(NSError *)error
 }
 
 -(void)showBuyFullAppAlert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Buy Full App", nil) message:NSLocalizedString(@"Buy full app description", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Later", nil) otherButtonTitles:NSLocalizedString(@"Buy Now", nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Later"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
     alert.tag = 2;
     [alert show];
 }
@@ -506,7 +506,7 @@ finishedSavingWithError:(NSError *)error
         case 2:
             if (buttonIndex==1) {
                 
-                [[Helper appDelegate] buyFullApp];
+                [[Helper appDelegate] buyFullApp:NO];
             }
             break;
             
@@ -544,7 +544,7 @@ finishedSavingWithError:(NSError *)error
     switch (buttonIndex) {
         case 1:
             [self saveToAlbum];
-            [self showHudWithText:NSLocalizedString(@"Saving, please wate",nil)];
+            [self showHudWithText:[Helper languageSelectedStringForKey:@"Saving, please wate"]];
             
             break;
         case 2:
@@ -553,7 +553,7 @@ finishedSavingWithError:(NSError *)error
         case 3:
             
             [self postWall];
-            [self showHudWithText:NSLocalizedString(@"Posting, please wate",nil)];
+            [self showHudWithText:[Helper languageSelectedStringForKey:@"Posting, please wate"]];
             break;
     }
    

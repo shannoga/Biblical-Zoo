@@ -48,7 +48,7 @@
                 self.imageview.image = [UIImage imageNamed:@"Opening.png"];
    
     }else{
-        if ([Helper isRightToLeft]) {
+        if ([Helper appLang]==kHebrew) {
             if (IS_IPHONE_5) {
                 self.imageview.image = [UIImage imageNamed:@"opening_screen_night_he_5"];
             }else{

@@ -20,7 +20,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom the table
-        self.title = NSLocalizedString(@"News",nil); 
+        self.title = [Helper languageSelectedStringForKey:@"News"]; 
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshObjects)];
         self.navigationItem.rightBarButtonItem = barItem;
         
@@ -51,10 +51,10 @@
         [self loadObjects];
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"No Internet alert body",nil)
+                              initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                              message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                               otherButtonTitles:nil];
 		[alert show];
     }
@@ -67,7 +67,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.rowHeight=100;
+    self.tableView.rowHeight=120;
     self.tableView.sectionIndexMinimumDisplayRowCount=200;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -129,7 +129,7 @@
     [super objectsWillLoad];
     refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:refreshHUD];
-    refreshHUD.labelText = NSLocalizedString(@"Loading", nil);
+    refreshHUD.labelText = [Helper languageSelectedStringForKey:@"Loading"];
     [refreshHUD show:YES];
     // This method is called before a PFQuery is fired to get more objects
 }
@@ -195,10 +195,10 @@
         if(![reach isReachable]){
           
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"No Internet alert body",nil)
+                                  initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                                  message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                   otherButtonTitles:nil];
             [alert show];
             return;

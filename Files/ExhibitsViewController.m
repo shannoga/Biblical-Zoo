@@ -14,6 +14,7 @@
 #import "UIView+i7Rotate360.h"
 #import "Reachability.h"
 #import "ZooInfoViewController.h"
+#import "SettingsViewController.h"
 
 @interface ExhibitsViewController ()
 
@@ -33,7 +34,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title = NSLocalizedString(@"Exhibits",nil);
+        self.title = [Helper languageSelectedStringForKey:@"Exhibits"];
+        
         /*
         if (DEBUG) {
             UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateAnimalsData)];
@@ -44,13 +46,21 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
         }
         
-        UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Info", nil) style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
+        UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Info"] style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
         self.navigationItem.leftBarButtonItem = infoBarItem;
+        
+        //073-Setting
+        UIBarButtonItem *settingsBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"073-Setting"] style:UIBarButtonItemStyleDone target:self action:@selector(showSettings)];
+
+              self.navigationItem.rightBarButtonItem = settingsBarItem;
 
     }
     return self;
 }
-
+-(void)showSettings{
+    SettingsViewController *settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:[Helper localizationBundle]];
+    [self presentViewController:settingsController animated:YES completion:nil];
+}
 -(void)unlock{
 
     self.fetchedResultsController = nil;
@@ -72,7 +82,7 @@
 }
 
 -(void)buyFullApp{
-    [[Helper appDelegate] buyFullApp];
+    [[Helper appDelegate] buyFullApp:NO];
 }
 
 -(void)dismissWithChanges:(BOOL)changes{
@@ -94,7 +104,7 @@
     UIFont * font;
     UITextAlignment textAlign;
     
-    if ([Helper isRightToLeft]) {
+    if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 7, 260, 60);
         iconRect = CGRectMake(275, 15, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
@@ -149,14 +159,14 @@
         self.headerButton.backgroundColor = UIColorFromRGB(0xC95000);
         [self.headerButton addTarget:self action:@selector(buyFullApp) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"302-Unlock.png"]];
-        self.headerButtonLabel.text = NSLocalizedString(@"Buy Full App",nil);
+        self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Buy Full App"];
 
     }else if (exhibitsHasPendingUpdates) {
         // Do any additional setup after loading the view, typically from a nib.
         self.headerButton.backgroundColor = UIColorFromRGB(0x3A2E23);
         [self.headerButton addTarget:self action:@selector(updateAnimalsData) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"156-Cycle"]];
-        if(exhibitsHasPendingUpdates)self.headerButtonLabel.text = NSLocalizedString(@"Update available for exhibits",nil);
+        if(exhibitsHasPendingUpdates)self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Update available for exhibits"];
 
     }else{
         //nearest exhibit        
@@ -164,7 +174,7 @@
         [self.headerButton addTarget:self action:@selector(findNearestExhibit) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"343-Wand"]];
         [self.headerButton addSubview:self.headerButtonIconView];
-        self.headerButtonLabel.text = NSLocalizedString(@"Show Nearest Exhibit",nil);
+        self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Show Nearest Exhibit"];
   
     }
     
@@ -184,7 +194,7 @@
     if (locationAllowed) {
    
     [self.headerButtonIconView rotate360WithDuration:.5 repeatCount:100 timingMode:i7Rotate360TimingModeLinear];
-    self.headerButtonLabel.text = NSLocalizedString(@"Finding your location",nil);
+    self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Finding your location"];
     
     // locationManager update as location
     locationManager = [[CLLocationManager alloc] init];
@@ -193,10 +203,10 @@
     locationManager.distanceFilter = kCLDistanceFilterNone;
     [locationManager startUpdatingLocation];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
-                                                        message:NSLocalizedString(@"location services error body",nil)
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                        message:[Helper languageSelectedStringForKey:@"location services error body"]
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -215,7 +225,7 @@
     self.tableView.rowHeight = 60;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        OpeningScreenViewController *openingScreen = [[OpeningScreenViewController alloc] initWithNibName:@"OpeningScreenViewController" bundle:nil];
+        OpeningScreenViewController *openingScreen = [[OpeningScreenViewController alloc] initWithNibName:@"OpeningScreenViewController" bundle:[Helper localizationBundle]];
         [self.navigationController presentModalViewController:openingScreen animated:NO];
     });
     
@@ -289,10 +299,10 @@
         
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"oops Error",nil)
-                              message:NSLocalizedString(@"There is a problem with this exhibit we will fix it as soon as possible",nil)
+                              initWithTitle:[Helper languageSelectedStringForKey:@"oops Error"]
+                              message:[Helper languageSelectedStringForKey:@"There is a problem with this exhibit we will fix it as soon as possible"]
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                               otherButtonTitles:nil];
         [alert show];
         
@@ -352,10 +362,10 @@
     [self updateHeaderView];
     //Unable to determine your location
     //Please check your location settings in the iphone settings
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location services error title",nil)
-                                                    message:NSLocalizedString(@"location services error body",nil)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                    message:[Helper languageSelectedStringForKey:@"location services error body"]
                                                    delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                          cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                           otherButtonTitles:nil, nil];
     [alert show];
 }
@@ -380,7 +390,7 @@
     
     // Set the batch size to a suitable number.
     //[fetchRequest setFetchBatchSize:20];
-    NSString *key = ![Helper isRightToLeft]?@"nameEn":@"name";
+    NSString *key = [Helper appLang]==kHebrew?@"name":@"nameEn";
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
@@ -429,17 +439,17 @@
     
     if([reach isReachable]){
         
-        self.headerButtonLabel.text= NSLocalizedString(@"Downloading Exhibits",nil);
+        self.headerButtonLabel.text= [Helper languageSelectedStringForKey:@"Downloading Exhibits"];
         [self.headerButtonIconView rotate360WithDuration:.5 repeatCount:HUGE_VALF timingMode:i7Rotate360TimingModeLinear];
         [self storeNewExhibitsLocallyInContext:moc updateOldEntities:update];
         
         
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"No Internet alert body",nil)
+                              initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                              message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                               otherButtonTitles:nil];
         [alert show];
     }
@@ -448,7 +458,7 @@
 
 -(void)storeNewAnimalObjectsLocallyInContext:(NSManagedObjectContext*)moc updateOldEntities:(BOOL)update{
     [self.headerButtonIconView rotate360WithDuration:.5 repeatCount:HUGE_VALF timingMode:i7Rotate360TimingModeLinear];
-    NSString *localAnimalParseClass = ![Helper isRightToLeft]?@"AnimalEn":@"AnimalHe";
+    NSString *localAnimalParseClass = [Helper appLang]==kHebrew?@"AnimalHe":@"AnimalEn";
     PFQuery *query = [PFQuery queryWithClassName:localAnimalParseClass];
     query.cachePolicy = kPFCachePolicyNetworkOnly;
     query.maxCacheAge = 60 * 60 * 24;
@@ -456,7 +466,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         //The find succeeded.
         if (!error) {
-            self.headerButtonLabel.text= NSLocalizedString(@"Saving Animals Data",nil);
+            self.headerButtonLabel.text= [Helper languageSelectedStringForKey:@"Saving Animals Data"];
             for (PFObject *object in objects) {
                 NSString *objectId = [object valueForKey:@"objectId"];
                 if ([ParseHelper existOnLocalDBForEntityName:@"Animal" byObjectId:objectId inContext:moc]) {
@@ -464,16 +474,16 @@
                         [Animal updateFromParseAnimalObject:object inContext:moc];
                     }
                 }else{
-                    NSString *local = [Helper isRightToLeft]?@"he":@"en";
+                    NSString *local = [Helper appLang]==kHebrew?@"he":@"en";
                     [Animal createFromParseAnimalObject:object forLocal:local inContext:moc];
                 }
                 
             }
-            self.headerButtonLabel.text= NSLocalizedString(@"Completed",nil);
+            self.headerButtonLabel.text= [Helper languageSelectedStringForKey:@"Completed"];
             [self.headerButtonIconView.layer removeAllAnimations];
             
             
-            NSString *key = [Helper isRightToLeft]?@"completedExhibitsFirstDownloadingForHe":@"completedExhibitsFirstDownloadingForEn";
+            NSString *key = [Helper appLang]==kHebrew?@"completedExhibitsFirstDownloadingForHe":@"completedExhibitsFirstDownloadingForEn";
             
             [[NSUserDefaults standardUserDefaults] setBool:YES   forKey:key];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"exhibitsNeedsUpdates"];
@@ -505,7 +515,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //The find succeeded.
-            self.headerButtonLabel.text= NSLocalizedString(@"Creating Exhibits",nil);
+            self.headerButtonLabel.text= [Helper languageSelectedStringForKey:@"Creating Exhibits"];
             
             //check for exhibits to delete
             NSInteger localCount = [[Exhibit numberOfEntities] integerValue];
@@ -543,7 +553,7 @@
                 [[NSManagedObjectContext defaultContext] saveNestedContexts];
             }
             
-            self.headerButtonLabel.text= NSLocalizedString(@"Downloading Animals",nil);
+            self.headerButtonLabel.text= [Helper languageSelectedStringForKey:@"Downloading Animals"];
             [self storeNewAnimalObjectsLocallyInContext:moc updateOldEntities:update];
             
             

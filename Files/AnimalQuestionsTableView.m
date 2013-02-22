@@ -17,7 +17,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom the table
-        self.title = NSLocalizedString(@"Questions",nil);
+        self.title = [Helper languageSelectedStringForKey:@"Questions"];
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshObjects)];
         self.navigationItem.rightBarButtonItem = barItem;
         
@@ -50,10 +50,10 @@
         [self loadObjects];
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                              message:NSLocalizedString(@"No Internet alert body",nil)
+                              initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                              message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                               delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                               otherButtonTitles:nil];
 		[alert show];
     }
@@ -69,7 +69,7 @@
     }
     
     [query orderByDescending:@"createdAt"];
-    NSString *key = [Helper isRightToLeft]? @"visible":@"visible_en";
+    NSString *key = [Helper appLang]==kHebrew? @"visible":@"visible_en";
     [query whereKey:key equalTo:@YES];
     
     return query;
@@ -92,7 +92,7 @@
     UIFont *font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
     UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     labelView.backgroundColor = UIColorFromRGB(0x8C9544);
-    labelView.text = NSLocalizedString(@"Send a Question", nil);
+    labelView.text = [Helper languageSelectedStringForKey:@"Send a Question"];
     labelView.font = font;
     labelView.textAlignment = NSTextAlignmentCenter;
     labelView.textColor = [UIColor whiteColor];
@@ -111,12 +111,12 @@
     
     self.nameTF = [[UITextField alloc] initWithFrame:CGRectMake(180, 120, 120, 25)];
     self.nameTF.backgroundColor = UIColorFromRGBA(0xffffff, .5);
-    self.nameTF.placeholder = NSLocalizedString(@"name", nil);
+    self.nameTF.placeholder = [Helper languageSelectedStringForKey:@"name"];
     [self.fieldsView addSubview:self.nameTF];
     
     self.cityTF = [[UITextField alloc] initWithFrame:CGRectMake(20, 120, 120, 25)];
     self.cityTF.backgroundColor = UIColorFromRGBA(0xffffff, .5);
-    self.cityTF.placeholder = NSLocalizedString(@"city", nil);
+    self.cityTF.placeholder = [Helper languageSelectedStringForKey:@"city"];
     [self.fieldsView addSubview:self.cityTF];
     
     if(IS_IPHONE_5){
@@ -139,7 +139,7 @@
     UIBarButtonItem *flexButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(resignKeyboard)];
     
-    UIBarButtonItem *postBtn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", nil) style:UIBarButtonItemStyleDone target:self action:@selector(sendQuestion)];
+    UIBarButtonItem *postBtn = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Send"] style:UIBarButtonItemStyleDone target:self action:@selector(sendQuestion)];
     
     
     NSArray *itemsArray = @[doneButton,flexButton,postBtn];
@@ -167,15 +167,15 @@
 
 -(void)sendQuestion{
     if (![self verifyPost]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Post Attantion", nil)
-                                                        message:NSLocalizedString(@"Post Missing Data Massege", nill) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Attantion"]
+                                                        message:[Helper languageSelectedStringForKey:@"Post Missing Data Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
         [alert show];
         return;
     }
     
     // Create the object.
     PFObject *userQuestion = [PFObject objectWithClassName:@"AnimalQuestions"];
-    NSString *key = [Helper isRightToLeft]?@"question":@"question_en";
+    NSString *key = [Helper appLang]==kHebrew?@"question":@"question_en";
     userQuestion[key] = self.textView.text;
    
     NSString * userNameAndCity = [NSString stringWithFormat:@"%@, %@",self.nameTF.text,self.cityTF.text];
@@ -192,8 +192,8 @@
     
     [self resignKeyboard];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Question Tanks", nil)
-                                                    message:NSLocalizedString(@"Question Suscess Massege", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Question Tanks"]
+                                                    message:[Helper languageSelectedStringForKey:@"Question Suscess Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
     [alert show];
 }
 -(void)toggleQuestionFromView{
@@ -281,7 +281,7 @@
     [super objectsWillLoad];
     refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:refreshHUD];
-    refreshHUD.labelText = NSLocalizedString(@"Loading", nil);
+    refreshHUD.labelText = [Helper languageSelectedStringForKey:@"Loading"];
     [refreshHUD show:YES];
     // This method is called before a PFQuery is fired to get more objects
 }
@@ -325,7 +325,7 @@
     if (indexPath.row < [self.objects count]) {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
         PFObject *questionObject = (self.objects)[indexPath.row];
-        AnimalQuestionAnswerViewController * answerController = [[AnimalQuestionAnswerViewController alloc] initWithNibName:@"AnimalQuestionAnswerViewController" bundle:nil];
+        AnimalQuestionAnswerViewController * answerController = [[AnimalQuestionAnswerViewController alloc] initWithNibName:@"AnimalQuestionAnswerViewController" bundle:[Helper localizationBundle]];
         answerController.questionObject = questionObject;
         [self.navigationController pushViewController:answerController animated:YES];
     }else{
@@ -335,10 +335,10 @@
         if(![reach isReachable]){
             
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"No Internet alert body",nil)
+                                  initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                                  message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                   otherButtonTitles:nil];
             [alert show];
             return;

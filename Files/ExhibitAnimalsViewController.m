@@ -23,7 +23,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.title = NSLocalizedString(@"Exhibit animals",nil); 
+        self.title = [Helper languageSelectedStringForKey:@"Exhibit animals"];
    
     }
     return self;
@@ -35,7 +35,7 @@
     
     NSMutableArray *array  = [NSMutableArray arrayWithArray:[[[self exhibit] animals] allObjects]];
     
-    NSPredicate *query = [NSPredicate predicateWithFormat:@"local == %@", [Helper currentLang]];
+    NSPredicate *query = [NSPredicate predicateWithFormat:@"local == %@", [Helper appLang] == kEnglish?@"en":@"he"];
        
     self.animals = [[array filteredArrayUsingPredicate:query] mutableCopy];
 
@@ -49,7 +49,7 @@
     self.tableView.tableHeaderView = headerView;
     
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-    if([Helper isRightToLeft]){
+    if([Helper appLang]==kHebrew){
         [iconView setFrame:CGRectMake(260, 10, 40, 40)];
     }
     [iconView setImage:[exhibit icon]];
@@ -59,7 +59,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
    
-    if([Helper isRightToLeft]){
+    if([Helper appLang]==kHebrew){
         [label setFrame:CGRectMake(0, 10, 250, 40)];
          label.font= [UIFont fontWithName:@"ArialHebrew-Bold" size:18];
         label.textAlignment = UITextAlignmentRight;
@@ -154,10 +154,10 @@
     
     NSLog(@"no animals in the exhibit");
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:NSLocalizedString(@"oops Error",nil)
-                          message:NSLocalizedString(@"There is a problem with this exhibit we will fix it as soon as possible",nil)
+                          initWithTitle:[Helper languageSelectedStringForKey:@"oops Error"]
+                          message:[Helper languageSelectedStringForKey:@"There is a problem with this exhibit we will fix it as soon as possible"]
                           delegate:nil
-                          cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                          cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                           otherButtonTitles:nil];
     [alert show];
 }

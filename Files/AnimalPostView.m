@@ -84,7 +84,7 @@
         postExplainLabel.backgroundColor = [UIColor clearColor];
         postExplainLabel.textColor = UIColorFromRGB(0x281502);
         postExplainLabel.editable = NO;
-        if([Helper isRightToLeft]) {
+        if([Helper appLang]==kHebrew) {
             postExplainLabel.font = [UIFont fontWithName:@"ArialHebrew" size:14];
         }else{
             postExplainLabel.font = [UIFont fontWithName:@"Futura" size:14];
@@ -151,10 +151,10 @@
                         [self addSubview:self.explinationView];
                         if(fromButton){
                         UIAlertView *alert = [[UIAlertView alloc]
-                                              initWithTitle:NSLocalizedString(@"No Posts For Animal",nil)
-                                              message:NSLocalizedString(@"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors.",nil)
+                                              initWithTitle:[Helper languageSelectedStringForKey:@"No Posts For Animal"]
+                                              message:[Helper languageSelectedStringForKey:@"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors."]
                                               delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                              cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil];
                         [alert show];
                     }
@@ -172,10 +172,10 @@
             if (fromButton) {
           
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"No Internet Connection",nil)
-                                  message:NSLocalizedString(@"No Internet alert body",nil)
+                                  initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
+                                  message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"Dismiss",nil)
+                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                   otherButtonTitles:nil];
             [alert show];
             }

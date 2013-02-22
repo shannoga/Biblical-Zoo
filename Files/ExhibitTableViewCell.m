@@ -25,13 +25,7 @@
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.nameLabel.textColor = [UIColor blackColor];
         
-        UIFont *font;
-        if([Helper isRightToLeft]){
-             font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
-        }else{
-            font =  [UIFont fontWithName:@"Futura" size:20];
-        }
-        self.nameLabel.font = font;
+        
         self.nameLabel.backgroundColor = [UIColor clearColor];
         
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -52,19 +46,27 @@
 }
 
 -(void)layoutSubviews{
-    
+     [super layoutSubviews];
     CGRect newCellSubViewsFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     CGRect newCellViewFrame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
     
     self.contentView.frame = self.contentView.bounds = self.backgroundView.frame = self.accessoryView.frame = newCellSubViewsFrame;
     self.frame = newCellViewFrame;
     
-    [super layoutSubviews];
+   
+    
+    UIFont *font;
+    if([Helper appLang]==kHebrew){
+        font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
+    }else{
+        font =  [UIFont fontWithName:@"Futura" size:20];
+    }
+    self.nameLabel.font = font;
     
     UIImage *icon = [[exhibit icon] normalize];
     self.iconImageView.image = icon;
     
-    if([Helper isRightToLeft]){
+    if([Helper appLang]==kHebrew){
         self.nameLabel.text =self.exhibit.name;
         [self.nameLabel setFrame:CGRectMake(10,0,250,CGRectGetHeight(self.bounds))];
         [self.iconImageView setFrame:CGRectMake(275,15,30,30)];

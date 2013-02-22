@@ -28,7 +28,7 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    UIImage * backgroundImage = [exhibit icon];
+    UIImage * backgroundImage = [self.exhibit icon];
     CGRect annotationRectangle = CGRectMake(30/2-60*scale/2, 30/2-60*scale/2, 60*scale, 60*scale);
     [backgroundImage drawInRect: annotationRectangle];
 }

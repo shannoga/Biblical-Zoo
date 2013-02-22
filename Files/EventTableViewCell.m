@@ -111,7 +111,7 @@
 	[super layoutSubviews];
 	
 	//if () {
-    if ([[Helper currentLang] isEqualToString:@"en"]){
+    if ([Helper appLang] == kEnglish){
         self.cellImageView.frame =     CGRectMake(0, 15, 40,40);
         self.detailLableView.textAlignment = self.labelView.textAlignment = UITextAlignmentLeft;
         self.labelView.frame =         CGRectMake(self.cellImageView.frame.size.width+5,0,190,25);
@@ -167,7 +167,7 @@
 	
    //get the localized title from the string
     
-    NSString * title = NSLocalizedString(event.typeString,nil);
+    NSString * title = [Helper languageSelectedStringForKey:event.typeString];
     
     self.labelView.text = title;
     self.detailLableView.text = [event title];

@@ -26,7 +26,7 @@
         self.nameLabel.textColor = [UIColor blackColor];
         
         UIFont *font;
-        if([Helper isRightToLeft]){
+        if([Helper appLang]==kHebrew){
             font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
         }else{
             font =  [UIFont fontWithName:@"Futura" size:20];
@@ -64,7 +64,7 @@
    // UIImage *icon = [exhibit icon];
    // self.iconImageView.image = icon;
     
-    if([Helper isRightToLeft]){
+    if([Helper appLang]==kHebrew){
         self.nameLabel.text =self.animal.name;
         [self.nameLabel setFrame:CGRectMake(10,0,250,CGRectGetHeight(self.bounds))];
         [self.iconImageView setFrame:CGRectMake(270,10,40,40)];

@@ -44,7 +44,7 @@
     [super viewDidLoad];
     
     
-    self.typeLabel.text = NSLocalizedString([event typeString], nil) ;
+    self.typeLabel.text = [Helper languageSelectedStringForKey:[event typeString]];
      self.titleLabel.text =  [event title];
      self.locationLabel.text =  [event location];
      self.dateLabel.text =  [event dateAsString];
@@ -85,8 +85,8 @@
     NSDate *alertDate = [event.startDate dateByAddingTimeInterval:-1200];
     [localNotification setFireDate:alertDate];
     NSLog(@"fire date = %@",localNotification.fireDate);
-    [localNotification setAlertAction:NSLocalizedString(@"Launch",nil)];
-    NSString * localString = NSLocalizedString(@"Will start in 20 minutes",nil);
+    [localNotification setAlertAction:[Helper languageSelectedStringForKey:@"Launch"]];
+    NSString * localString = [Helper languageSelectedStringForKey:@"Will start in 20 minutes"];
     NSString * str = [NSString stringWithFormat:@"%@ %@",event.title,localString];
     [localNotification setAlertBody:str];
     [localNotification setSoundName:@"notification_sound.aif"];
@@ -96,8 +96,8 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification]; 
     [BugSenseController sendCustomEventWithTag:@"seted alert to event"];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Great", nil)
-                                                    message:NSLocalizedString(@"Your notification had been set", nill) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Great"]
+                                                    message:[Helper languageSelectedStringForKey:@"Your notification had been set"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
     [alert show];
 }
 
