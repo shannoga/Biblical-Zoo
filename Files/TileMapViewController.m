@@ -94,9 +94,11 @@
 {
     [super viewDidLoad];
     
+    if(!self.map){
      self.map = [[MKMapView alloc] initWithFrame:self.view.frame];
     self.map.delegate = self;
     [self.view addSubview:self.map];
+    }
     
     NSString *tileDirectory = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Tiles"];
     
@@ -229,8 +231,12 @@
     if([Helper isLion]){
         [self.map setShowsUserLocation:YES];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app map description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Later"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
-        [alert show];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app map description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Later"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
+            [alert show];
+        });
+      
     }
     
     if([CLLocationManager locationServicesEnabled]){

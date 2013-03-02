@@ -67,7 +67,10 @@
       return;
     
     }else{
-       [self showBuyFullAppAlert];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self showBuyFullAppAlert];
+        });
     }
 }
 
@@ -78,7 +81,10 @@
     AnimalQuestionsTableView * animalQuestions = [[AnimalQuestionsTableView alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:animalQuestions animated:YES];
     }else{
-        [self showBuyFullAppAlert];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self showBuyFullAppAlert];
+        });
     }
 }
 
@@ -98,7 +104,10 @@
         }
         
     }else{
-        [self showBuyFullAppAlert];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self showBuyFullAppAlert];
+        });
     }
   
 }
@@ -135,7 +144,11 @@
         
     
     }else{
-        [self showBuyFullAppAlert];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+             [self showBuyFullAppAlert];
+        });
+       
     }
 }
 

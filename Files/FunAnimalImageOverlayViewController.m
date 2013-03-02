@@ -55,6 +55,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = UIColorFromRGB(0xBDB38C);
     self.uniteImagesView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     self.imagesContainer = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     self.imagesContainer.userInteractionEnabled = NO;

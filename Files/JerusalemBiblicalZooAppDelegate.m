@@ -29,7 +29,7 @@
 #warning check for next realese 
     //[self startLocationServices];
     //check for updates
-    [self checkForUpdates];
+  //  [self checkForUpdates];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
   
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
