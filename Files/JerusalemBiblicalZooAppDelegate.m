@@ -44,7 +44,7 @@
     BOOL agreed = [[NSUserDefaults standardUserDefaults] boolForKey:@"agreedBugsense"];
     
     if(!askedUser){
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please let us improve!" message:@"By taping confirm below you permit the app to send us crash reports, log files and basic usage statistics. This data is completely anonymous and will be used only to improve this app." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Deny",@"Confirm", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please let us improve!" message:@"By tapping confirm below you permit the app to send us crash reports, log files and basic usage statistics. This data is completely anonymous and will be used only to improve this app." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Deny",@"Confirm", nil];
     [alert show];
     }else if(agreed){
         [BugSenseController sharedControllerWithBugSenseAPIKey:@"e12a5b10"];
@@ -373,7 +373,7 @@ monitoringDidFailForRegion:(CLRegion *)region
     // make the window visible
     [self.window makeKeyAndVisible];
     
-    [eventsTableViewController updateCalendar];
+   // [eventsTableViewController updateCalendar];
 }
 
 -(void)refreshViewControllersAfterLangChange{

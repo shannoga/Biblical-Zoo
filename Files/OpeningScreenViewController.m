@@ -43,9 +43,24 @@
     NSString *dateInStringFormated = [dateFormatter stringFromDate:currentDateTime];
    
     NSInteger time = [dateInStringFormated intValue];
-    if (time >= 9 && time < 17) {
+    if (time >= 9 && time < 18) {
         
-                self.imageview.image = [UIImage imageNamed:@"Opening.png"];
+        
+        if ([Helper appLang]==kHebrew) {
+            if (IS_IPHONE_5) {
+                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_he_5"];
+            }else{
+                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_he"];
+                
+            }
+        }else{
+            if (IS_IPHONE_5) {
+                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_en_5"];
+            }else{
+                self.imageview.image = [UIImage imageNamed:@"opening_screen_day_en"];
+                
+            }
+        }
    
     }else{
         if ([Helper appLang]==kHebrew) {

@@ -81,8 +81,9 @@
 "Video recording unavailable" = "לא ניתן לצלם וידאו";
 
 /* Event name */
-"Kids" = "ילדים";
+"Talks" = "הדרכה";
 
+"Talk" = "הדרכה";
 /* No comment provided by engineer. */
 "Language" = "שפה";
 
@@ -161,7 +162,7 @@
 "Post" = "פוסט";
 
 /* No comment provided by engineer. */
-"Tap to see animal" = "הקש בכדי לצפות בפרטים על התצוגה";
+"Tap to see animal" = "הקישו בכדי לצפות בפרטים על התצוגה";
 
 /* No comment provided by engineer. */
 "PostLabel" = "עובדות מעניינות, שירים ובדיחות ממבקרי הגן.";
@@ -248,7 +249,7 @@
 "Success" = "הצלחנו :)";
 
 /* No comment provided by engineer. */
-"Tap To Load Events" = "הקש בכדי לטעון אירועים";
+"Tap To Load Events" = "הקישו בכדי לטעון אירועים";
 
 /* No comment provided by engineer. */
 "There is a problem with this exhibit we will fix it as soon as possible" = "ישנה בעיה עם תצוגה זו, אנו עובדים בכדי לתקן אותה בהקדם !";
@@ -257,7 +258,7 @@
 "Unable to send Email." = "אין אפשרות לשלוח אימייל";
 
 /* No comment provided by engineer. */
-"Update Zoo Exhibits" = "לחץ לעדכון תצוגות הגן !";
+"Update Zoo Exhibits" = "לחצו לעדכון תצוגות הגן !";
 
 /* No comment provided by engineer. */
 "WiFi" = "WiFi";
@@ -269,7 +270,7 @@
 "Attantion" = "שימו לב !";
 
 /* No comment provided by engineer. */
-"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors." = "היה הראשון להוסיף, עובדה מעניינת, בדיחה, שיר או כל דבר שיעניין את המבקרים האחרים בגן.";
+"No Posts Message" = "היו הראשונים להוסיף, עובדה מעניינת, בדיחה, שיר או כל דבר שיעניין את המבקרים האחרים בגן. ";
 
 /* No comment provided by engineer. */
 "Cancel" = "בטל";
@@ -329,7 +330,7 @@
 "Question Suscess Massege" = "שאלה טובה !";
 
 /* No comment provided by engineer. */
-"Question Tanks" = "שאלתך נשלחה בהצלחה, אנו משתדלים לענות על השאלות בהקדם האפשרי !";
+"Question Tanks" = "שאלתכם נשלחה בהצלחה, אנו משתדלים לענות על השאלות בהקדם האפשרי !";
 
 /* No comment provided by engineer. */
 "Questions" = "שאלות";
@@ -338,7 +339,7 @@
 "Save to album" = "שמור לאלבום ";
 
 /* No comment provided by engineer. */
-"Save to FaceBook" = "פרסם בפייסבוק";
+"Save to FaceBook" = "פרסמו בפייסבוק";
 
 /* No comment provided by engineer. */
 "Send a Question" = "שלח שאלה";
@@ -362,10 +363,10 @@
 "Buy full app map description" = "רכשו את האפליקציה בכדי לראות את מיקומכם על המפה !";
 
 /* No comment provided by engineer. */
-"Buy Full App" = "רכוש את הגרסה המלאה!";
+"Buy Full App" = "רכשו את הגרסה המלאה!";
 
 /* No comment provided by engineer. */
-"Buy Now" = "קנה עכשיו";
+"Buy Now" = "קנו עכשיו";
 
 /* No comment provided by engineer. */
 "Buying Thanks" = "תודה שרכשתם את האפליקציה, אנו מקווים שתהנו ממנה.";
@@ -389,7 +390,7 @@
 "Thank You" = "תודה רבה";
 
 /* No comment provided by engineer. */
-"Update available for exhibits" = "לחץ לעדכון תצוגות הגן !";
+"Update available for exhibits" = "לחצו לעדכון תצוגות הגן !";
 
 /* No comment provided by engineer. */
 "You are out of the zoo" = "אתם נמצאים מחוץ לגן !";
@@ -401,10 +402,10 @@
 "Downloading Exhibits" = "מוריד מידע תצוגות";
 
 /* No comment provided by engineer. */
-"A graet image from [ENTER YOUR NAME HERE]!" = "תמונה נהדרת מ [כתוב כאן את שמך]!";
+"A graet image from [ENTER YOUR NAME HERE]!" = "תמונה נהדרת מ [כתבו כאן את שמכם]!";
 
 /* No comment provided by engineer. */
-"Ask a question" = "שאל שאלה!";
+"Ask a question" = "שאלו שאלה!";
 
 /* No comment provided by engineer. */
 "From Album" = "אלבום תמונות";
@@ -440,7 +441,7 @@
 "Will start in 20 minutes" = "יתחיל בעוד 20 דקות";
 
 /* No comment provided by engineer. */
-"Your email is not configured." = "תיבת המייל שלך אינה מוגדרת במכשיר בו אתה משתמש!";
+"Your email is not configured." = "תיבת המייל שלכם אינה מוגדרת במכשיר בו אתה משתמשים!";
 
 /* nill */
 "Your notification had been set" = "התזכורת נקבעה בהצלחה, המשך ביקור נעים.";
@@ -449,7 +450,7 @@
 "Dismiss" = "אישור";
 
 /* No comment provided by engineer. */
-"location services error body" = "כנס להגדרות > פרטיות > שירותי מיקום  ואפשר את האפליקציה הזו.";
+"location services error body" = "כנסו להגדרות > פרטיות > שירותי מיקום  ואפשרו את האפליקציה הזו.";
 
 /* No comment provided by engineer. */
 "location services error title" = "שירותי מיקום מכובים";
@@ -458,7 +459,7 @@
 "No questions alert body" = "לא נשאלו שאלות על חיה זו, היו הראשונים לשאול שאלה!";
 
 /* No comment provided by engineer. */
-"Buy full app description" = "רכוש את האפליקציה בכדי להשתמש בתכונה זו.";
+"Buy full app description" = "רכשו את האפליקציה בכדי להשתמש בתכונה זו.";
 
 /* No comment provided by engineer. */
 "Later" = "לא כעת";
@@ -536,5 +537,26 @@
 "We are in the Jerusalem Biblical Zoo - http://itunes.apple.com/app/id591193554" = "אנו נמצאים בגן החיות התנכ\"י - http://itunes.apple.com/app/id591193554";
 
 /* No comment provided by engineer. */
-"You are not loged in to Facebook" = "אינך מחובר לפייסבוק, אנא התחבר בכדי שתוכל להשתמש בתכונה זו.";
+"You are not loged in to Facebook" = "אינכם מחוברים לפייסבוק, יש להתחברבכדי שתוכלו להשתמש בתכונה זו.";
+
+/* No comment provided by engineer. */
+"add your messege here" = " הוסף כאן את הודעתך";
+
+/* No comment provided by engineer. */
+"Check out the Jerusalem Biblical Zoo iPhone and iPod App" = "בדקו את האפליקציה של גן החיות התנכ\"י בירושלים לאייפון ואייפוד.";
+
+/* No comment provided by engineer. */
+"Device can not send email's" = "מכשיר זה אינו מותאם לשליחת מיילים";
+
+/* No comment provided by engineer. */
+"email subject" = "משוב לאפליקצית גן החיות";
+
+/* No comment provided by engineer. */
+"iOS6 required" = "דרושה מערכת הפעלה iOS6 ומעלה.";
+
+/* No comment provided by engineer. */
+"This feature require iOS6" = "תכונה זו דורשת גרסת מערכת הפעלה iOS6";
+
+/* No comment provided by engineer. */
+"We got your email" = "הודעתכם נשלחה, תודה רבה על המשוב.";
 

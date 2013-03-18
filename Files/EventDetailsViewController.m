@@ -49,8 +49,11 @@
      self.locationLabel.text =  [event location];
      self.dateLabel.text =  [event dateAsString];
      self.timeLabel.text =  [event timeAsString];
-     self.descriptionView.text =  [event eventDescription];
-    [self.iconView setImage:[event icon]]; 
+    //hotfix
+    NSString *description = event.eventDescription;
+    description = [description stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+    self.descriptionView.text =  description;
+    [self.iconView setImage:[event icon]];
     
     NSArray *cellColors = [event colors];
     

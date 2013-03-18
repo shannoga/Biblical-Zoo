@@ -62,20 +62,20 @@
 #pragma mark -
 #pragma mark Google Calendar API
 
+-(void)showHud{
+    refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    refreshHUD.delegate = self;
+    [refreshHUD show:YES];
+    refreshHUD.labelText = @"Loading Events";
+    [self.view addSubview:refreshHUD];
+}
 -(void)updateCalendar{
     
     Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     
     if([reach isReachable]){
-       // NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        //NSDate *date = (NSDate*)[ud objectForKey:@"lastCalendarUpdateDate"];
-        
-        refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.view addSubview:refreshHUD];
-        refreshHUD.delegate = self;
-        [refreshHUD show:YES];
-        refreshHUD.labelText = @"Loading Events";
-        
+     
+
         [self fetchAllCalendars];
     
     }else{
@@ -102,30 +102,30 @@
                                CGICalendar *ical = [[CGICalendar alloc] init];
                                if ([ical parseWithString:str error:&error]) {
                                    if(!error){
-                                       
+                                       NSInteger counter = 0;
                                        for (CGICalendarObject *icalObj in [ical objects]) {
+                                           counter++;
                                            NSString *name = [[icalObj propertyForName:@"X-WR-CALNAME"] value];
                                            if (![name isEqualToString:@"Lion rank"]) {
                                                [Event parseEventsFromArray:[icalObj events] forClendarName:name completion:^(BOOL finished) {
                                                    updateLoopCounter++;
-                                                   if(updateLoopCounter==[calendarsUrls count]){
-                                                      [self updateUI];
-                                                   }
+                                                   
                                                }];
                                            }else{
                                                [Madad parseMadadsFromArray:[icalObj events] completion:^(BOOL finished) {
                                                    updateLoopCounter++;
-                                                   if(updateLoopCounter==[calendarsUrls count]){
-                                                       [self updateUI];
-                                                   }
-                                                   
+                                                 
                                                }];
                                            }
-                                          
+                                           if(updateLoopCounter==[calendarsUrls count]){
+                                              [self updateUI];
+                                           }
                                        }
                                        
                                    }else{
                                        NSLog(@"error = %@",[error description]);
+                                       
+                                       
                                    }
                                }else{
                                    NSLog(@"Problem getting ICS files");
@@ -146,12 +146,20 @@
     self.tableView.scrollEnabled =NO;
     shouldUpdateUI=NO;
     [Event truncateAll];
-    [calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSURL *url = [NSURL URLWithString:obj];
-        [self createEventsFromUrl:url];
-    }];
+    [[NSManagedObjectContext defaultContext] saveNestedContexts];
     
-   
+    
+    refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
+    refreshHUD.delegate = self;
+    refreshHUD.labelText = @"Loading Events";
+    [self.view addSubview:refreshHUD];
+    [refreshHUD show:YES];
+    
+     [calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+         NSURL *url = [NSURL URLWithString:obj];
+         [self createEventsFromUrl:url];
+     }];
+    
     
 }
 
@@ -176,7 +184,7 @@
     
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_special_small.png"] atIndex:0 animated:NO];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_music_small.png"] atIndex:0 animated:NO];
-    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_kids_small.png"] atIndex:0 animated:NO];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_talk_small.png"] atIndex:0 animated:NO];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"event_feeding_small.png"] atIndex:0 animated:NO];
     [segmentedControl insertSegmentWithTitle:[Helper languageSelectedStringForKey:@"All"] atIndex:0 animated:NO];
     self.navigationItem.titleView = segmentedControl;
@@ -190,8 +198,11 @@
  
     
 	self.tableView.rowHeight=70;
-   // self.tableView.backgroundColor = UIColorFromRGB(0x95bdc2);
-    
+
+    //update calendar if it is empty
+    if([[Event findAll] count]==0){
+        [self updateCalendar];
+    }
    
 }
 
@@ -287,7 +298,7 @@
 }
 
 -(void)madadExplination{
-    MadadExplinationViewController *madadExplination = [[MadadExplinationViewController alloc] initWithNibName:@"MadadExplinationViewController" bundle:[Helper localizationBundle]];
+    MadadExplinationViewController *madadExplination = [[MadadExplinationViewController alloc] initWithNibName:@"MadadExplinationViewController" bundle:nil];
     [self.navigationController pushViewController:madadExplination animated:YES];
 }
 
@@ -387,7 +398,7 @@
             predicateString=@"Feeding";
             break;
         case 2:
-            predicateString=@"Kids";
+            predicateString=@"Talk";
             break;
         case 3:
             predicateString=@"Music";
@@ -466,8 +477,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:[NSDate date] forKey:@"lastCalendarUpdateDate"];
     self.tableView.scrollEnabled =YES;
-    [refreshHUD hide:YES];
-    
+     [refreshHUD hide:YES];
    
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
@@ -478,6 +488,7 @@
     if (shouldUpdateUI) {
         [[NSManagedObjectContext defaultContext] saveNestedContexts];
          [self.tableView reloadData];
+        [refreshHUD hide:YES];
     }
 
     

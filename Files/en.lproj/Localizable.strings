@@ -81,7 +81,10 @@
 "Video recording unavailable" = "Video recording unavailable";
 
 /* Event name */
-"Kids" = "Kids";
+"Talks" = "Talks";
+
+/* Event name */
+"Talk" = "Talk";
 
 /* No comment provided by engineer. */
 "Language" = "Language";
@@ -269,7 +272,7 @@
 "Attantion" = "Attention";
 
 /* No comment provided by engineer. */
-"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors." = "Be the first to add an interesting fact, joke, song or any thing that might interest other visitors.";
+"No Posts Message" = "Be the first to add an interesting fact, joke, song or any thing that might interest other visitors.";
 
 /* No comment provided by engineer. */
 "Cancel" = "Cancel";
@@ -537,4 +540,25 @@
 
 /* No comment provided by engineer. */
 "You are not loged in to Facebook" = "You are not loged in to Facebook";
+
+/* No comment provided by engineer. */
+"add your messege here" = "add your messege here";
+
+/* No comment provided by engineer. */
+"Check out the Jerusalem Biblical Zoo iPhone and iPod App" = "Check out the Jerusalem Biblical Zoo iPhone and iPod App";
+
+/* No comment provided by engineer. */
+"Device can not send email's" = "Device can not send email's";
+
+/* No comment provided by engineer. */
+"email subject" = "Zoo App Feedback";
+
+/* No comment provided by engineer. */
+"iOS6 required" = "iOS6 required";
+
+/* No comment provided by engineer. */
+"This feature require iOS6" = "This feature require iOS6";
+
+/* No comment provided by engineer. */
+"We got your email" = "We got your email";
 

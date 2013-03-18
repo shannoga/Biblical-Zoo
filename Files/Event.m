@@ -37,6 +37,7 @@
 #define REAPET_DAYES @"BYDAY"
 #define REAPET_FREQ @"FREQ"
 #define REAPET_UNTIL @"UNTIL"
+#define REPEAT_COUNT @"COUNT"
 
 +(void)createEvent:(CGICalendarComponent*)eventComponent calendarName:(NSString*)calendarName startDate:(NSDate*)startDate isReapeater:(BOOL)reapeter{
     //set the start date
@@ -84,6 +85,7 @@
         
         if ([eventComp isEvent] && sDate) {
             NSString * repeat = [[eventComp propertyForName:REAPET] value];
+           
             if(repeat!=NULL){
                 NSDictionary *dic = [self repeatDictionaryFromString:repeat];
                 NSArray *datesArray = [self repeatEventsDatesArrayWithDictionary:dic];
@@ -128,6 +130,8 @@
     NSString *reapetFreq = dic[REAPET_FREQ];
     NSString *reapetDays = dic[REAPET_DAYES];
     NSDate * repeatEndDate = [self dateFromICSString:dic[REAPET_UNTIL]];
+    NSLog(@"dic = %@",dic);
+    NSInteger count = [dic[REPEAT_COUNT] integerValue];
     //gat all the first days to reapet
     NSArray *starterDates = [self reapeterStarterDates:reapetDays];
     
@@ -135,7 +139,7 @@
     
     if ([reapetFreq isEqualToString:@"WEEKLY"]) {
         for (NSDate *date in starterDates) {
-            NSArray * datesSet = [self datesSetForWeeklyRepeaterWithStartDate:date EndDate:repeatEndDate];
+            NSArray * datesSet = [self datesSetForWeeklyRepeaterWithStartDate:date ReapetCount:count];
             [allDatesForReapeter addObjectsFromArray:datesSet];
         }
     }else if([reapetFreq isEqualToString:@"DAILY"]){
@@ -156,11 +160,11 @@
     }
     return [NSArray arrayWithArray:repeaterStartDayes];
 }
-+(NSArray*)datesSetForWeeklyRepeaterWithStartDate:(NSDate*)startDate EndDate:(NSDate*)endDate{
++(NSArray*)datesSetForWeeklyRepeaterWithStartDate:(NSDate*)startDate ReapetCount:(NSInteger)count{
 
     NSMutableArray *datesArray = [@[startDate]mutableCopy];
     NSDate *futureDate=nil;
-    for (NSInteger i=0; i<4; i++) {
+    for (NSInteger i=0; i<count-1; i++) {
         futureDate = [startDate dateByAddingDays:(i+1)*7];
         [datesArray addObject:futureDate];
     }
@@ -234,7 +238,7 @@
 
 +(NSString*)cleanCalendarTitle:(NSString*)title{
     NSString *cleanedTitle = title;
-    if ([title hasSuffix:@"s"]&&![title isEqualToString:@"Kids"]){
+    if ([title hasSuffix:@"s"]){
         cleanedTitle = [title  substringToIndex:[title length] - 1];
     }
     return cleanedTitle;
@@ -299,8 +303,8 @@
         return kEventTypeFeeding;
     }else if ([string isEqualToString:@"Exhibition"]) {
         return kEventTypeExhibition;
-    }else if ([string isEqualToString:@"Kids"]) {
-        return kEventTypeKids;
+    }else if ([string isEqualToString:@"Talk"]) {
+        return kEventTypeTalk;
     }else if ([string isEqualToString:@"Music"]) {
         return kEventTypeMusic;
     }else if ([string isEqualToString:@"Show"]) {
@@ -323,7 +327,7 @@
             cellColors = @[(id)[UIColorFromRGB(0xBDB38C) CGColor],
                           (id)[UIColorFromRGB(0xBDB38C) CGColor]];
             break;
-        case kEventTypeKids:
+        case kEventTypeTalk:
             cellColors = @[(id)[UIColorFromRGB(0xD4963E) CGColor],//kids
                           (id)[UIColorFromRGB(0xD4963E) CGColor]];
             break;

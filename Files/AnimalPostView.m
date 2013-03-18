@@ -89,7 +89,7 @@
         }else{
             postExplainLabel.font = [UIFont fontWithName:@"Futura" size:14];
         }
-        postExplainLabel.text =@"Load other users facts jokes and other interesting posts about this animal, tap the load button to load other user posts, tap the pencil to add your own. We will post the most funny interesting posts !";
+        postExplainLabel.text =[Helper languageSelectedStringForKey:@"No Posts Message"];
         [self.explinationView addSubview:postExplainLabel];
         
         [self addSubview:self.explinationView];
@@ -152,7 +152,7 @@
                         if(fromButton){
                         UIAlertView *alert = [[UIAlertView alloc]
                                               initWithTitle:[Helper languageSelectedStringForKey:@"No Posts For Animal"]
-                                              message:[Helper languageSelectedStringForKey:@"Be the first to add an interesting fact, joke, song. any thing that might interest other visitors."]
+                                              message:[Helper languageSelectedStringForKey:@"No Posts Message"]
                                               delegate:nil
                                               cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
                                               otherButtonTitles:nil];
