@@ -218,10 +218,7 @@
     return language;
 }
 
-+(BOOL)isLion{
-   BOOL unlocked =  [[NSUserDefaults standardUserDefaults] boolForKey:@"Lion"];
-    return unlocked;
-}
+
 
 +(NSString*)audioGuideFilesPath{
     NSString *path;

@@ -19,7 +19,7 @@
    
 }
 @property (nonatomic, retain) AnimalViewController *parentController;
-@property (nonatomic, weak) Animal *animal;
+@property (nonatomic, assign) __unsafe_unretained Animal *animal;
 @property (nonatomic, strong) AnimalAudioGuideView *audioGuide;
 @property (nonatomic, retain)  AnimalPostView *postView;
 - (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal withParentController:(AnimalViewController *)animalController;

@@ -6,7 +6,7 @@
 #import <StoreKit/StoreKit.h>
 #import "MBProgressHUD.h"
 
-@interface JerusalemBiblicalZooAppDelegate : NSObject <UIApplicationDelegate,CLLocationManagerDelegate,UIAlertViewDelegate,SKPaymentTransactionObserver> {
+@interface JerusalemBiblicalZooAppDelegate : NSObject <UIApplicationDelegate,CLLocationManagerDelegate,UIAlertViewDelegate> {
     CLLocationManager *locationManager;
     BOOL subscribedAsVisitor;
     MBProgressHUD *HUD;

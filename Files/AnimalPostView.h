@@ -23,7 +23,7 @@
 @property (nonatomic,strong) UIView *explinationView;
 @property (nonatomic,strong) UIButton *loadPostsBtn;
 @property (nonatomic,strong) UIButton *viewPosts;
-@property (nonatomic,weak) Animal *animal;
+@property (nonatomic,assign) __unsafe_unretained Animal *animal;
 @property (nonatomic,strong) AnimalUserPostsViewer *postViewer;
 @property (nonatomic, strong) NSMutableArray * posts;
 @property (nonatomic, strong) UIButton *prev;

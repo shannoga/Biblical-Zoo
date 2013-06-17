@@ -45,10 +45,7 @@
             facebookButton = [[UIBarButtonItem alloc] initWithTitle:@"Facebook" style:UIBarButtonItemStyleDone  target:self action:@selector(loginToFacebook)];
             self.navigationItem.rightBarButtonItem = facebookButton;
         }
-        if(![Helper isLion]){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
-        }
-        
+   
         
     }
     return self;
@@ -61,37 +58,20 @@
 }
 
 -(IBAction)opsenSignGenerator:(id)sender{
-    if([Helper isLion]){
     SignForFreindViewController *signController = [[SignForFreindViewController alloc] initWithNibName:@"SignForFreindViewController" bundle:[Helper localizationBundle]];
     [self.navigationController pushViewController:signController animated:YES];
-      return;
-    
-    }else{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self showBuyFullAppAlert];
-        });
-    }
 }
 
 
 
 -(IBAction)openQuestions:(id)sender{
-    if([Helper isLion]){
     AnimalQuestionsTableView * animalQuestions = [[AnimalQuestionsTableView alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:animalQuestions animated:YES];
-    }else{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self showBuyFullAppAlert];
-        });
-    }
 }
 
 
 -(IBAction)openZooPhotographerCamera:(id)sender{
     
-    if([Helper isLion]){
         if ([UIImagePickerController isSourceTypeAvailable:
              UIImagePickerControllerSourceTypeCamera]){
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:[Helper languageSelectedStringForKey:@"Cancel"] otherButtonTitles:
@@ -102,14 +82,6 @@
         }else{
             [self openPhotographerCamera:UIImagePickerControllerSourceTypePhotoLibrary];
         }
-        
-    }else{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self showBuyFullAppAlert];
-        });
-    }
-  
 }
 
 
@@ -127,7 +99,6 @@
 }
 
 -(void)openPhotographerCamera:(UIImagePickerControllerSourceType)type{
-    if([Helper isLion]){
         self.imagePicker = [[UIImagePickerController alloc] init];
         self.imagePicker.delegate = self;
         
@@ -140,16 +111,7 @@
             imagePicker.allowsEditing=YES;
         }
          [self presentModalViewController:self.imagePicker  animated:YES];
-            
-        
-    
-    }else{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-             [self showBuyFullAppAlert];
-        });
-       
-    }
+
 }
 
 - (void) imagePickerController: (UIImagePickerController *) picker
@@ -247,12 +209,6 @@
 {
     [super viewDidLoad];
     
-    if(![Helper isLion]){
-        self.signBtn.alpha = .5;
-        self.zooCamera.alpha = .5;
-        self.questionsButton.alpha = .5;
-    }
-    
     self.facebookView.transform = CGAffineTransformTranslate(self.facebookView.transform, 0, -self.facebookView.bounds.size.height);
     
     if (IS_IPHONE_5) {
@@ -277,7 +233,6 @@
      
            
         }else{
-            if([Helper isLion]){
             //set alert to connect to facebook
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:[Helper languageSelectedStringForKey:@"FaceBook connection"]
@@ -287,7 +242,6 @@
                                   otherButtonTitles:[Helper languageSelectedStringForKey:@"Connect"], nil];
             alert.tag=1;
             [alert show];
-            }
             
         }
         [self toggleFacebookButton];

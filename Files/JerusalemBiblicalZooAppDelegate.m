@@ -308,21 +308,7 @@ monitoringDidFailForRegion:(CLRegion *)region
     [defaultACL setPublicReadAccess:YES];
     //[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    // Use the product identifier from iTunes to register a handler.
-    [PFPurchase addObserverForProduct:@"com.shannoga.biblicalzoo" block:^(SKPaymentTransaction *transaction) {
-        [HUD hide:YES];
-        // Write business logic that should run once this product is purchased.
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Lion"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"unlock-feature" object:nil]];
-        
-        if([Helper bugsenseOn]) [BugSenseController sendCustomEventWithTag:@"app purchesed"];
-        if([Helper bugsenseOn]) [BugSenseController leaveBreadcrumb:@"app purchesed"];
-        
-        // Run UI logic that informs user the product has been purchased, such as displaying an alert view.
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Thank You"] message:[Helper languageSelectedStringForKey:@"Buying Thanks"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+
 
 }
 -(void)setUpTabBarControllers{

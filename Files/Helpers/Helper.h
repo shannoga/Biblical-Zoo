@@ -22,7 +22,6 @@
 +(BOOL)isDeviceAniPad;
 +(BOOL)isEnglish;
 +(BOOL)isRightToLeft;
-+(BOOL)isLion;
 +(BOOL)bugsenseOn;
 +(BOOL)isRetina;
 +(BOOL)isLangRTL;

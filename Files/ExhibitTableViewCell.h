@@ -12,7 +12,7 @@
     BOOL single;
 }
 
-@property (nonatomic, weak) Exhibit *exhibit;
+@property (nonatomic, assign) __unsafe_unretained Exhibit *exhibit;
 @property (nonatomic, retain)  UILabel *nameLabel;
 @property (nonatomic, retain)  UIImageView *iconImageView;
 @property (nonatomic, retain)  UIImageView *auodioGuideIndicator;

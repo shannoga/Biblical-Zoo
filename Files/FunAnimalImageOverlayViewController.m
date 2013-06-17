@@ -46,9 +46,7 @@
              overlayImages = @[[UIImage imageNamed:@"lion_overlay_en"],[UIImage imageNamed:@"zoo_overlay_en"]];
         }
     }
-    if(![Helper isLion]){
-        [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
-    }
+  
     return self;
 }
 

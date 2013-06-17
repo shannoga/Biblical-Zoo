@@ -80,15 +80,12 @@
     if (self) {
         // Custom initialization
         self.title =  [Helper languageSelectedStringForKey:@"Map"];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
+     
        
     }
     return self;
 }
 
--(void)unlock{
-    [self.map setShowsUserLocation:YES];
-}
 
 - (void)viewDidLoad
 {
@@ -200,9 +197,6 @@
       //  pinView.transform = CGAffineTransformMakeScale(scale, scale);
        // [pinImage resizedImage:CGSizeMake(pinImage.size.width * scale, pinImage.size.height * scale) interpolationQuality:kCGInterpolationHigh];
 
-        if (![Helper isLion] && ![exhibit free]) {
-            pinView.alpha=.5;
-        }
     }
 }
 
@@ -228,16 +222,8 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    if([Helper isLion]){
-        [self.map setShowsUserLocation:YES];
-    }else{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app map description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Later"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
-            [alert show];
-        });
-      
-    }
+    [self.map setShowsUserLocation:YES];
+
     
     if([CLLocationManager locationServicesEnabled]){
         if (locationManager==nil) {
@@ -305,7 +291,6 @@
 
     Exhibit *exhibit = anootation.exhibit;
     
-    if ([Helper isLion] || [exhibit.free boolValue]) {
    
         NSArray *animals = [exhibit localAnimals];
         [self.navigationController setToolbarHidden:YES animated:NO];
@@ -326,7 +311,7 @@
         }else{
             NSLog(@"no animals in the exhibit");  
         }
-    }
+
      
 }
 
@@ -472,7 +457,6 @@
         NSLog(@"user is in zoo");
         
     }else{
-        if([Helper isLion]){
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"You are out of the zoo"]
@@ -482,7 +466,6 @@
                                                   otherButtonTitles:nil];
             [alert show];
         });
-        }
 
     }
     [locationManager stopUpdatingLocation];

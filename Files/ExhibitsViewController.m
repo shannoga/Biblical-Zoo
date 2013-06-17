@@ -42,9 +42,7 @@
             self.navigationItem.rightBarButtonItem = barItem;
         }
         */
-        if(![Helper isLion]){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(unlock) name:@"unlock-feature"  object: nil];
-        }
+    
         
         UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Info"] style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
         self.navigationItem.leftBarButtonItem = infoBarItem;
@@ -61,19 +59,7 @@
     SettingsViewController *settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:[Helper localizationBundle]];
     [self presentViewController:settingsController animated:YES completion:nil];
 }
--(void)unlock{
 
-    self.fetchedResultsController = nil;
-    NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Error in refetch: %@",[error localizedDescription]);
-        abort();
-    }
-    
-    [self.tableView reloadData];
-    [self.tableView.tableFooterView removeFromSuperview];
-    [self updateHeaderView];
-}
 
 -(void)showInfoController{
    ZooInfoViewController * zooInfo = [[ZooInfoViewController alloc] init];
@@ -155,13 +141,7 @@
     [self.headerButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     exhibitsHasPendingUpdates =  [[NSUserDefaults standardUserDefaults] boolForKey:@"exhibitsNeedsUpdates"];
 
-    if(![Helper isLion]){
-        self.headerButton.backgroundColor = UIColorFromRGB(0xC95000);
-        [self.headerButton addTarget:self action:@selector(buyFullApp) forControlEvents:UIControlEventTouchUpInside];
-        [self.headerButtonIconView setImage:[UIImage imageNamed:@"302-Unlock.png"]];
-        self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Buy Full App"];
-
-    }else if (exhibitsHasPendingUpdates) {
+    if (exhibitsHasPendingUpdates) {
         // Do any additional setup after loading the view, typically from a nib.
         self.headerButton.backgroundColor = UIColorFromRGB(0x3A2E23);
         [self.headerButton addTarget:self action:@selector(updateAnimalsData) forControlEvents:UIControlEventTouchUpInside];
@@ -382,11 +362,6 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Exhibit" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
     [fetchRequest setEntity:entity];
-    
-    if (![Helper isLion]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"free = %@",@YES];
-        [fetchRequest setPredicate:predicate];
-    }
     
     // Set the batch size to a suitable number.
     //[fetchRequest setFetchBatchSize:20];

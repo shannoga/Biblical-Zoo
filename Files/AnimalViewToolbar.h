@@ -15,6 +15,6 @@
 @interface AnimalViewToolbar : UIToolbar
 
 - (id)initWithFrame:(CGRect)frame withAudioGuide:(BOOL)hasAudioGuide withDisTributaionMap:(BOOL)hasMap withZooDescription:(BOOL)hasZooDescription isGeneralExhibitDescription:(BOOL)isGeneralExhibitDescription;
-@property (nonatomic,weak) id<AnimalViewToolbarDelegate> delegate;
+@property (nonatomic,assign) __unsafe_unretained id<AnimalViewToolbarDelegate> delegate;
 
 @end

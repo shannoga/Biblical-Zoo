@@ -10,7 +10,7 @@
 
 @interface AnimalTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) Animal *animal;
+@property (nonatomic, assign) __unsafe_unretained Animal *animal;
 @property (nonatomic, retain)  UILabel *nameLabel;
 @property (nonatomic, retain)  UIImageView *iconImageView;
 @property (nonatomic, retain)  UIImageView *auodioGuideIndicator;
