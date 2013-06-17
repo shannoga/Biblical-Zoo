@@ -92,7 +92,7 @@
     [super viewDidLoad];
     
     if(!self.map){
-     self.map = [[MKMapView alloc] initWithFrame:self.view.frame];
+     self.map = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.map.delegate = self;
     [self.view addSubview:self.map];
     }
