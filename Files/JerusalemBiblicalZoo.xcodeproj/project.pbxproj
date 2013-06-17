@@ -376,7 +376,6 @@
 		398F3D6016811056009FE911 /* SignForFreindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 398F3D6216811056009FE911 /* SignForFreindViewController.xib */; };
 		398F3D691681184F009FE911 /* SignForFriendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3D681681184C009FE911 /* SignForFriendView.m */; };
 		39A39B86169724C500B37A06 /* MapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A39B85169724C500B37A06 /* MapAnnotationView.m */; };
-		39A51D8A16A333D100247B7C /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39A51D8916A333D100247B7C /* BugSense-iOS.framework */; };
 		39A77F6E16BD9EAA008A0A4A /* Opening-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A77F6816BD9EAA008A0A4A /* Opening-568h@2x.png */; };
 		39A77F6F16BD9EAA008A0A4A /* Opening.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A77F6A16BD9EAA008A0A4A /* Opening.png */; };
 		39A77F7016BD9EAA008A0A4A /* Opening@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A77F6C16BD9EAA008A0A4A /* Opening@2x.png */; };
@@ -1013,7 +1012,6 @@
 		398F3D681681184C009FE911 /* SignForFriendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignForFriendView.m; sourceTree = "<group>"; };
 		39A39B84169724C500B37A06 /* MapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotationView.h; sourceTree = "<group>"; };
 		39A39B85169724C500B37A06 /* MapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotationView.m; sourceTree = "<group>"; };
-		39A51D8916A333D100247B7C /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		39A77F6916BD9EAA008A0A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Opening-568h@2x.png"; sourceTree = "<group>"; };
 		39A77F6B16BD9EAA008A0A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/Opening.png; sourceTree = "<group>"; };
 		39A77F6D16BD9EAA008A0A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Opening@2x.png"; sourceTree = "<group>"; };
@@ -1411,7 +1409,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39A51D8A16A333D100247B7C /* BugSense-iOS.framework in Frameworks */,
 				394B348F16766D5B0021C507 /* AdSupport.framework in Frameworks */,
 				09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */,
 				394B348D16766D100021C507 /* libsqlite3.dylib in Frameworks */,
@@ -1455,7 +1452,6 @@
 				391DA98716AC955000D9012D /* AnimalSpecificQuestionsTableView.h */,
 				391DA98816AC955000D9012D /* AnimalSpecificQuestionsTableView.m */,
 				391DA98416AC779400D9012D /* UI Sounds */,
-				39A51D8916A333D100247B7C /* BugSense-iOS.framework */,
 				39FC1653169AF1A600E60F99 /* ZooInfoViewController.h */,
 				39FC1654169AF1A600E60F99 /* ZooInfoViewController.m */,
 				39CCD3AF169306E400CBD40A /* AnimalQuestionAnswerViewController.h */,
