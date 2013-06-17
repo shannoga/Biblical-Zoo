@@ -375,6 +375,7 @@
 		398F3D51167F7B1E009FE911 /* FunAnimalImageOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3D50167F7B1E009FE911 /* FunAnimalImageOverlayViewController.m */; };
 		398F3D6016811056009FE911 /* SignForFreindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 398F3D6216811056009FE911 /* SignForFreindViewController.xib */; };
 		398F3D691681184F009FE911 /* SignForFriendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3D681681184C009FE911 /* SignForFriendView.m */; };
+		399AA4BF176F9DCE00E63F7C /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399AA4BE176F9DCE00E63F7C /* BugSense-iOS.framework */; };
 		39A39B86169724C500B37A06 /* MapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A39B85169724C500B37A06 /* MapAnnotationView.m */; };
 		39A77F6E16BD9EAA008A0A4A /* Opening-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A77F6816BD9EAA008A0A4A /* Opening-568h@2x.png */; };
 		39A77F6F16BD9EAA008A0A4A /* Opening.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A77F6A16BD9EAA008A0A4A /* Opening.png */; };
@@ -1010,6 +1011,7 @@
 		398F3D6316811061009FE911 /* he */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = he; path = he.lproj/SignForFreindViewController.xib; sourceTree = "<group>"; };
 		398F3D671681184A009FE911 /* SignForFriendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignForFriendView.h; sourceTree = "<group>"; };
 		398F3D681681184C009FE911 /* SignForFriendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignForFriendView.m; sourceTree = "<group>"; };
+		399AA4BE176F9DCE00E63F7C /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		39A39B84169724C500B37A06 /* MapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotationView.h; sourceTree = "<group>"; };
 		39A39B85169724C500B37A06 /* MapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotationView.m; sourceTree = "<group>"; };
 		39A77F6916BD9EAA008A0A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Opening-568h@2x.png"; sourceTree = "<group>"; };
@@ -1437,6 +1439,7 @@
 				09ABC07213A1D52D009C3FCF /* UIKit.framework in Frameworks */,
 				09ABC07413A1D52D009C3FCF /* Foundation.framework in Frameworks */,
 				39ABDF0616772BA800025349 /* Parse.framework in Frameworks */,
+				399AA4BF176F9DCE00E63F7C /* BugSense-iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,6 +1598,7 @@
 		09ABC07013A1D52D009C3FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				399AA4BE176F9DCE00E63F7C /* BugSense-iOS.framework */,
 				394B348E16766D5B0021C507 /* AdSupport.framework */,
 				394B348C16766D100021C507 /* libsqlite3.dylib */,
 				394B348A16766CC10021C507 /* StoreKit.framework */,
