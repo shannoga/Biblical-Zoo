@@ -16,12 +16,12 @@
 #import "CGICalendar.h"
 
 @interface EventsTableViewController ()
-// -(void)beginFetchingEventsFromCalendar:(GDataEntryCalendar *)calendar;
+    @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+    @property (nonatomic,strong) NSArray *calendarsUrls;
+@property (nonatomic) BOOL hasHud;
 @end
 
 @implementation EventsTableViewController
-@synthesize fetchedResultsController =__fetchedResultsController;
-@synthesize calendarsUrls;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -43,6 +43,7 @@
          @"https://www.google.com/calendar/ical/36f9lqe80tg3f23peaid7m4asc%40group.calendar.google.com/public/basic.ics",
          @"https://www.google.com/calendar/ical/k2nk1v47vt0dk8l0pkufdigrug%40group.calendar.google.com/public/basic.ics",
          @"https://www.google.com/calendar/ical/biblicalzoo%40gmail.com/public/basic.ics",
+       //  @"https://www.google.com/calendar/ical/f6n87hn6hl1977tp7f66tbr39c%40group.calendar.google.com/public/basic.ics",//test
          @"https://www.google.com/calendar/ical/eh8h86b49r6hjp9nc31orrjpb8%40group.calendar.google.com/public/basic.ics"//lion
          ];
          
@@ -100,33 +101,22 @@
                                CGICalendar *ical = [[CGICalendar alloc] init];
                                if ([ical parseWithString:str error:&error]) {
                                    if(!error){
-                                       NSInteger counter = 0;
                                        for (CGICalendarObject *icalObj in [ical objects]) {
-                                           counter++;
                                            NSString *name = [[icalObj propertyForName:@"X-WR-CALNAME"] value];
-                                           if (![name isEqualToString:@"Lion rank"]) {
+                                           if (![[name lowercaseString] isEqualToString:@"lion rank"]) {
                                                [Event parseEventsFromArray:[icalObj events] forClendarName:name completion:^(BOOL finished) {
-                                                   updateLoopCounter++;
-                                                   
+                                                   completion(YES);
                                                }];
                                            }else{
                                                [Madad parseMadadsFromArray:[icalObj events] completion:^(BOOL finished) {
-                                                   updateLoopCounter++;
-                                                   
-                                                 
+                                                   completion(YES);
                                                }];
-                                           }
-                                           if(updateLoopCounter==[calendarsUrls count]){
-                                              completion(YES);
                                            }
                                        }
                                        
                                    }else{
                                        NSLog(@"error = %@",[error description]);
-                                       updateLoopCounter++;
-                                       if(updateLoopCounter==[calendarsUrls count]){
-                                           completion(YES);
-                                       }
+                                        completion(YES);
                                    }
                                }else{
                                    NSLog(@"Problem getting ICS files");
@@ -146,23 +136,19 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
     self.tableView.scrollEnabled =NO;
-    shouldUpdateUI=NO;
     [Event truncateAll];
     [[NSManagedObjectContext defaultContext] saveNestedContexts];
-    
-    
-    refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
-    refreshHUD.delegate = self;
-    refreshHUD.labelText = @"Loading Events";
-    [self.view addSubview:refreshHUD];
-    [refreshHUD show:YES];
-    
-     [calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+     [self.calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
          NSURL *url = [NSURL URLWithString:obj];
          [self createEventsFromUrl:url completion:^(BOOL finished) {
+             if ([refreshHUD isHidden]) {
+                 [self showHud];
+             }
+             
              if (finished)
              {
-              [self updateUI];   
+                 [[NSManagedObjectContext defaultContext] saveNestedContexts];
              }
              else
              {
@@ -171,6 +157,7 @@
              }
          }];
      }];
+    
     
     
 }
@@ -361,8 +348,8 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (__fetchedResultsController != nil) {
-        return __fetchedResultsController;
+    if (_fetchedResultsController!= nil) {
+        return _fetchedResultsController;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -395,7 +382,7 @@
 	    abort();
 	}
     
-    return __fetchedResultsController;
+    return _fetchedResultsController;
 }    
 
 
@@ -485,7 +472,7 @@
     shouldUpdateUI=YES;
     // In the simplest, most efficient, case, reload the table view.
     [[NSManagedObjectContext defaultContext] saveNestedContexts];
-    updateLoopCounter = 1;
+    updateLoopCounter = 0;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:[NSDate date] forKey:@"lastCalendarUpdateDate"];
     self.tableView.scrollEnabled =YES;
@@ -495,13 +482,19 @@
 }
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
 
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    NSLog(@"");
+}
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if (shouldUpdateUI) {
+   // if (shouldUpdateUI) {
         [[NSManagedObjectContext defaultContext] saveNestedContexts];
          [self.tableView reloadData];
         [refreshHUD hide:YES];
-    }
+       self.tableView.scrollEnabled =YES;
+     self.navigationItem.rightBarButtonItem.enabled = YES;
+  //  }
 
     
 }

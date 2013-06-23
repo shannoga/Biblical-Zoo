@@ -74,13 +74,12 @@
         event.typeString = cleanedCalendarName;
         event.type = [NSNumber numberWithInt:[Event eventTypeFromString:cleanedCalendarName]];
     
-   // [[NSManagedObjectContext defaultContext] saveNestedContexts];
-
 }
 
 +(void)parseEventsFromArray:(NSArray*)events forClendarName:(NSString*)calendarName completion:(void (^)(BOOL finished))completion{
-
+    NSInteger counter =0;
     for (CGICalendarComponent *eventComp in events) {
+       
         NSDate * sDate = [self dateFromICSString:[[eventComp propertyForName:START_DATE] value]];
         
         if ([eventComp isEvent] && sDate) {
@@ -88,10 +87,10 @@
            
             if(repeat!=NULL){
                 NSDictionary *dic = [self repeatDictionaryFromString:repeat];
-                NSArray *datesArray = [self repeatEventsDatesArrayWithDictionary:dic];
-                NSArray *filteredDates = [self removeOldDatesFromArray:datesArray];
+                NSArray *datesArray = [self repeatEventsDatesArrayWithDictionary:dic startDate:sDate];
+              //  NSArray *filteredDates = [self removeOldDatesFromArray:datesArray];
                 
-                for (NSDate *date in filteredDates) {
+                for (NSDate *date in datesArray) {
                     [self createEvent:eventComp calendarName:calendarName startDate:date isReapeater:YES];
                 }
             }else{
@@ -102,11 +101,14 @@
             
             }
         }
+         
+        if (counter == [events count]) {
+            completion(YES);
+        }
+        counter ++;
     }
-   
-    BOOL finished = YES;
-    if (completion) {
-        completion(finished);
+    if ([events count]==0) {
+        completion(YES);
     }
 }
 
@@ -124,26 +126,42 @@
     
 }
 
-+(NSArray*)repeatEventsDatesArrayWithDictionary:(NSDictionary*)dic{
++(NSArray*)repeatEventsDatesArrayWithDictionary:(NSDictionary*)dic startDate:(NSDate*)date{
     NSMutableArray *allDatesForReapeter = [NSMutableArray array];
     
     NSString *reapetFreq = dic[REAPET_FREQ];
     NSString *reapetDays = dic[REAPET_DAYES];
     NSDate * repeatEndDate = [self dateFromICSString:dic[REAPET_UNTIL]];
-    NSLog(@"dic = %@",dic);
     NSInteger count = [dic[REPEAT_COUNT] integerValue];
+    count = [dic[REPEAT_COUNT] integerValue];
+    
     //gat all the first days to reapet
-    NSArray *starterDates = [self reapeterStarterDates:reapetDays];
     
     //add the first dates to the array
     
     if ([reapetFreq isEqualToString:@"WEEKLY"]) {
+        NSArray *starterDates = [self reapeterStarterDates:reapetDays];
+
         for (NSDate *date in starterDates) {
-            NSArray * datesSet = [self datesSetForWeeklyRepeaterWithStartDate:date ReapetCount:count];
+            NSArray * datesSet;
+            if (repeatEndDate) {
+                datesSet = [self datesSetForWeeklyRepeaterWithStartDate:date endDate:repeatEndDate];
+            }else{
+                datesSet = [self datesSetForWeeklyRepeaterWithStartDate:date ReapetCount:count];
+            }
+          
             [allDatesForReapeter addObjectsFromArray:datesSet];
         }
     }else if([reapetFreq isEqualToString:@"DAILY"]){
+        NSLog(@"");
+        NSArray * datesSet;
+        if (repeatEndDate) {
+            datesSet = [self datesSetForDailyRepeaterWithStartDate:date endDate:repeatEndDate];
+        }else{
+            datesSet = [self datesSetForDailyRepeaterWithStartDate:date ReapetCount:count];
+        }
         
+        [allDatesForReapeter addObjectsFromArray:datesSet];
     }
     return [NSArray arrayWithArray:allDatesForReapeter];
 }
@@ -160,13 +178,59 @@
     }
     return [NSArray arrayWithArray:repeaterStartDayes];
 }
++(NSArray*)datesSetForDailyRepeaterWithStartDate:(NSDate*)startDate ReapetCount:(NSInteger)count{
+    
+    NSMutableArray *datesArray = [@[startDate]mutableCopy];
+    NSDate *futureDate=nil;
+    for (NSInteger i=0; i<count-1; i++) {
+        futureDate = [startDate dateByAddingDays:(i+1)];
+        if([futureDate isLaterThanDate:[NSDate date]] || [futureDate isToday])
+        {
+            [datesArray addObject:futureDate];
+        }
+    }
+    return [NSArray arrayWithArray:datesArray];
+}
++(NSArray*)datesSetForDailyRepeaterWithStartDate:(NSDate*)startDate endDate:(NSDate*)endDate{
+    endDate = [endDate dateByAddingDays:1];
+    NSMutableArray *datesArray = [@[startDate]mutableCopy];
+    NSDate *futureDate=startDate;
+    NSUInteger i = 0;
+    while ([futureDate isEarlierThanDate:endDate]) {
+        futureDate = [startDate dateByAddingDays:(i+1)];
+        if(([futureDate isLaterThanDate:[NSDate date]] || [futureDate isToday]) && [futureDate isEarlierThanDate:endDate])
+        {
+            [datesArray addObject:futureDate];
+        }
+        i++;
+    }
+    return [NSArray arrayWithArray:datesArray];
+}
 +(NSArray*)datesSetForWeeklyRepeaterWithStartDate:(NSDate*)startDate ReapetCount:(NSInteger)count{
 
     NSMutableArray *datesArray = [@[startDate]mutableCopy];
     NSDate *futureDate=nil;
     for (NSInteger i=0; i<count-1; i++) {
         futureDate = [startDate dateByAddingDays:(i+1)*7];
-        [datesArray addObject:futureDate];
+        if([futureDate isLaterThanDate:[NSDate date]] || [futureDate isToday])
+        {
+            [datesArray addObject:futureDate];
+        }
+    }
+    return [NSArray arrayWithArray:datesArray];
+}
++(NSArray*)datesSetForWeeklyRepeaterWithStartDate:(NSDate*)startDate endDate:(NSDate*)endDate{
+    endDate = [endDate dateByAddingDays:1];
+    NSMutableArray *datesArray = [@[startDate]mutableCopy];
+    NSDate *futureDate=startDate;
+    NSUInteger i = 0;
+    while ([futureDate isEarlierThanDate:endDate]) {
+        futureDate = [startDate dateByAddingDays:(i+1)*7];
+        if(([futureDate isLaterThanDate:[NSDate date]] || [futureDate isToday]) && [futureDate isEarlierThanDate:endDate])
+        {
+            [datesArray addObject:futureDate];
+        }
+        i++;
     }
     return [NSArray arrayWithArray:datesArray];
 }
@@ -183,7 +247,6 @@
         repaetDictionary[keyVal[0]] = keyVal[1];
         }
     }
-   // NSLog(@"repaetDictionary = %@",repaetDictionary);
     return [NSDictionary dictionaryWithDictionary:repaetDictionary];
 }
 

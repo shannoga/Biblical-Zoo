@@ -15,12 +15,10 @@
     NSString *calendarName;
     NSUInteger fetchCounter;
     MBProgressHUD *refreshHUD;
-    NSArray * calendarsUrls;
     NSInteger updateLoopCounter;
     BOOL shouldUpdateUI;
 }
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic,retain) NSArray *calendarsUrls;
+
 -(void)updateCalendar;
 @end
