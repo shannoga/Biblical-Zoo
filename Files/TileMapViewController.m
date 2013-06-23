@@ -125,7 +125,7 @@
     visibleRect.origin.x += visibleRect.size.width/1.5;
     visibleRect.origin.y += visibleRect.size.height/2.2;
     self.map.visibleMapRect = visibleRect;
-    
+    self.map.centerCoordinate = CLLocationCoordinate2DMake(31.740531,35.165652);
     if([CLLocationManager locationServicesEnabled]){
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
@@ -396,7 +396,10 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation: (MKUserLocation *)userLocation
 {
-    //mapView.centerCoordinate = userLocation.location.coordinate;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      //  mapView.centerCoordinate = userLocation.location.coordinate;
+    });
 } 
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated

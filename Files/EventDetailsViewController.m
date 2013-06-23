@@ -7,7 +7,7 @@
 //
 
 #import "EventDetailsViewController.h"
-
+#import <BugSense-iOS/BugSenseController.h>
 @interface EventDetailsViewController ()
 
 @end

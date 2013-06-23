@@ -74,8 +74,6 @@
     Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     
     if([reach isReachable]){
-     
-
         [self fetchAllCalendars];
     
     }else{
@@ -92,7 +90,7 @@
     return 70;
 }
 
--(void)createEventsFromUrl:(NSURL*)url{
+-(void)createEventsFromUrl:(NSURL*)url completion:(void (^)(BOOL finished))completion{
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -114,21 +112,25 @@
                                            }else{
                                                [Madad parseMadadsFromArray:[icalObj events] completion:^(BOOL finished) {
                                                    updateLoopCounter++;
+                                                   
                                                  
                                                }];
                                            }
                                            if(updateLoopCounter==[calendarsUrls count]){
-                                              [self updateUI];
+                                              completion(YES);
                                            }
                                        }
                                        
                                    }else{
                                        NSLog(@"error = %@",[error description]);
-                                       
-                                       
+                                       updateLoopCounter++;
+                                       if(updateLoopCounter==[calendarsUrls count]){
+                                           completion(YES);
+                                       }
                                    }
                                }else{
                                    NSLog(@"Problem getting ICS files");
+                                   completion(NO);
                                }
                                
                            }];
@@ -157,7 +159,17 @@
     
      [calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
          NSURL *url = [NSURL URLWithString:obj];
-         [self createEventsFromUrl:url];
+         [self createEventsFromUrl:url completion:^(BOOL finished) {
+             if (finished)
+             {
+              [self updateUI];   
+             }
+             else
+             {
+                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Update failed", nil) message:NSLocalizedString(@"Please try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
+                 [alertView show];
+             }
+         }];
      }];
     
     
