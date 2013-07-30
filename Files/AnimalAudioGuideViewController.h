@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Animal.h"
-@interface AnimalAudioGuideView : UIView <AVAudioPlayerDelegate,AVAudioSessionDelegate>{
+@interface AnimalAudioGuideViewController : UIViewController <AVAudioPlayerDelegate,AVAudioSessionDelegate>{
     UILabel *label;
     BOOL shouldResume;
     __unsafe_unretained Animal *animal;
@@ -23,5 +23,5 @@
 -(void)pause;
 -(void)stop;
 -(void)togglePlayPause;
-- (id)initWithFrame:(CGRect)frame withAniaml:(Animal*)anAnimal;
+- (id)initWithAniaml:(Animal*)anAnimal;
 @end

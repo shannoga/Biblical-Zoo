@@ -9,20 +9,20 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "Animal.h"
-#import "AnimalDataScrollView.h"
+#import "AnimalDataTabBarController.h"
 #import "AnimalViewToolbar.h"
 #import "TPKeyboardAvoidingScrollView.h"
 @class AnimalViewToolbar;
-@class AnimalDataScrollView;
+@class AnimalDataTabBarController;
 
-@interface AnimalViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate,AnimalViewToolbarDelegate>{
+@interface AnimalViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>{
     AnimalViewToolbar *toolbar;
     BOOL toolbarEnabeld;
 }
 
 @property (nonatomic,retain)  TPKeyboardAvoidingScrollView *scroolKeyboardView;
 @property (nonatomic,retain)  UIView *previosView;
-@property (nonatomic, strong)  AnimalDataScrollView *animalDataScrollView;
+@property (nonatomic, strong)  AnimalDataTabBarController *animalDataTabViewController;
 @property (nonatomic,retain)   Animal * animal;
 @property (nonatomic,retain)   UIScrollView * imagesScroll;
 

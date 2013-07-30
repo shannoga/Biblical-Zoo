@@ -127,7 +127,7 @@
     [self notifEditingEnd];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Tanks"]
-                                                    message:[Helper languageSelectedStringForKey:@"Post Suscess Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
+                                                    message:[Helper languageSelectedStringForKey:@"Post Suscess Massege"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
     [alert show];
     
 }

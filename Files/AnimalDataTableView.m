@@ -10,66 +10,90 @@
 #import "AnimalDataTableViewCell.h"
 #import "Animal.h"
 #import "Helper.h"
+#import "AnimalsImagesScrollView.h"
+
 @implementation AnimalDataTableView
 @synthesize animal;
 
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal
+- (id)initWithStyle:(UITableViewStyle)style withAnimal:(Animal*)anAnimal
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         self.animal = anAnimal;
-        /*****************************************/
-        /* sets the data to the data table view */
-        /*****************************************/
-        tableViewdata = [[NSMutableArray alloc] init];
-        
-        if ([animal.name length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Name"],animal.name]];
-        }
-        
-        if ([animal.verse length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the Bible"],animal.verse]];
-        }
-        if ([animal.bioClass length]>0) {
-            
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Class"],[Helper languageSelectedStringForKey:animal.bioClass]]];
-        }
-        if ([animal.family length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Family"],animal.family]];
-        }
-        if ([animal.binomialName length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Sientific Name"],animal.binomialName]];
-        }
-        if ([animal.conservationStatus length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Conservation Status"],[Helper languageSelectedStringForKey:animal.conservationStatus]]];
-        }
-        if ([animal.habitat length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Habitat"],animal.habitat]];
-        }
-        if ([animal.diet length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Diet"],animal.diet]];
-        }
-        if ([animal.socialStructure length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Social Structure"],animal.socialStructure]];
-        } 
-        if ([animal.zooItems length]>0) {
-            [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the zoo"],animal.zooItems]];
-        }
-        
        
-        //add atable view for the animal descrption
-        UITableView *dataTableView = [[UITableView alloc] initWithFrame:CGRectInset( self.bounds, 10, 10) style:UITableViewStylePlain];
-        dataTableView.delegate=self;
-        dataTableView.dataSource = self;
-        dataTableView.backgroundColor = UIColorFromRGB(0xf8eddf);
-        dataTableView.rowHeight = 60;
-        dataTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self addSubview:dataTableView];
-     
     }
     return self;
 }
 
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    /*****************************************/
+    /* sets the data to the data table view */
+    /*****************************************/
+    tableViewdata = [[NSMutableArray alloc] init];
+    
+    if ([animal.name length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Name"],animal.name]];
+    }
+    
+    if ([animal.verse length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the Bible"],animal.verse]];
+    }
+    if ([animal.bioClass length]>0) {
+        
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Class"],[Helper languageSelectedStringForKey:animal.bioClass]]];
+    }
+    if ([animal.family length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Family"],animal.family]];
+    }
+    if ([animal.binomialName length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Sientific Name"],animal.binomialName]];
+    }
+    if ([animal.conservationStatus length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Conservation Status"],[Helper languageSelectedStringForKey:animal.conservationStatus]]];
+    }
+    if ([animal.habitat length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Habitat"],animal.habitat]];
+    }
+    if ([animal.diet length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Diet"],animal.diet]];
+    }
+    if ([animal.socialStructure length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"Social Structure"],animal.socialStructure]];
+    }
+    if ([animal.zooItems length]>0) {
+        [tableViewdata addObject:@[[Helper languageSelectedStringForKey:@"In the zoo"],animal.zooItems]];
+    }
+    
+    
+    //add atable view for the animal descrption
+  
+    self.tableView.delegate=self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = UIColorFromRGB(0xf8eddf);
+    self.tableView.rowHeight = 60;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    AnimalsImagesScrollView *imagesScrollView;
+    
+    if(IS_IPHONE_5){
+        imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 28, 320, 190) withAnimal:self.animal];
+    }else{
+        imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 190) withAnimal:self.animal];
+    }
+    self.tableView.tableHeaderView = imagesScrollView;
+    
+    
+    //self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
+}
+
+- (void) viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = CGRectMake(0, 30, 320,400);
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

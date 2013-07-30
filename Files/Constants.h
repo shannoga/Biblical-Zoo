@@ -16,6 +16,17 @@ typedef enum EventTypes : NSUInteger{
     kEventTypeWorkShop
 }EventTypes;
 
+
+typedef enum ConservationStatus : NSUInteger {
+    ConEX,
+    ConEW,
+    ConCR,
+    ConEN,
+    ConVU,
+    ConNT,
+    ConLC
+} ConservationStatus;
+
 typedef enum Langs : NSUInteger{
     kEnglish,
     kHebrew

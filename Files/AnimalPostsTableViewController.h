@@ -1,14 +1,13 @@
 //
-//  AnimalQuestionsTableView.h
+//  AnimalPostsTableViewController.h
 //  JerusalemBiblicalZoo
 //
-//  Created by shani hajbi on 12/21/12.
+//  Created by shani hajbi on 7/30/13.
 //
 //
 
-#import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-@interface AnimalQuestionsTableView :PFQueryTableViewController <MBProgressHUDDelegate>{
+@interface AnimalPostsTableViewController : PFQueryTableViewController<MBProgressHUDDelegate>{
     MBProgressHUD *refreshHUD;
     BOOL askingQuestion;
 }
@@ -16,5 +15,5 @@
 @property (nonatomic, strong) UITextField *nameTF;
 @property (nonatomic, strong) UITextField *cityTF;
 @property (nonatomic, strong) UIView *fieldsView;
-- (id)initWithStyle:(UITableViewStyle)style forAnimal:(Animal*)animal;
+ - (id)initWithStyle:(UITableViewStyle)style forAnimal:(Animal*)anAnimal;
 @end

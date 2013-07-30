@@ -15,7 +15,7 @@
 #import "Reachability.h"
 #import "ZooInfoViewController.h"
 #import "SettingsViewController.h"
-
+#import "AnimalDataTabBarController.h"
 @interface ExhibitsViewController ()
 
 -(void)storeNewAnimalObjectsLocallyInContext:(NSManagedObjectContext*)moc updateOldEntities:(BOOL)update;
@@ -264,12 +264,10 @@
     [self updateHeaderView];
     NSArray *animals = [exhibit localAnimals];
     if ([animals count]==1) {
-        AnimalViewController *anialViewController = [[AnimalViewController alloc] init];
-        if(!IS_IPHONE_5){
-            self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-            self.navigationController.navigationBar.translucent =YES;
-        }
+        AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
+ 
         anialViewController.animal = [animals lastObject];
+        [anialViewController setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:anialViewController animated:YES];
         
     } else if([animals count]>1){
@@ -333,6 +331,15 @@
         }
         if (nearesrExhibit!=nil) {
             [self showExhibit:nearesrExhibit];
+        }else{
+            [self.headerButtonIconView.layer removeAllAnimations];
+            [self updateHeaderView];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"location services error title"]
+                                                            message:[Helper languageSelectedStringForKey:@"location services error body"]
+                                                           delegate:self
+                                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
         }
     }
 }

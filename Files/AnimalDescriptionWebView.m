@@ -8,6 +8,11 @@
 
 #import "AnimalDescriptionWebView.h"
 #import "Animal.h"
+#import "ConservationStatusDataView.h"
+
+@interface AnimalDescriptionWebView()
+@property (nonatomic,strong) Animal* animal;
+@end
 
 @implementation AnimalDescriptionWebView
 
@@ -26,48 +31,57 @@
 }
  */
 
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        
-        
-        //add UIWebView  for the animal main text
-        
-        NSString *dir = @"ltr";
-        NSString *langClass = @"";
-        if ([Helper appLang] == kHebrew) {
-            dir = @"rtl";
-            langClass = @"dirrtl";
-        }
-        UIWebView *descriptionView = [[UIWebView alloc] initWithFrame:self.bounds];
-      
-        descriptionView.backgroundColor = UIColorFromRGB(0xf8eddf);
-        descriptionView.opaque=YES;
-        descriptionView.delegate=self;
-     
-        
-        NSString *cssPath = [[NSBundle mainBundle] pathForResource:@"style" ofType:@"css"];
-        //do base url for css
-        NSString *path = [[NSBundle mainBundle] bundlePath];
-        NSURL *baseURL = [NSURL fileURLWithPath:path];
-        
-        NSString *html =[NSString stringWithFormat:@"<!DOCTYPE html><html lang=\"%@\" dir=\"%@\"><head><link rel=\"stylesheet\"  href=\"%@\" type=\"text/css\" /></head><body><section class=\"%@\">%@</section><br><br></body></html>",
-                         [Helper appLang] == kEnglish?@"en":@"he",dir,cssPath,langClass,anAnimal.generalDescription];
-         NSString *new = [html stringByReplacingOccurrencesOfString:@"\\"  withString:@""];  
-        
-        new = [new stringByReplacingOccurrencesOfString:@"u2013"  withString:@"-"];  
-       
-        [descriptionView loadHTMLString:new baseURL:baseURL];  
-    
-        [self addSubview:descriptionView];
-        
 
+- (id)initWithAnimal:(Animal*)anAnimal
+{
+    self = [super init];
+    if (self) {
+        self.animal = anAnimal;
     }
     return self;
 }
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Initialization code
+    ConservationStatusDataView *conStatus = [[ConservationStatusDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 80) withConservationStatus:self.animal.conservationStatus];
+    [self.view addSubview:conStatus];
+    
+    //add UIWebView  for the animal main text
+    
+    NSString *dir = @"ltr";
+    NSString *langClass = @"";
+    if ([Helper appLang] == kHebrew) {
+        dir = @"rtl";
+        langClass = @"dirrtl";
+    }
+    CGRect webRect = self.view.bounds;
+    webRect.origin.y = conStatus.frame.size.height;
+    webRect.size.height = CGRectGetHeight(self.view.bounds)-conStatus.frame.size.height;
+    UIWebView *descriptionView = [[UIWebView alloc] initWithFrame:webRect];
+    
+    descriptionView.backgroundColor = UIColorFromRGB(0xf8eddf);
+    descriptionView.opaque=YES;
+    descriptionView.delegate=self;
+    
+    
+    NSString *cssPath = [[NSBundle mainBundle] pathForResource:@"style" ofType:@"css"];
+    //do base url for css
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    
+    NSString *html =[NSString stringWithFormat:@"<!DOCTYPE html><html lang=\"%@\" dir=\"%@\"><head><link rel=\"stylesheet\"  href=\"%@\" type=\"text/css\" /></head><body><section class=\"%@\">%@</section><br><br></body></html>",
+                     [Helper appLang] == kEnglish?@"en":@"he",dir,cssPath,langClass,self.animal.generalDescription];
+    NSString *new = [html stringByReplacingOccurrencesOfString:@"\\"  withString:@""];
+    
+    new = [new stringByReplacingOccurrencesOfString:@"u2013"  withString:@"-"];
+    
+    [descriptionView loadHTMLString:new baseURL:baseURL];
+    
+    [self.view addSubview:descriptionView];
+    
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

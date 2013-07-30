@@ -65,7 +65,7 @@
 
 
 -(IBAction)openQuestions:(id)sender{
-    AnimalQuestionsTableView * animalQuestions = [[AnimalQuestionsTableView alloc] initWithStyle:UITableViewStylePlain];
+    AnimalQuestionsTableView * animalQuestions = [[AnimalQuestionsTableView alloc] initWithStyle:UITableViewStylePlain forAnimal:nil];
     [self.navigationController pushViewController:animalQuestions animated:YES];
 }
 

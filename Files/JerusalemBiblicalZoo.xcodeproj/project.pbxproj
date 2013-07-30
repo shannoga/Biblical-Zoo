@@ -371,6 +371,8 @@
 		398A1AFE1589C5CD005FBA99 /* event_special_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 398A1AE51589C5CD005FBA99 /* event_special_small@2x.png */; };
 		398A1B001589C5CD005FBA99 /* event_talk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 398A1AE71589C5CD005FBA99 /* event_talk@2x.png */; };
 		398A1B031589C5CD005FBA99 /* event_talk_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 398A1AEA1589C5CD005FBA99 /* event_talk_small@2x.png */; };
+		398C7B97177A303300ED5721 /* ConservationCircleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 398C7B96177A303300ED5721 /* ConservationCircleImage.m */; };
+		398C7B9A177A359400ED5721 /* ConservationStatusDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 398C7B99177A359400ED5721 /* ConservationStatusDataView.m */; };
 		398F3D4B167E3705009FE911 /* AnimalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3D4A167E3704009FE911 /* AnimalTableViewCell.m */; };
 		398F3D51167F7B1E009FE911 /* FunAnimalImageOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3D50167F7B1E009FE911 /* FunAnimalImageOverlayViewController.m */; };
 		398F3D6016811056009FE911 /* SignForFreindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 398F3D6216811056009FE911 /* SignForFreindViewController.xib */; };
@@ -543,8 +545,8 @@
 		39ABDF4A16772BE600025349 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0A16772BE600025349 /* AlbumViewController.m */; };
 		39ABDF4B16772BE600025349 /* AlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39ABDF0B16772BE600025349 /* AlbumViewController.xib */; };
 		39ABDF4C16772BE600025349 /* Animal.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0D16772BE600025349 /* Animal.m */; };
-		39ABDF4D16772BE600025349 /* AnimalAudioGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0F16772BE600025349 /* AnimalAudioGuideView.m */; };
-		39ABDF4E16772BE600025349 /* AnimalDataScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1116772BE600025349 /* AnimalDataScrollView.m */; };
+		39ABDF4D16772BE600025349 /* AnimalAudioGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0F16772BE600025349 /* AnimalAudioGuideViewController.m */; };
+		39ABDF4E16772BE600025349 /* AnimalDataTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1116772BE600025349 /* AnimalDataTabBarController.m */; };
 		39ABDF4F16772BE600025349 /* AnimalDataTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1316772BE600025349 /* AnimalDataTableView.m */; };
 		39ABDF5016772BE600025349 /* AnimalDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1516772BE600025349 /* AnimalDataTableViewCell.m */; };
 		39ABDF5116772BE600025349 /* AnimalDescriptionWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1716772BE600025349 /* AnimalDescriptionWebView.m */; };
@@ -596,6 +598,7 @@
 		39C4AAE416D64EA500EA8848 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39C4AAE616D64EA500EA8848 /* SettingsViewController.xib */; };
 		39C4DB5816C31EF700ACF55F /* events.png in Resources */ = {isa = PBXBuildFile; fileRef = 39C4DB5616C31EF700ACF55F /* events.png */; };
 		39C4DB5916C31EF700ACF55F /* events@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39C4DB5716C31EF700ACF55F /* events@2x.png */; };
+		39C7F4D217A77DAC00063A6F /* AnimalPostsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C7F4D117A77DAC00063A6F /* AnimalPostsTableViewController.m */; };
 		39CCD3B2169306E800CBD40A /* AnimalQuestionAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CCD3B0169306E400CBD40A /* AnimalQuestionAnswerViewController.m */; };
 		39CCD3BA169437EA00CBD40A /* FunViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39CCD3BC169437EA00CBD40A /* FunViewController.xib */; };
 		39ED9E831587AFB200C7D43D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39ED9E821587AFB200C7D43D /* MapKit.framework */; };
@@ -1003,6 +1006,10 @@
 		398A1AE51589C5CD005FBA99 /* event_special_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event_special_small@2x.png"; sourceTree = "<group>"; };
 		398A1AE71589C5CD005FBA99 /* event_talk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event_talk@2x.png"; sourceTree = "<group>"; };
 		398A1AEA1589C5CD005FBA99 /* event_talk_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event_talk_small@2x.png"; sourceTree = "<group>"; };
+		398C7B95177A303300ED5721 /* ConservationCircleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConservationCircleImage.h; sourceTree = "<group>"; };
+		398C7B96177A303300ED5721 /* ConservationCircleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConservationCircleImage.m; sourceTree = "<group>"; };
+		398C7B98177A359300ED5721 /* ConservationStatusDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConservationStatusDataView.h; sourceTree = "<group>"; };
+		398C7B99177A359400ED5721 /* ConservationStatusDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConservationStatusDataView.m; sourceTree = "<group>"; };
 		398F3D49167E3704009FE911 /* AnimalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalTableViewCell.h; sourceTree = "<group>"; };
 		398F3D4A167E3704009FE911 /* AnimalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalTableViewCell.m; sourceTree = "<group>"; };
 		398F3D4F167F7B1E009FE911 /* FunAnimalImageOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunAnimalImageOverlayViewController.h; sourceTree = "<group>"; };
@@ -1253,10 +1260,10 @@
 		39ABDF0B16772BE600025349 /* AlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumViewController.xib; sourceTree = SOURCE_ROOT; };
 		39ABDF0C16772BE600025349 /* Animal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animal.h; sourceTree = SOURCE_ROOT; };
 		39ABDF0D16772BE600025349 /* Animal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animal.m; sourceTree = SOURCE_ROOT; };
-		39ABDF0E16772BE600025349 /* AnimalAudioGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalAudioGuideView.h; sourceTree = SOURCE_ROOT; };
-		39ABDF0F16772BE600025349 /* AnimalAudioGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalAudioGuideView.m; sourceTree = SOURCE_ROOT; };
-		39ABDF1016772BE600025349 /* AnimalDataScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataScrollView.h; sourceTree = SOURCE_ROOT; };
-		39ABDF1116772BE600025349 /* AnimalDataScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataScrollView.m; sourceTree = SOURCE_ROOT; };
+		39ABDF0E16772BE600025349 /* AnimalAudioGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalAudioGuideViewController.h; sourceTree = SOURCE_ROOT; };
+		39ABDF0F16772BE600025349 /* AnimalAudioGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalAudioGuideViewController.m; sourceTree = SOURCE_ROOT; };
+		39ABDF1016772BE600025349 /* AnimalDataTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTabBarController.h; sourceTree = SOURCE_ROOT; };
+		39ABDF1116772BE600025349 /* AnimalDataTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTabBarController.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1216772BE600025349 /* AnimalDataTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTableView.h; sourceTree = SOURCE_ROOT; };
 		39ABDF1316772BE600025349 /* AnimalDataTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTableView.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1416772BE600025349 /* AnimalDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTableViewCell.h; sourceTree = SOURCE_ROOT; };
@@ -1348,6 +1355,8 @@
 		39C4AAE716D64EAC00EA8848 /* he */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = he; path = he.lproj/SettingsViewController.xib; sourceTree = "<group>"; };
 		39C4DB5616C31EF700ACF55F /* events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = events.png; sourceTree = "<group>"; };
 		39C4DB5716C31EF700ACF55F /* events@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "events@2x.png"; sourceTree = "<group>"; };
+		39C7F4D017A77DAC00063A6F /* AnimalPostsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalPostsTableViewController.h; sourceTree = "<group>"; };
+		39C7F4D117A77DAC00063A6F /* AnimalPostsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalPostsTableViewController.m; sourceTree = "<group>"; };
 		39CCD3AF169306E400CBD40A /* AnimalQuestionAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalQuestionAnswerViewController.h; sourceTree = "<group>"; };
 		39CCD3B0169306E400CBD40A /* AnimalQuestionAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalQuestionAnswerViewController.m; sourceTree = "<group>"; };
 		39CCD3BB169437EA00CBD40A /* he */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = he; path = he.lproj/FunViewController.xib; sourceTree = "<group>"; };
@@ -1475,10 +1484,12 @@
 				39ABDF0B16772BE600025349 /* AlbumViewController.xib */,
 				39ABDF0C16772BE600025349 /* Animal.h */,
 				39ABDF0D16772BE600025349 /* Animal.m */,
-				39ABDF0E16772BE600025349 /* AnimalAudioGuideView.h */,
-				39ABDF0F16772BE600025349 /* AnimalAudioGuideView.m */,
-				39ABDF1016772BE600025349 /* AnimalDataScrollView.h */,
-				39ABDF1116772BE600025349 /* AnimalDataScrollView.m */,
+				39ABDF0E16772BE600025349 /* AnimalAudioGuideViewController.h */,
+				39ABDF0F16772BE600025349 /* AnimalAudioGuideViewController.m */,
+				39ABDF1016772BE600025349 /* AnimalDataTabBarController.h */,
+				39ABDF1116772BE600025349 /* AnimalDataTabBarController.m */,
+				39C7F4D017A77DAC00063A6F /* AnimalPostsTableViewController.h */,
+				39C7F4D117A77DAC00063A6F /* AnimalPostsTableViewController.m */,
 				39650F6116845DF5008EA096 /* AnimalQuestionsTableView.h */,
 				39650F6216845DF5008EA096 /* AnimalQuestionsTableView.m */,
 				39ABDF1216772BE600025349 /* AnimalDataTableView.h */,
@@ -1508,6 +1519,10 @@
 				39ABDF2E16772BE600025349 /* CapturedImageViewController.m */,
 				39ABDF2F16772BE600025349 /* ConservasionStatusIndicator.h */,
 				39ABDF3016772BE600025349 /* ConservasionStatusIndicator.m */,
+				398C7B95177A303300ED5721 /* ConservationCircleImage.h */,
+				398C7B96177A303300ED5721 /* ConservationCircleImage.m */,
+				398C7B98177A359300ED5721 /* ConservationStatusDataView.h */,
+				398C7B99177A359400ED5721 /* ConservationStatusDataView.m */,
 				39ABDF3116772BE600025349 /* Constants.h */,
 				39ABDF3216772BE600025349 /* Event.h */,
 				39ABDF3316772BE600025349 /* Event.m */,
@@ -2944,8 +2959,8 @@
 				39ABDF0816772BA800025349 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				39ABDF4A16772BE600025349 /* AlbumViewController.m in Sources */,
 				39ABDF4C16772BE600025349 /* Animal.m in Sources */,
-				39ABDF4D16772BE600025349 /* AnimalAudioGuideView.m in Sources */,
-				39ABDF4E16772BE600025349 /* AnimalDataScrollView.m in Sources */,
+				39ABDF4D16772BE600025349 /* AnimalAudioGuideViewController.m in Sources */,
+				39ABDF4E16772BE600025349 /* AnimalDataTabBarController.m in Sources */,
 				39ABDF4F16772BE600025349 /* AnimalDataTableView.m in Sources */,
 				39ABDF5016772BE600025349 /* AnimalDataTableViewCell.m in Sources */,
 				39ABDF5116772BE600025349 /* AnimalDescriptionWebView.m in Sources */,
@@ -2999,6 +3014,9 @@
 				391DA98916AC955000D9012D /* AnimalSpecificQuestionsTableView.m in Sources */,
 				39A7850F16BEA8BA008A0A4A /* SignForFriendView_HalfSize.m in Sources */,
 				39C4AAE216D552CD00EA8848 /* SettingsViewController.m in Sources */,
+				398C7B97177A303300ED5721 /* ConservationCircleImage.m in Sources */,
+				398C7B9A177A359400ED5721 /* ConservationStatusDataView.m in Sources */,
+				39C7F4D217A77DAC00063A6F /* AnimalPostsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3394,8 +3412,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: shani hajbi";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shani hajbi";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3414,8 +3432,8 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = JerusalemBiblicalZoo;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "BF020E70-7A57-4E38-B055-DA06B4DF97B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BF020E70-7A57-4E38-B055-DA06B4DF97B6";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;

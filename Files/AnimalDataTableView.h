@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Animal.h"
-@interface AnimalDataTableView : UIView <UITableViewDataSource,UITableViewDelegate>{
+@interface AnimalDataTableView : UITableViewController{
     NSMutableArray *tableViewdata;
    
 }
 @property (nonatomic,assign) Animal *animal;
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal;
+- (id)initWithStyle:(UITableViewStyle)style withAnimal:(Animal*)anAnimal;
 @end

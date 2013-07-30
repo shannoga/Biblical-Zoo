@@ -213,7 +213,7 @@
                                           reuseIdentifier:CellIdentifier];
     }
     PFObject *object = [self.tableViewdata objectAtIndex:indexPath.row];
-    [cell setQuestion:object atIndex:indexPath.row];
+     [cell setObject:object atIndex:indexPath.row isQuestion:YES];
     
     
     return cell;

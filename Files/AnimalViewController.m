@@ -8,7 +8,7 @@
 
 #import "AnimalViewController.h"
 #import "AnimalsImagesScrollView.h"
-#import "AnimalDataScrollView.h"
+#import "AnimalDataTabBarController.h"
 #import "ConservasionStatusIndicator.h"
 #import "AnimalViewToolbar.h"
 #import "TPKeyboardAvoidingScrollView.h"
@@ -37,7 +37,7 @@
 @synthesize mapBtn;
 @synthesize mediaBtn;
 @synthesize animal;
-@synthesize animalDataScrollView;
+@synthesize animalDataTabViewController;
 @synthesize fullscreen = _fullscreen;
 @synthesize scroolKeyboardView;
 @synthesize previosView;
@@ -71,24 +71,24 @@
 }
 
 - (void)toggleFullscreen {
-     if(!IS_IPHONE_5){
-        _fullscreen = !_fullscreen;
-        if (_fullscreen) { 
-            
-            [self.navigationController setNavigationBarHidden:YES animated:YES];
-        } else {
-          
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
-        }
-     }
+//     if(!IS_IPHONE_5){
+//        _fullscreen = !_fullscreen;
+//        if (_fullscreen) { 
+//            
+//            [self.navigationController setNavigationBarHidden:YES animated:YES];
+//        } else {
+//          
+//            [self.navigationController setNavigationBarHidden:NO animated:YES];
+//        }
+//     }
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if(!IS_IPHONE_5){
-    self.navigationController.navigationBar.translucent =YES;
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+   // self.navigationController.navigationBar.translucent =YES;
+   // [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
     [self performSelector:@selector(toggleFullscreen) withObject:nil afterDelay:.5];
     
@@ -103,7 +103,7 @@
     [super viewWillDisappear:animated];
     
     //End recieving events
-     [self.animalDataScrollView stop];
+     [self.animalDataTabViewController stop];
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
 }
@@ -118,11 +118,11 @@
     //if it is a remote control event handle it correctly
     if (event.type == UIEventTypeRemoteControl) {
         if (event.subtype == UIEventSubtypeRemoteControlPlay) {
-            [self.animalDataScrollView play];
+            [self.animalDataTabViewController play];
         } else if (event.subtype == UIEventSubtypeRemoteControlPause) {
-            [self.animalDataScrollView pause];
+            [self.animalDataTabViewController pause];
         } else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause) {
-            [self.animalDataScrollView togglePlayPause];
+            [self.animalDataTabViewController togglePlayPause];
         }
     }
 }
@@ -138,13 +138,6 @@
     }
 }
 
--(void)userTappedOnbuttonWithIndex:(NSUInteger)index{
-    
-    [self.animalDataScrollView setContentOffset:CGPointMake(320*index, 0) animated:YES];
-    if(index==4){
-        [self.animalDataScrollView getAnimalPosts];
-    }
-}
 
 
 - (void)viewDidLoad
@@ -161,48 +154,19 @@
     if(IS_IPHONE_5){
      consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 26)];
     }else{
-     consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+     consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 20)];
     }
     [consInd setAnimal:self.animal];
     [scroolKeyboardView addSubview:consInd];
     
     
-    AnimalsImagesScrollView *imagesScrollView;
-    if(IS_IPHONE_5){
-        imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 28, 320, 190) withAnimal:self.animal];
-    }else{
-        imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 190) withAnimal:self.animal];
-    }
-    [scroolKeyboardView addSubview:imagesScrollView];
+  
 	
-      if(IS_IPHONE_5){
-          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 218, 320, 240) withAnimal:self.animal withParentController:self];
-                                                    
-      }else{
-          self.animalDataScrollView = [[AnimalDataScrollView alloc] initWithFrame:CGRectMake(0, 210, 320, 220) withAnimal:self.animal withParentController:self];
-      }
-    self.animalDataScrollView.scrollsToTop = NO;
-    self.animalDataScrollView.scrollEnabled =NO;
-    self.animalDataScrollView.delegate = self;
-    [scroolKeyboardView addSubview:animalDataScrollView];
-    
- 
-     if(!IS_IPHONE_5){
-         toolbar = [[AnimalViewToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-30, 320, 30) withAudioGuide:[[self.animal audioGuide] boolValue] withDisTributaionMap:NO withZooDescription:NO isGeneralExhibitDescription:[[self.animal generalExhibitDescription] boolValue]];
-     }else{
-        toolbar = [[AnimalViewToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-88, 320, 44) withAudioGuide:[[self.animal audioGuide] boolValue] withDisTributaionMap:NO withZooDescription:NO isGeneralExhibitDescription:[[self.animal generalExhibitDescription] boolValue]];
-     }
-    toolbar.delegate = self;
-    [toolbar becomeFirstResponder];
-    [scroolKeyboardView addSubview:toolbar];
-    
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleFullscreenWithTimer)];
-    tapRecognizer.delegate = self;
-    [scroolKeyboardView addGestureRecognizer:tapRecognizer];
-    
-    if ([[self.animal generalExhibitDescription] boolValue]) {
-        [self userTappedOnbuttonWithIndex:1];
-    }
+
+    self.animalDataTabViewController = [[AnimalDataTabBarController alloc] init];
+    [self.view addSubview:self.animalDataTabViewController.view];
+
+  
     if (!IS_IPHONE_5) {
         UIButton * mapButton = [[UIButton alloc] initWithFrame:CGRectMake(280, 170, 30, 30)];
         [mapButton setImage:[UIImage imageNamed:@"088-Map_brown_bg@2x.png"]  forState:UIControlStateNormal];
@@ -234,11 +198,11 @@
     }
     return YES;
 }
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
      [[NSNotificationCenter defaultCenter] removeObserver:self];
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

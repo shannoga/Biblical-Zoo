@@ -1,5 +1,5 @@
 //
-//  AnimalDataScrollView.h
+//  AnimalDataTabBarController.h
 //  ParseStarterProject
 //
 //  Created by shani hajbi on 6/22/12.
@@ -8,21 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "Animal.h"
-#import "AnimalAudioGuideView.h"
+#import "AnimalAudioGuideViewController.h"
 
 #import "AnimalViewController.h"
 
 @class AnimalViewController,AnimalPostView;
 
-@interface AnimalDataScrollView : UIScrollView {
+@interface AnimalDataTabBarController : UITabBarController {
     NSArray *tableViewdata;
    
 }
 @property (nonatomic, retain) AnimalViewController *parentController;
 @property (nonatomic, assign) __unsafe_unretained Animal *animal;
-@property (nonatomic, strong) AnimalAudioGuideView *audioGuide;
+@property (nonatomic, strong) AnimalAudioGuideViewController *audioGuide;
 @property (nonatomic, retain)  AnimalPostView *postView;
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal withParentController:(AnimalViewController *)animalController;
+- (id)initWithAnimal:(Animal*)anAnimal;
 -(void)play;
 -(void)pause;
 -(void)stop;

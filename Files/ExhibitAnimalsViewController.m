@@ -145,8 +145,8 @@
     if(animal){
     AnimalViewController *animalViewController = [[AnimalViewController alloc] init];
         if(!IS_IPHONE_5){
-            self.navigationController.navigationBar.tintColor = nil;
-            self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+           // self.navigationController.navigationBar.tintColor = nil;
+           // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         }
     animalViewController.animal = animal;
     [self.navigationController pushViewController:animalViewController animated:YES];

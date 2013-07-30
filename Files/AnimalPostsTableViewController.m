@@ -1,19 +1,22 @@
 //
-//  AnimalQuestionsTableView.m
+//  AnimalPostsTableViewController.m
 //  JerusalemBiblicalZoo
 //
-//  Created by shani hajbi on 12/21/12.
+//  Created by shani hajbi on 7/30/13.
+//
 //
 
-#import "AnimalQuestionsTableView.h"
-#import "AnimalQuestionsCell.h"
+#import "AnimalPostsTableViewController.h"
 #import "Reachability.h"
-#import "AnimalQuestionAnswerViewController.h"
 #import "Animal.h"
-@interface AnimalQuestionsTableView ()
-  @property (nonatomic,strong) Animal *animal;
+#import "AnimalQuestionsCell.h"
+@interface AnimalPostsTableViewController ()
+    @property(nonatomic,strong) Animal *animal;
 @end
-@implementation AnimalQuestionsTableView
+
+@implementation AnimalPostsTableViewController
+
+
 @synthesize textView,nameTF,cityTF,fieldsView;
 
 - (id)initWithStyle:(UITableViewStyle)style forAnimal:(Animal*)anAnimal
@@ -24,12 +27,12 @@
         if(anAnimal!=nil){
             self.animal = anAnimal;
         }
-        self.title = [Helper languageSelectedStringForKey:@"Questions"];
+        self.title = [Helper languageSelectedStringForKey:@"Posts"];
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshObjects)];
         self.navigationItem.rightBarButtonItem = barItem;
         
         // The className to query on
-        self.className = @"AnimalQuestions";
+        self.className = @"AnimalPost";
         
         self.tableView.backgroundColor = UIColorFromRGB(0xabc9cb);
         
@@ -42,7 +45,7 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 6;
-       
+        
         askingQuestion = NO;
         
     }
@@ -67,20 +70,14 @@
 }
 
 - (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
     
-    // If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network.
-    if (self.objects.count == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
-    
-    [query orderByDescending:@"createdAt"];
-    if(self.animal!=nil){
-    [query whereKey:@"animal_en_name" equalTo:self.animal.nameEn];
-    }
-    NSString *key = [Helper appLang]==kHebrew? @"visible":@"visible_en";
-    [query whereKey:key equalTo:@YES];
+    PFQuery *query = [PFQuery queryWithClassName:@"AnimalPost"];
+    [query whereKey:@"visible" equalTo:@YES];
+    [query whereKey:@"animal_id" equalTo:self.animal.objectId];
+    [query orderByDescending:@"updatedAt"];
+    query.limit = 100;
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    return query;
     
     return query;
 }
@@ -102,7 +99,7 @@
     UIFont *font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
     UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     labelView.backgroundColor = UIColorFromRGB(0x8C9544);
-    labelView.text = [Helper languageSelectedStringForKey:@"Send a Question"];
+    labelView.text = [Helper languageSelectedStringForKey:@"Send Your post"];
     labelView.font = font;
     labelView.textAlignment = NSTextAlignmentCenter;
     labelView.textColor = [UIColor whiteColor];
@@ -111,7 +108,7 @@
     self.fieldsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 240)];
     self.fieldsView.backgroundColor = UIColorFromRGB(0x8C9544);
     self.fieldsView.alpha = 0;
-
+    
     self.textView = [[UITextView alloc] initWithFrame:CGRectMake(20, 10, 280, 100)];
     
     font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:14];
@@ -160,7 +157,7 @@
     [self.textView setInputAccessoryView:toolbar];
     [self.nameTF setInputAccessoryView:toolbar];
     [self.cityTF setInputAccessoryView:toolbar];
-   
+    
 }
 -(void)resignKeyboard {
     [self.textView resignFirstResponder];
@@ -183,35 +180,33 @@
         return;
     }
     
-    // Create the object.
-    PFObject *userQuestion = [PFObject objectWithClassName:@"AnimalQuestions"];
-    NSString *key = [Helper appLang]==kHebrew?@"question":@"question_en";
-    userQuestion[key] = self.textView.text;
-   
+    PFObject *userPost = [PFObject objectWithClassName:@"AnimalPost"];
+    userPost[@"text"] = self.textView.text;
+    if(self.animal.nameEn!=nil){
+        userPost[@"animalNameEn"] = self.animal.nameEn;
+    }
     NSString * userNameAndCity = [NSString stringWithFormat:@"%@, %@",self.nameTF.text,self.cityTF.text];
-    userQuestion[@"user_name"] = userNameAndCity;
-    userQuestion[@"visible"] = @NO;
+    userPost[@"user"] = userNameAndCity;
+    userPost[@"animal_id"] = self.animal.objectId;
+    userPost[@"visible"] = @YES;
     
-    [userQuestion saveEventually];
+    [userPost saveEventually];
     
-    
-    [self.textView setText:@""];
-    [self.nameTF setText:@""];
-    [self.cityTF setText:@""];
-    
-    
-    [self resignKeyboard];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Question Tanks"]
-                                                    message:[Helper languageSelectedStringForKey:@"Question Suscess Massege"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
+    [self.textView resignFirstResponder];
+    [self.cityTF resignFirstResponder];
+    [self.nameTF resignFirstResponder];
+     [self resignKeyboard];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Tanks"]
+                                                    message:[Helper languageSelectedStringForKey:@"Post Suscess Massege"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
     [alert show];
+
 }
 -(void)toggleQuestionFromView{
     if (askingQuestion) return;
     [self toggleQuestion];
 }
 -(void)toggleQuestion{
-  
+    
     [UIView animateWithDuration:1 animations:^{
         if (askingQuestion) {
             [self.tableView.tableHeaderView setFrame:CGRectMake(0, 0, 320, 60)];
@@ -226,13 +221,13 @@
             }
             [self.tableView.tableHeaderView setFrame:rect];
             [self.tableView.tableHeaderView addSubview:self.fieldsView];
-             self.fieldsView.alpha =1;
+            self.fieldsView.alpha =1;
             [self.textView becomeFirstResponder];
         }
         self.tableView.tableHeaderView.userInteractionEnabled = NO;
     } completion:^(BOOL finished) {
         NSLog(@"completed");
-         askingQuestion = !askingQuestion;
+        askingQuestion = !askingQuestion;
         self.tableView.tableHeaderView.userInteractionEnabled = YES;
     }];
 }
@@ -297,6 +292,7 @@
 }
 
 
+
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
 - (PFTableViewCell *)tableView:(UITableView *)tableView
@@ -308,10 +304,11 @@
     AnimalQuestionsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[AnimalQuestionsCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                               reuseIdentifier:CellIdentifier];
+                                          reuseIdentifier:CellIdentifier];
     }
     
-    [cell setObject:object atIndex:indexPath.row isQuestion:YES];
+    [cell setObject:object atIndex:indexPath.row isQuestion:NO];
+
     
     return cell;
 }
@@ -321,30 +318,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
-    if (indexPath.row < [self.objects count]) {
-        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
-        PFObject *questionObject = (self.objects)[indexPath.row];
-        AnimalQuestionAnswerViewController * answerController = [[AnimalQuestionAnswerViewController alloc] initWithNibName:@"AnimalQuestionAnswerViewController" bundle:[Helper localizationBundle]];
-        answerController.questionObject = questionObject;
-        [self.navigationController pushViewController:answerController animated:YES];
-    }else{
-        Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-        NSLog(@"reach  = %@",[reach isReachable]? @"YES":@"NO");
-        
-        if(![reach isReachable]){
-            
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:[Helper languageSelectedStringForKey:@"No Internet Connection"]
-                                  message:[Helper languageSelectedStringForKey:@"No Internet alert body"]
-                                  delegate:nil
-                                  cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"]
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-    }
-    
+       
 }
 
 
@@ -355,4 +329,6 @@
     [hud removeFromSuperview];
 	hud = nil;
 }
- @end
+@end
+
+

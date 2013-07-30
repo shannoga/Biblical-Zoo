@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AnimalDescriptionWebView : UIView<UIWebViewDelegate>
-- (id)initWithFrame:(CGRect)frame withAnimal:(Animal*)anAnimal;
+@interface AnimalDescriptionWebView : UIViewController<UIWebViewDelegate>
+- (id)initWithAnimal:(Animal*)anAnimal;
 @end

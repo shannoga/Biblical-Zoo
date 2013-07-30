@@ -24,7 +24,7 @@
     //set up parse
     [self setUpParse];
     //set the appearence of the app
-    [self setUpAppearence];
+    [self setUIAppearence];
     //start tracking user location
 #warning check for next realese 
     //[self startLocationServices];
@@ -246,7 +246,7 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 
 
--(void)setUpAppearence{
+-(void)setUIAppearence{
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];

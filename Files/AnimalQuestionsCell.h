@@ -14,6 +14,6 @@
 @property (nonatomic,strong) UILabel *labelView;
 @property (nonatomic,strong) UILabel *detailLableView;
 
-- (void)setQuestion:(PFObject *)aQuestion atIndex:(NSInteger)cellIndex;
+-(void)setObject:(PFObject *)anObject atIndex:(NSInteger)cellIndex isQuestion:(BOOL)isQuestion;
 
 @end

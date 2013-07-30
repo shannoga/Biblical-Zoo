@@ -90,9 +90,9 @@
 }
 
 
--(void)setQuestion:(PFObject *)aQuestion atIndex:(NSInteger)cellIndex{
-    if (aQuestion != questionObject) {
-        questionObject = aQuestion;
+-(void)setObject:(PFObject *)anObject atIndex:(NSInteger)cellIndex isQuestion:(BOOL)isQuestion{
+    if (anObject != questionObject) {
+        questionObject = anObject;
     }
     
     NSArray * cellColors = @[(id)[UIColorFromRGB(0xf8eddf) CGColor],
@@ -109,13 +109,20 @@
     gradientLayer_.colors =@[cellColors[index],
     cellColors[index++]];
    
-    NSString *key = [Helper appLang]==kHebrew? @"question":@"question_en";
-    NSString *title = questionObject[key];
-    NSString *subtitle = questionObject[@"user_name"];
-
-    self.labelView.text = title;
-    self.detailLableView.text =subtitle;
-
+    if(isQuestion)
+    {
+        NSString *key = [Helper appLang]==kHebrew? @"question":@"question_en";
+        NSString *title = questionObject[key];
+        NSString *subtitle = questionObject[@"user_name"];
+        self.labelView.text = title;
+        self.detailLableView.text =subtitle;
+    }else{
+        NSString *key = [Helper appLang]==kHebrew? @"text":@"text";
+        NSString *title = questionObject[key];
+        NSString *subtitle = questionObject[@"user"];
+        self.labelView.text = title;
+        self.detailLableView.text =subtitle;
+    }
     [self setNeedsDisplay];
 }
 
