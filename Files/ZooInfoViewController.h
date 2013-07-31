@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZooInfoViewController : UIViewController
+@interface ZooInfoViewController : UIViewController<UIWebViewDelegate,MBProgressHUDDelegate>{
+    MBProgressHUD *refreshHUD;
+}
 
 @end

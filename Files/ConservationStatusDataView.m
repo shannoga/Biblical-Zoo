@@ -20,7 +20,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColorFromRGB(0x3B2F24);
+        self.backgroundColor = UIColorFromRGB(0xf8eddf);
         CGFloat diameter = CGRectGetWidth(frame)/8;
         for (NSInteger i =0; i< NUMBER_OF_STATUSES; i++) {
             

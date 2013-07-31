@@ -34,16 +34,58 @@
     // e.g. self.myOutlet = nil;
 }
 
+-(void)updateOpeningHours
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Info"];
+    [query getObjectInBackgroundWithId:@"cCctIOxCg3" block:^(PFObject *openingHours, NSError *error) {
+        // Do something with the returned PFObject in the gameScore variable.
+        if(error){
+            NSLog(@"error = %@",[error description]);
+            return;
+        }
+        NSLog(@"openingHours %@", openingHours);
+        NSInteger opening = [openingHours[@"opening"] integerValue];
+        NSInteger closing = [openingHours[@"closing"] integerValue];
+        [[NSUserDefaults standardUserDefaults] setInteger:opening forKey:@"opening"];
+        [[NSUserDefaults standardUserDefaults] setInteger:closing forKey:@"closing"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self loadImage];
+
+    }];
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-  
+    [self updateOpeningHours];
+    
+    [self loadImage];
+    [self setButtonsPosition];
+}
+
+-(void)setButtonsPosition
+{
+    if (IS_IPHONE_5) {
+        self.directionsBtn.frame = CGRectOffset(self.directionsBtn.frame, 0, 60);
+        self.enterBtn.frame = CGRectOffset(self.enterBtn.frame, 0, 60);
+    }
+}
+-(void)loadImage{
     NSDate *currentDateTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH"];
     NSString *dateInStringFormated = [dateFormatter stringFromDate:currentDateTime];
-   
+    
+    NSInteger openingHour = [[NSUserDefaults standardUserDefaults] integerForKey:@"opening"];
+    NSInteger closingHour = [[NSUserDefaults standardUserDefaults] integerForKey:@"closing"];
+    
+    //setdefaultVal
+    if(openingHour==0){
+        openingHour = 9;
+        closingHour = 18;
+    }
+    
     NSInteger time = [dateInStringFormated intValue];
-    if (time >= 9 && time < 18) {
+    if (time >= openingHour && time < closingHour) {
         
         
         if ([Helper appLang]==kHebrew) {
@@ -61,7 +103,7 @@
                 
             }
         }
-   
+        
     }else{
         if ([Helper appLang]==kHebrew) {
             if (IS_IPHONE_5) {
@@ -79,14 +121,9 @@
             }
         }
     }
-
-    if (IS_IPHONE_5) {
-        self.directionsBtn.frame = CGRectOffset(self.directionsBtn.frame, 0, 60);
-        self.enterBtn.frame = CGRectOffset(self.enterBtn.frame, 0, 60);
-    }
-   // [self cloudScroll];
+    
+  
 }
-
 
 -(IBAction)showInfo:(id)sender{
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"waze://"]]) {

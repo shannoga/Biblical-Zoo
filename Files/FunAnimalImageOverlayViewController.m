@@ -506,7 +506,6 @@ finishedSavingWithError:(NSError *)error
         case 2:
             if (buttonIndex==1) {
                 
-                [[Helper appDelegate] buyFullApp:NO];
             }
             break;
             

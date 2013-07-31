@@ -32,16 +32,12 @@
         
         
         self.view.backgroundColor = UIColorFromRGB(0xf8eddf);
+        self.tabBar.backgroundColor = UIColorFromRGB(0xf8eddf);
         self.animal = anAnimal;
-        //conservation sataus ind
-        ConservasionStatusIndicator *consInd;
-        if(IS_IPHONE_5){
-            consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 26)];
-        }else{
-            consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 20)];
-        }
-        [consInd setAnimal:self.animal];
-        [self.view addSubview:consInd];
+       
+        UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"088-Map_white.png"] style:UIBarButtonItemStyleDone target:self action:@selector(showOnMap)];
+        
+        self.navigationItem.rightBarButtonItem = mapButton;
         
         
         
@@ -50,6 +46,8 @@
         /*****************************************/
         if(![anAnimal.generalExhibitDescription boolValue]){
             AnimalDataTableView *dataTableView = [[AnimalDataTableView alloc] initWithStyle:UITableViewStylePlain withAnimal:anAnimal];
+            dataTableView.title = [Helper languageSelectedStringForKey:@"In Short"];
+            dataTableView.tabBarItem.image =[UIImage imageNamed:@"data"];
             [self addChildViewController:dataTableView];
         }
         
@@ -58,6 +56,8 @@
         /*****************************************/
 
         AnimalDescriptionWebView *descriptionViewController = [[AnimalDescriptionWebView alloc] initWithAnimal:anAnimal];
+        descriptionViewController.title = [Helper languageSelectedStringForKey:@"More"];
+        descriptionViewController.tabBarItem.image =[UIImage imageNamed:@"description"];
         [self addChildViewController:descriptionViewController];
 
         
@@ -84,10 +84,14 @@
         [self addSubview:self.postView];
          */
         AnimalPostsTableViewController *animalPostsTableViewController = [[AnimalPostsTableViewController alloc] initWithStyle:UITableViewStylePlain forAnimal:anAnimal];
+        animalPostsTableViewController.title = [Helper languageSelectedStringForKey:@"Posts"];
+        animalPostsTableViewController.tabBarItem.image =[UIImage imageNamed:@"post"];
         [self addChildViewController:animalPostsTableViewController];
 
         
         AnimalQuestionsTableView * animalQuestions = [[AnimalQuestionsTableView alloc] initWithStyle:UITableViewStylePlain forAnimal:anAnimal];
+         animalQuestions.title = [Helper languageSelectedStringForKey:@"Q&A"];
+        animalQuestions.tabBarItem.image =[UIImage imageNamed:@"248-QuestionCircleAlt"];
         [self addChildViewController:animalQuestions];
 
         
@@ -96,6 +100,8 @@
         /*****************************************/
         if([anAnimal.audioGuide boolValue]){
             audioGuide = [[AnimalAudioGuideViewController alloc] initWithAniaml:anAnimal];
+            audioGuide.title = [Helper languageSelectedStringForKey:@"Audio Guide"];
+            audioGuide.tabBarItem.image =[UIImage imageNamed:@"audioGuide"];
             [self addChildViewController:audioGuide];
         }
         
@@ -104,6 +110,12 @@
     }
     return self;
 }
+
+-(void)showOnMap{
+    [Helper setCurrentExhibit:self.animal.exhibit];
+}
+
+
 -(void)getAnimalPosts{
     [self.postView getPosts:NO];
 }
@@ -121,7 +133,11 @@
      [self.audioGuide stop];
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self stop];
+}
 
 
 /*

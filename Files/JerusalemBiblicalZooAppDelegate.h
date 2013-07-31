@@ -18,6 +18,5 @@
 @property (nonatomic,retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) TileMapViewController *mapController;
 @property (nonatomic, retain) CLRegion *zooRegion;
--(void)buyFullApp:(BOOL)restore;
 -(void)refreshViewControllersAfterLangChange;
 @end

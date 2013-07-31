@@ -10,7 +10,6 @@
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface SettingsViewController : UIViewController<MFMailComposeViewControllerDelegate>
-@property (nonatomic,retain) IBOutlet UIButton *restoreButton;
 
 @property (nonatomic,retain) IBOutlet UISegmentedControl *langSelector;
 

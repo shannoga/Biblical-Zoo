@@ -89,7 +89,7 @@
     }
     
     if([exhibit.manyAnimals boolValue]){
-        [self.manyAnimalsIndicator setImage:[UIImage imageNamed:@"098-ShareThis"]];
+        [self.manyAnimalsIndicator setImage:[UIImage imageNamed:@"001-Home"]];
     }else{
         [self.manyAnimalsIndicator setImage:nil];
     }

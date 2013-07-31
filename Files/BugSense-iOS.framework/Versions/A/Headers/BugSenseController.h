@@ -159,6 +159,13 @@ OBJC_EXPORT @interface BugSenseController : NSObject <UIAlertViewDelegate>
  */
 + (void) setFixNotificationsTitle:(NSString *)title message:(NSString *)message;
 
+/**
+ Sets a string for identifying the user.
+ 
+ @param identifier the string identifying the user.
+ */
++ (void)setUserIdentifier:(NSString *)identifier;
+
 /** @name Logging exceptions */
 
 /**
@@ -202,6 +209,7 @@ OBJC_EXPORT @interface BugSenseController : NSObject <UIAlertViewDelegate>
 
 + (NSString *)apiKey;
 + (NSString *)endpointURL;
++ (NSString *)userIdentifier;
 
 + (BOOL) usesProxy;
 

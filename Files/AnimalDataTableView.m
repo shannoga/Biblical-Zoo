@@ -11,7 +11,7 @@
 #import "Animal.h"
 #import "Helper.h"
 #import "AnimalsImagesScrollView.h"
-
+#import "ConservasionStatusIndicator.h"
 @implementation AnimalDataTableView
 @synthesize animal;
 
@@ -32,6 +32,8 @@
     /*****************************************/
     /* sets the data to the data table view */
     /*****************************************/
+  
+    
     tableViewdata = [[NSMutableArray alloc] init];
     
     if ([animal.name length]>0) {
@@ -84,16 +86,12 @@
         imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 20, 320, 190) withAnimal:self.animal];
     }
     self.tableView.tableHeaderView = imagesScrollView;
-    
+
     
     //self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
 }
 
-- (void) viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    self.tableView.frame = CGRectMake(0, 30, 320,400);
-}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

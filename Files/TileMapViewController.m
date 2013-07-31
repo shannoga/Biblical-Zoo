@@ -119,13 +119,11 @@
     TileOverlay *overlay = [[TileOverlay alloc] initWithTileDirectory:tileDirectory];
     [self.map addOverlay:overlay];
 
-    MKMapRect visibleRect = [self.map mapRectThatFits:bg.boundingMapRect];
-    visibleRect.size.width /= 2;
-    visibleRect.size.height /= 2;
-    visibleRect.origin.x += visibleRect.size.width/1.5;
-    visibleRect.origin.y += visibleRect.size.height/2.2;
-    self.map.visibleMapRect = visibleRect;
-    self.map.centerCoordinate = CLLocationCoordinate2DMake(31.740531,35.165652);
+    
+        MKMapRect visibleRect = [self.map mapRectThatFits:bg.boundingMapRect];
+        self.map.visibleMapRect = visibleRect;
+        self.map.centerCoordinate = CLLocationCoordinate2DMake(31.740531,35.165652);
+    
     if([CLLocationManager locationServicesEnabled]){
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
@@ -157,11 +155,6 @@
     [locationManager stopUpdatingLocation];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
-        [[Helper appDelegate] buyFullApp:NO];
-    }
-}
 
 #pragma mark -
 #pragma mark UIPinchGestureRecognizer
@@ -295,12 +288,12 @@
         NSArray *animals = [exhibit localAnimals];
         [self.navigationController setToolbarHidden:YES animated:NO];
         if ([animals count]==1) {
-            AnimalViewController *anialViewController = [[AnimalViewController alloc] init];
+            AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
             if(!IS_IPHONE_5){
             self.navigationController.navigationBar.tintColor = nil;
             self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
             }
-            anialViewController.animal = [animals lastObject];
+            [anialViewController setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:anialViewController animated:YES];
             
         } else if([animals count]>1){

@@ -13,7 +13,7 @@
 @end
 
 @implementation SettingsViewController
-@synthesize langSelector,restoreButton,openingLang;
+@synthesize langSelector,openingLang;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,10 +35,6 @@
             button.layer.cornerRadius = 10;
         }
     }
-}
-
--(IBAction)restorePurchase:(id)sender{
-    [[Helper appDelegate] buyFullApp:YES];
 }
 
 -(IBAction)changedLang:(UISegmentedControl*)sender{

@@ -143,13 +143,14 @@
     Animal *animal = (self.animals)[indexPath.row];
     
     if(animal){
-    AnimalViewController *animalViewController = [[AnimalViewController alloc] init];
+    AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:animal];
         if(!IS_IPHONE_5){
            // self.navigationController.navigationBar.tintColor = nil;
            // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         }
-    animalViewController.animal = animal;
-    [self.navigationController pushViewController:animalViewController animated:YES];
+    [anialViewController setHidesBottomBarWhenPushed:YES];
+
+    [self.navigationController pushViewController:anialViewController animated:YES];
     }else{
     
     NSLog(@"no animals in the exhibit");

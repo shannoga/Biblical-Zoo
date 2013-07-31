@@ -47,8 +47,7 @@
         detailLableView = label;
         [self.contentView addSubview:detailLableView];
         
-        self.imageView.image = [UIImage imageNamed:@"question.png"];
-        
+       
         
     }
     return self;
@@ -60,9 +59,9 @@
     if ([Helper appLang]==kEnglish) {
         CGRect rect = CGRectMake(10,(self.bounds.size.height-60)/2, 60, 60);
         self.imageView.frame = rect;
-        rect = CGRectMake(rect.size.width+20,5,240,70);
+        rect = CGRectMake(rect.size.width+20,5,240,(self.contentView.bounds.size.height-26));
         labelView.frame = rect;
-        rect.origin.y = rect.origin.y+ 70;
+        rect.origin.y = CGRectGetMaxY(rect);
         rect.size.height = 20;
         detailLableView.textAlignment= UITextAlignmentLeft;
         labelView.textAlignment= UITextAlignmentLeft;
@@ -72,10 +71,10 @@
         
         CGRect rect = CGRectMake(self.bounds.size.width-65,25, 60, 60);
         self.imageView.frame = rect;
-        rect = CGRectMake(5, 4, 240, 70);
+        rect = CGRectMake(5, 4, 240, (self.contentView.bounds.size.height-26));
         labelView.frame = rect;
         labelView.textAlignment = UITextAlignmentRight;
-        rect.origin.y = rect.origin.y+ 70;
+        rect.origin.y = CGRectGetMaxY(rect);
         rect.size.height = 20;
         detailLableView.frame = rect;
         detailLableView.textAlignment= NSTextAlignmentRight;
@@ -116,12 +115,14 @@
         NSString *subtitle = questionObject[@"user_name"];
         self.labelView.text = title;
         self.detailLableView.text =subtitle;
+        self.imageView.image = [UIImage imageNamed:@"question"];
     }else{
         NSString *key = [Helper appLang]==kHebrew? @"text":@"text";
         NSString *title = questionObject[key];
         NSString *subtitle = questionObject[@"user"];
         self.labelView.text = title;
         self.detailLableView.text =subtitle;
+        self.imageView.image = [UIImage imageNamed:@"postCellIcon"];
     }
     [self setNeedsDisplay];
 }

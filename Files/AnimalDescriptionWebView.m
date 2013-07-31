@@ -9,7 +9,8 @@
 #import "AnimalDescriptionWebView.h"
 #import "Animal.h"
 #import "ConservationStatusDataView.h"
-
+#import "ConservasionStatusIndicator.h"
+#import "AnimalsImagesScrollView.h"
 @interface AnimalDescriptionWebView()
 @property (nonatomic,strong) Animal* animal;
 @end
@@ -44,9 +45,32 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    // Initialization code
-    ConservationStatusDataView *conStatus = [[ConservationStatusDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 80) withConservationStatus:self.animal.conservationStatus];
-    [self.view addSubview:conStatus];
+    
+    //conservation sataus ind
+    ConservasionStatusIndicator *consInd;
+    ConservationStatusDataView *conStatus;
+     AnimalsImagesScrollView *imagesScrollView;
+     if(![self.animal.generalExhibitDescription boolValue]){
+        if(IS_IPHONE_5){
+            consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 26)];
+        }else{
+            consInd = [[ConservasionStatusIndicator alloc] initWithFrame:CGRectMake(0, 2, 320, 20)];
+        }
+        [consInd setAnimal:self.animal];
+         [self.view addSubview:consInd];
+
+        
+        // Initialization code
+           conStatus = [[ConservationStatusDataView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(consInd.frame), CGRectGetWidth(self.view.frame), 80) withConservationStatus:self.animal.conservationStatus];
+        [self.view addSubview:conStatus];
+     }else{         
+         if(IS_IPHONE_5){
+             imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 190) withAnimal:self.animal];
+         }else{
+             imagesScrollView = [[AnimalsImagesScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 190) withAnimal:self.animal];
+         }
+         [self.view addSubview:imagesScrollView];
+     }
     
     //add UIWebView  for the animal main text
     
@@ -56,11 +80,15 @@
         dir = @"rtl";
         langClass = @"dirrtl";
     }
-    CGRect webRect = self.view.bounds;
-    webRect.origin.y = conStatus.frame.size.height;
-    webRect.size.height = CGRectGetHeight(self.view.bounds)-conStatus.frame.size.height;
+    CGRect webRect =self.view.bounds;
+    if(![self.animal.generalExhibitDescription boolValue]){
+        webRect.origin.y = CGRectGetMaxY(conStatus.frame);
+        webRect.size.height = CGRectGetHeight(self.view.bounds)-conStatus.frame.size.height - self.tabBarController.tabBar.frame.size.height-30;
+    }else{
+        webRect.origin.y = CGRectGetMaxY(imagesScrollView.frame);
+        webRect.size.height = CGRectGetHeight(self.view.bounds)-imagesScrollView.frame.size.height - self.tabBarController.tabBar.frame.size.height-30;
+    }
     UIWebView *descriptionView = [[UIWebView alloc] initWithFrame:webRect];
-    
     descriptionView.backgroundColor = UIColorFromRGB(0xf8eddf);
     descriptionView.opaque=YES;
     descriptionView.delegate=self;
@@ -80,11 +108,13 @@
     [descriptionView loadHTMLString:new baseURL:baseURL];
     
     [self.view addSubview:descriptionView];
-    
+
 }
+
+
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+// Only override drawRect: if you perform
+ empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code

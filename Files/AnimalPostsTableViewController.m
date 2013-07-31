@@ -10,8 +10,14 @@
 #import "Reachability.h"
 #import "Animal.h"
 #import "AnimalQuestionsCell.h"
+
+#define FONT_SIZE 14.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 35.0f
+
 @interface AnimalPostsTableViewController ()
     @property(nonatomic,strong) Animal *animal;
+    @property(nonatomic,strong) UIView *explinationView;
 @end
 
 @implementation AnimalPostsTableViewController
@@ -34,10 +40,10 @@
         // The className to query on
         self.className = @"AnimalPost";
         
-        self.tableView.backgroundColor = UIColorFromRGB(0xabc9cb);
+       self.tableView.backgroundColor = UIColorFromRGB(0xF8EDDF);
         
         // Whether the built-in pull-to-refresh is enabled
-        self.pullToRefreshEnabled = YES;
+        self.pullToRefreshEnabled = NO;
         
         self.loadingViewEnabled = NO;
         // Whether the built-in pagination is enabled
@@ -48,8 +54,33 @@
         
         askingQuestion = NO;
         
+        
+        
     }
     return self;
+}
+
+-(UIView*)explinationView{
+    if(!_explinationView){
+    _explinationView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 170)];
+    self.explinationView.backgroundColor = [UIColor clearColor];
+    
+    
+    UITextView *postExplainLabel = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
+    postExplainLabel.textAlignment = UITextAlignmentCenter;
+    postExplainLabel.backgroundColor = [UIColor clearColor];
+    postExplainLabel.textColor = UIColorFromRGB(0x281502);
+    postExplainLabel.editable = NO;
+    if([Helper appLang]==kHebrew) {
+        postExplainLabel.font = [UIFont fontWithName:@"ArialHebrew" size:16];
+    }else{
+        postExplainLabel.font = [UIFont fontWithName:@"Futura" size:16];
+    }
+    postExplainLabel.text =[Helper languageSelectedStringForKey:@"No Posts Message"];
+    [self.explinationView addSubview:postExplainLabel];
+    
+    }
+    return _explinationView;
 }
 
 -(void)refreshObjects{
@@ -99,7 +130,7 @@
     UIFont *font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
     UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     labelView.backgroundColor = UIColorFromRGB(0x8C9544);
-    labelView.text = [Helper languageSelectedStringForKey:@"Send Your post"];
+    labelView.text = [Helper languageSelectedStringForKey:@"Send Your Post"];
     labelView.font = font;
     labelView.textAlignment = NSTextAlignmentCenter;
     labelView.textColor = [UIColor whiteColor];
@@ -113,16 +144,16 @@
     
     font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:14];
     self.textView.font = font;
-    self.textView.backgroundColor = UIColorFromRGBA(0xffffff, .5);
+    self.textView.backgroundColor = UIColorFromRGBA(0xffffff, 1);
     [self.fieldsView addSubview:self.textView];
     
     self.nameTF = [[UITextField alloc] initWithFrame:CGRectMake(180, 120, 120, 25)];
-    self.nameTF.backgroundColor = UIColorFromRGBA(0xffffff, .5);
+    self.nameTF.backgroundColor = UIColorFromRGBA(0xffffff, 1);
     self.nameTF.placeholder = [Helper languageSelectedStringForKey:@"name"];
     [self.fieldsView addSubview:self.nameTF];
     
     self.cityTF = [[UITextField alloc] initWithFrame:CGRectMake(20, 120, 120, 25)];
-    self.cityTF.backgroundColor = UIColorFromRGBA(0xffffff, .5);
+    self.cityTF.backgroundColor = UIColorFromRGBA(0xffffff, 1);
     self.cityTF.placeholder = [Helper languageSelectedStringForKey:@"city"];
     [self.fieldsView addSubview:self.cityTF];
     
@@ -206,8 +237,7 @@
     [self toggleQuestion];
 }
 -(void)toggleQuestion{
-    
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
         if (askingQuestion) {
             [self.tableView.tableHeaderView setFrame:CGRectMake(0, 0, 320, 60)];
             [self.fieldsView  removeFromSuperview];
@@ -223,11 +253,14 @@
             [self.tableView.tableHeaderView addSubview:self.fieldsView];
             self.fieldsView.alpha =1;
             [self.textView becomeFirstResponder];
+            
         }
         self.tableView.tableHeaderView.userInteractionEnabled = NO;
     } completion:^(BOOL finished) {
         NSLog(@"completed");
         askingQuestion = !askingQuestion;
+        self.tableView.scrollEnabled = !askingQuestion;
+        [self toggleExplinationView];
         self.tableView.tableHeaderView.userInteractionEnabled = YES;
     }];
 }
@@ -276,21 +309,47 @@
 
 #pragma mark - Parse
 
+-(void)toggleExplinationView{
+    if([self.objects count]==0 && !askingQuestion)
+    {
+        [self.view addSubview:self.explinationView];
+    }else{
+        [_explinationView removeFromSuperview];
+    }
+}
 - (void)objectsDidLoad:(NSError *)error {
     [super objectsDidLoad:error];
     [refreshHUD hide:YES];
-    // This method is called every time objects are loaded from Parse via the PFQuery
+    [self toggleExplinationView];
+    
+    
 }
 
 - (void)objectsWillLoad {
     [super objectsWillLoad];
+    
+    
     refreshHUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:refreshHUD];
     refreshHUD.labelText = [Helper languageSelectedStringForKey:@"Loading"];
     [refreshHUD show:YES];
-    // This method is called before a PFQuery is fired to get more objects
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     if(indexPath.row==[self.objects count])return 0;
+    PFObject *object = [self.objects objectAtIndex:[indexPath row]];
+    NSString *text = object[@"text"];
+    
+    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    CGFloat height = MAX(size.height, 44.0f);
+    
+    return height + (CELL_CONTENT_MARGIN * 2);
+}
 
 
 // Override to customize the look of a cell representing an object. The default is to display

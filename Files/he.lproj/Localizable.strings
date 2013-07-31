@@ -88,6 +88,9 @@
 "Language" = "שפה";
 
 /* No comment provided by engineer. */
+"Send Your Post" = "פרסמו פוסט משלכם";
+
+/* No comment provided by engineer. */
 "Update App Data" = "עדכן מידע";
 
 /* Event name */
@@ -270,7 +273,7 @@
 "Attantion" = "שימו לב !";
 
 /* No comment provided by engineer. */
-"No Posts Message" = "היו הראשונים להוסיף, עובדה מעניינת, בדיחה, שיר או כל דבר שיעניין את המבקרים האחרים בגן. ";
+"No Posts Message" = "היו הראשונים להוסיף, עובדה מעניינת, בדיחה, שיר או כל דבר שיעניין את המבקרים האחרים בגן שקשור לתצוגה זו. ";
 
 /* No comment provided by engineer. */
 "Cancel" = "בטל";
@@ -336,19 +339,19 @@
 "Questions" = "שאלות";
 
 /* No comment provided by engineer. */
-"Save to album" = "שמור לאלבום ";
+"Save to album" = "שמרו לאלבום ";
 
 /* No comment provided by engineer. */
 "Save to FaceBook" = "פרסמו בפייסבוק";
 
 /* No comment provided by engineer. */
-"Send a Question" = "שלח שאלה";
+"Send a Question" = "שלחו שאלה";
 
 /* No comment provided by engineer. */
-"Send email" = "שלח במייל";
+"Send email" = "שלחו במייל";
 
 /* No comment provided by engineer. */
-"Send" = "שלח";
+"Send" = "שלחו";
 
 /* No comment provided by engineer. */
 "Show Nearest exhibit" = "התצוגה הקרובה ביותר";

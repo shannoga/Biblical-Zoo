@@ -8,7 +8,7 @@
 #import "FunViewController.h"
 #import "ExhibitsViewController.h"
 #import "Reachability.h"
-
+#import "AnimalDataTabBarController.h"
 @implementation JerusalemBiblicalZooAppDelegate
 
 
@@ -249,11 +249,15 @@ monitoringDidFailForRegion:(CLRegion *)region
 -(void)setUIAppearence{
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundImage:[UIImage imageNamed:@"nav_pattern_baje"] ];
+    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundColor:UIColorFromRGB(0xf8eddf)];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];
     
     [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
     [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
     [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xC95000)];
+    [[UITabBar appearance] setTintColor:UIColorFromRGB(0x3B2F24)];
+    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setSelectedImageTintColor:UIColorFromRGB(0x69742C)];
     [[UITableView appearance] setBackgroundColor:UIColorFromRGB(0xBDB38C)];
 }
 -(void)setUpMagicalRecord{
@@ -311,6 +315,7 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 
 }
+
 -(void)setUpTabBarControllers{
     
     // Create a tabbar controller and an array to contain the view controllers
@@ -399,43 +404,6 @@ monitoringDidFailForRegion:(CLRegion *)region
 }
 
 
--(void)buyFullApp:(BOOL)restore{
-   
-    if (!restore) {
-        HUD = [[MBProgressHUD alloc] initWithWindow:self.window];
-        [self.window addSubview:HUD];
-        [HUD removeFromSuperViewOnHide];
-        [HUD show:YES];
-        HUD.labelText = [Helper languageSelectedStringForKey:@"Purchasing"];
-        [PFPurchase buyProduct:@"com.shannoga.biblicalzoo" block:^(NSError *error) {
-            if (error) {
-                [HUD hide:YES];
-                NSLog(@"error = %@",[error debugDescription]);
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Alert"] message:[Helper languageSelectedStringForKey:@"Perchase failed"] delegate:nil cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-    }else{
-         [PFPurchase restore];
-    }
-    
-  
-}
-
-// required by protocol
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
-{
-}
-
-// this is to get the total number of products to restore
-- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
-{
-   
-}
-
--(void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
-    [HUD hide:YES];
-}
 
 ///////////////////////////////////////////////////////////
 // Uncomment these two methods if you are using Facebook

@@ -81,17 +81,19 @@
                                         @"CR",
                                         @"EW",
                                         @"EX"];
+    NSArray *indicatorXpositions = @[@301,@257,@212,@166,@120,@75,@0];
+    
     [conservationStatusArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isEqualToString:animal.conservationStatus]) {
-            consevationToFloat = idx;
+            NSNumber *pos = indicatorXpositions[idx];
+            consevationToFloat = [pos floatValue];
         }
     }];
     consevationToFloat=fabsf(consevationToFloat-6);
     //create indicator
     CAShapeLayer *indicator = [CAShapeLayer layer];
     indicator.bounds = CGRectMake(0, 0, CGRectGetHeight(self.bounds)*0.8,CGRectGetHeight(self.bounds)*0.8);
-    indicator.position =CGPointMake(consevationToFloat* CGRectGetWidth(self.bounds)/6.5
-                                    , self.center.y);
+    indicator.position =CGPointMake(consevationToFloat, self.center.y);
     indicator.borderWidth=1.0f;
     indicator.borderColor=[UIColor whiteColor].CGColor;
     indicator.cornerRadius = (CGRectGetHeight(self.bounds)*0.8)*0.5;

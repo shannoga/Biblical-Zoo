@@ -250,27 +250,6 @@
 
 
 
--(void)showBuyFullAppAlert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Buy Full App"] message:[Helper languageSelectedStringForKey:@"Buy full app description"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:[Helper languageSelectedStringForKey:@"Buy Now"], nil];
-    alert.tag=2;
-    [alert show];
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(alertView.tag == 2){
-        if (buttonIndex==1) {
-            [[Helper appDelegate] buyFullApp:NO];
-        }
-    }else if (alertView.tag==1){
-        if (buttonIndex==1) {
-            [self loginToFacebook];
-        }
-    }
-    
-}
-
-
-
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

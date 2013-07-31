@@ -67,9 +67,6 @@
     [self.navigationController presentModalViewController:zooInfo animated:YES];
 }
 
--(void)buyFullApp{
-    [[Helper appDelegate] buyFullApp:NO];
-}
 
 -(void)dismissWithChanges:(BOOL)changes{
     if (changes) {
@@ -264,9 +261,7 @@
     [self updateHeaderView];
     NSArray *animals = [exhibit localAnimals];
     if ([animals count]==1) {
-        AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
- 
-        anialViewController.animal = [animals lastObject];
+        AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]]; 
         [anialViewController setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:anialViewController animated:YES];
         
