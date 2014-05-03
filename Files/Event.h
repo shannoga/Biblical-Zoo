@@ -21,6 +21,8 @@
 
 +(EventTypes)eventTypeFromString:(NSString*)string;
 +(void)parseEventsFromArray:(NSArray*)events forClendarName:(NSString*)calendarName completion:(void (^)(BOOL finished))completion;
++(NSString*)localStringFromDoubleLangString:(NSString*)title;
++(NSDate*)finalDateFromGeneratedStartDate:(NSDate*)sDate originalDate:(NSDate*)originalDate;
 -(NSString*)dateToStringForSectionTitels;
 -(NSString*)timeAsString;
 -(NSString*)dateAsString;

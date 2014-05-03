@@ -12,7 +12,6 @@
 #import "CGICalendar.h"
 
 @interface Event(Private)
-
 @end
 
 @implementation Event
@@ -38,6 +37,7 @@
 #define REAPET_FREQ @"FREQ"
 #define REAPET_UNTIL @"UNTIL"
 #define REPEAT_COUNT @"COUNT"
+
 
 +(void)createEvent:(CGICalendarComponent*)eventComponent calendarName:(NSString*)calendarName startDate:(NSDate*)startDate isReapeater:(BOOL)reapeter{
     //set the start date
@@ -75,6 +75,7 @@
         event.type = [NSNumber numberWithInt:[Event eventTypeFromString:cleanedCalendarName]];
     
 }
+
 
 +(void)parseEventsFromArray:(NSArray*)events forClendarName:(NSString*)calendarName completion:(void (^)(BOOL finished))completion{
     NSInteger counter =0;
@@ -273,7 +274,6 @@
 
 +(NSDate*)finalDateFromGeneratedStartDate:(NSDate*)sDate originalDate:(NSDate*)originalDate{
     
-    
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *weekdayComponents = [[NSDateComponents alloc] init];
@@ -342,7 +342,7 @@
     
     NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
     [timeFormat setDateFormat:@"HH:mm"];
-    
+
     NSString *theTime = [timeFormat stringFromDate:startDate];
     return theTime;
     
@@ -352,12 +352,12 @@
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd-MM-yy"];
+    [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
     
     NSString *theDate = [dateFormat stringFromDate:startDate];
     return theDate;
     
 }
-
 
 
 +(EventTypes)eventTypeFromString:(NSString*)string{
@@ -472,8 +472,6 @@
         [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:[Helper appLang]==kHebrew?@"he":@"en"]];
         [dateFormatter setDateStyle:NSDateFormatterFullStyle];
 		formattedDateString = [dateFormatter stringFromDate:localDate];
-    
-
 
     return formattedDateString;
 }

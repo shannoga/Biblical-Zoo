@@ -14,10 +14,13 @@
 #import "MadadExplinationViewController.h"
 #import "Reachability.h"
 #import "CGICalendar.h"
+#import "MXLCalendar.h"
+#import "MXLCalendarManager.h"
+#import "EventsController.h"
 
 @interface EventsTableViewController ()
     @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-    @property (nonatomic,strong) NSArray *calendarsUrls;
+
 @property (nonatomic) BOOL hasHud;
 @end
 
@@ -35,23 +38,13 @@
         self.navigationItem.rightBarButtonItem = barItem;
         self.tableView.sectionIndexMinimumDisplayRowCount = 99999999;
    
-        
-          self.calendarsUrls = @[
-         @"https://www.google.com/calendar/ical/h6e63v9e90ekuv35jbhh8qmgbc%40group.calendar.google.com/public/basic.ics",
-         @"https://www.google.com/calendar/ical/r3mos73aqqvud1du3bn42mpsmo%40group.calendar.google.com/public/basic.ics",
-         @"https://www.google.com/calendar/ical/hvft2h1m5dpgui1o8lgueoemto%40group.calendar.google.com/public/basic.ics",
-         @"https://www.google.com/calendar/ical/36f9lqe80tg3f23peaid7m4asc%40group.calendar.google.com/public/basic.ics",
-         @"https://www.google.com/calendar/ical/k2nk1v47vt0dk8l0pkufdigrug%40group.calendar.google.com/public/basic.ics",
-         @"https://www.google.com/calendar/ical/biblicalzoo%40gmail.com/public/basic.ics",
-       //  @"https://www.google.com/calendar/ical/f6n87hn6hl1977tp7f66tbr39c%40group.calendar.google.com/public/basic.ics",//test
-         @"https://www.google.com/calendar/ical/eh8h86b49r6hjp9nc31orrjpb8%40group.calendar.google.com/public/basic.ics"//lion
-         ];
-         
+    
         updateLoopCounter=1;
         shouldUpdateUI=NO;
     }
     return self;
 }
+
 
 
 -(void)updateLastUpdateDate{
@@ -73,7 +66,8 @@
 -(void)updateCalendar{
     
     Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    
+    [self fetchAllCalendars];
+    return;
     if([reach isReachable]){
         [self fetchAllCalendars];
     
@@ -91,41 +85,6 @@
     return 70;
 }
 
--(void)createEventsFromUrl:(NSURL*)url completion:(void (^)(BOOL finished))completion{
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                               
-                               CGICalendar *ical = [[CGICalendar alloc] init];
-                               if ([ical parseWithString:str error:&error]) {
-                                   if(!error){
-                                       for (CGICalendarObject *icalObj in [ical objects]) {
-                                           NSString *name = [[icalObj propertyForName:@"X-WR-CALNAME"] value];
-                                           if (![[name lowercaseString] isEqualToString:@"lion rank"]) {
-                                               [Event parseEventsFromArray:[icalObj events] forClendarName:name completion:^(BOOL finished) {
-                                                   completion(YES);
-                                               }];
-                                           }else{
-                                               [Madad parseMadadsFromArray:[icalObj events] completion:^(BOOL finished) {
-                                                   completion(YES);
-                                               }];
-                                           }
-                                       }
-                                       
-                                   }else{
-                                       NSLog(@"error = %@",[error description]);
-                                        completion(YES);
-                                   }
-                               }else{
-                                   NSLog(@"Problem getting ICS files");
-                                   completion(NO);
-                               }
-                               
-                           }];
-   
-}
 
 
 //step 1
@@ -134,32 +93,19 @@
 
 - (void)fetchAllCalendars {
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
     self.tableView.scrollEnabled =NO;
-    [Event truncateAll];
-    [[NSManagedObjectContext defaultContext] saveNestedContexts];
+    [self.tableView scrollsToTop];
+    [self showHud];
+    
+    [[EventsController sharedController] fetchEventsWithCompletionHandler:^(BOOL success) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.tableView.scrollEnabled =YES;
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [refreshHUD hide:YES];
 
-     [self.calendarsUrls enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-         NSURL *url = [NSURL URLWithString:obj];
-         [self createEventsFromUrl:url completion:^(BOOL finished) {
-             if ([refreshHUD isHidden]) {
-                 [self showHud];
-             }
-             
-             if (finished)
-             {
-                 [[NSManagedObjectContext defaultContext] saveNestedContexts];
-             }
-             else
-             {
-                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Update failed", nil) message:NSLocalizedString(@"Please try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil, nil];
-                 [alertView show];
-             }
-         }];
-     }];
-    
-    
-    
+        });
+    }];
+
 }
 
 #pragma mark -
@@ -202,6 +148,12 @@
     if([[Event findAll] count]==0){
         [self updateCalendar];
     }
+    else
+    {
+        [[Event findAll] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"event = %@",((Event*)obj).title);
+        }];
+    }
    
 }
 
@@ -210,7 +162,6 @@
 {
     [super viewDidUnload];
 
-    self.calendarsUrls =  nil;
     self.tableView = nil;
 }
 
@@ -220,7 +171,7 @@
     
     if([[self.tableView visibleCells] count]==0 && segmentedControl.selectedSegmentIndex==0){
         
-        [self updateCalendar];
+       // [self updateCalendar];
     }
 }
 
@@ -330,6 +281,21 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    // Set the colors for the gradient layer.
+//    CAGradientLayer *gradientLayer_ = (CAGradientLayer *)cell.contentView.layer;
+//    [gradientLayer_ setContentsScale:[[UIScreen mainScreen] scale]];
+    NSArray *cellColors = [event colors];
+   // gradientLayer_.colors =@[cellColors[0],
+                            // cellColors[1]];
+    cell.contentView.backgroundColor = [UIColor yellowColor];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -357,7 +323,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:[NSManagedObjectContext defaultContext]];
     [fetchRequest setEntity:entity];
     
-    NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"startDate > %@",[NSDate date]];
+   NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"startDate >= %@",[NSDate date]];
     [fetchRequest setPredicate:newPredicate];
     // Set the batch size to a suitable number.
     //[fetchRequest setFetchBatchSize:20];
@@ -489,11 +455,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
    // if (shouldUpdateUI) {
-        [[NSManagedObjectContext defaultContext] saveNestedContexts];
          [self.tableView reloadData];
-        [refreshHUD hide:YES];
-       self.tableView.scrollEnabled =YES;
-     self.navigationItem.rightBarButtonItem.enabled = YES;
   //  }
 
     

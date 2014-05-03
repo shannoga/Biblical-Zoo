@@ -168,7 +168,6 @@
    //get the localized title from the string
     
     NSString * title = [Helper languageSelectedStringForKey:event.typeString];
-    
     self.labelView.text = title;
     self.detailLableView.text = [event title];
     self.locationLableView.text = [event location];
@@ -179,12 +178,7 @@
    
 	[self.cellImageView setImage:cellImage];
     
-    // Set the colors for the gradient layer.
-    CAGradientLayer *gradientLayer_ = (CAGradientLayer *)self.layer;
-    [gradientLayer_ setContentsScale:[[UIScreen mainScreen] scale]];
-    NSArray *cellColors = [event colors];
-    gradientLayer_.colors =@[cellColors[0],
-                            cellColors[1]];
+    
 	
 
 	[labelView setNeedsDisplay];

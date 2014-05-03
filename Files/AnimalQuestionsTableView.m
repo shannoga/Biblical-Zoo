@@ -40,14 +40,14 @@
         self.tableView.backgroundColor = UIColorFromRGB(0xF8EDDF);
         
         // Whether the built-in pull-to-refresh is enabled
-        self.pullToRefreshEnabled = YES;
+        self.pullToRefreshEnabled = NO;
         
         self.loadingViewEnabled = NO;
         // Whether the built-in pagination is enabled
         self.paginationEnabled = YES;
         
         // The number of objects to show per page
-        self.objectsPerPage = 6;
+        self.objectsPerPage = 3;
        
         askingQuestion = NO;
         
@@ -104,7 +104,7 @@
 
     [query orderByDescending:@"createdAt"];
     if(self.animal!=nil){
-    [query whereKey:@"animal_en_name" equalTo:self.animal.nameEn];
+        [query whereKey:@"animal_en_name" equalTo:self.animal.nameEn];
     }
     
     NSString *key = [Helper appLang]==kHebrew? @"visible":@"visible_en";

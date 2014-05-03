@@ -334,6 +334,11 @@
 		39217B14158A2D3500DEA44C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39217B13158A2D3500DEA44C /* AssetsLibrary.framework */; };
 		39217B16158A2D4900DEA44C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39217B15158A2D4900DEA44C /* AVFoundation.framework */; };
 		392CB4DD16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 392CB4DC16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite */; };
+		39331D901914155B00BF550A /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D891914155B00BF550A /* MXLCalendar.m */; };
+		39331D911914155B00BF550A /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D8B1914155B00BF550A /* MXLCalendarEvent.m */; };
+		39331D921914155B00BF550A /* MXLCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D8D1914155B00BF550A /* MXLCalendarManager.m */; };
+		39331D931914155B00BF550A /* NSTimeZone+ProperAbbreviation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D8F1914155B00BF550A /* NSTimeZone+ProperAbbreviation.m */; };
+		39331D96191425DD00BF550A /* EventsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D95191425DD00BF550A /* EventsController.m */; };
 		3940506915B95F3300FCE4D6 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3940506815B95F3300FCE4D6 /* EventKit.framework */; };
 		394B348716766C9D0021C507 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394B348616766C9D0021C507 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		394B348916766CA60021C507 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394B348816766CA60021C507 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -977,6 +982,16 @@
 		39217B13158A2D3500DEA44C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		39217B15158A2D4900DEA44C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		392CB4DC16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = JerusalemBiblicalZooSeed.sqlite; sourceTree = "<group>"; };
+		39331D881914155B00BF550A /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
+		39331D891914155B00BF550A /* MXLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendar.m; sourceTree = "<group>"; };
+		39331D8A1914155B00BF550A /* MXLCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarEvent.h; sourceTree = "<group>"; };
+		39331D8B1914155B00BF550A /* MXLCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarEvent.m; sourceTree = "<group>"; };
+		39331D8C1914155B00BF550A /* MXLCalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendarManager.h; sourceTree = "<group>"; };
+		39331D8D1914155B00BF550A /* MXLCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendarManager.m; sourceTree = "<group>"; };
+		39331D8E1914155B00BF550A /* NSTimeZone+ProperAbbreviation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+ProperAbbreviation.h"; sourceTree = "<group>"; };
+		39331D8F1914155B00BF550A /* NSTimeZone+ProperAbbreviation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+ProperAbbreviation.m"; sourceTree = "<group>"; };
+		39331D94191425DD00BF550A /* EventsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsController.h; sourceTree = "<group>"; };
+		39331D95191425DD00BF550A /* EventsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsController.m; sourceTree = "<group>"; };
 		3940506815B95F3300FCE4D6 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		394B348616766C9D0021C507 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		394B348816766CA60021C507 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -1549,6 +1564,8 @@
 				39ABDF3116772BE600025349 /* Constants.h */,
 				39ABDF3216772BE600025349 /* Event.h */,
 				39ABDF3316772BE600025349 /* Event.m */,
+				39331D94191425DD00BF550A /* EventsController.h */,
+				39331D95191425DD00BF550A /* EventsController.m */,
 				39ABDF3416772BE600025349 /* EventDetailsViewController.h */,
 				39ABDF3516772BE600025349 /* EventDetailsViewController.m */,
 				39A94AF81677416B008A9CF6 /* EventsTableViewController.h */,
@@ -1702,6 +1719,21 @@
 			path = "UI Sounds";
 			sourceTree = "<group>";
 		};
+		39331D871914155B00BF550A /* MXLCalendarManager */ = {
+			isa = PBXGroup;
+			children = (
+				39331D881914155B00BF550A /* MXLCalendar.h */,
+				39331D891914155B00BF550A /* MXLCalendar.m */,
+				39331D8A1914155B00BF550A /* MXLCalendarEvent.h */,
+				39331D8B1914155B00BF550A /* MXLCalendarEvent.m */,
+				39331D8C1914155B00BF550A /* MXLCalendarManager.h */,
+				39331D8D1914155B00BF550A /* MXLCalendarManager.m */,
+				39331D8E1914155B00BF550A /* NSTimeZone+ProperAbbreviation.h */,
+				39331D8F1914155B00BF550A /* NSTimeZone+ProperAbbreviation.m */,
+			);
+			path = MXLCalendarManager;
+			sourceTree = "<group>";
+		};
 		39650F5116844327008EA096 /* audio guides */ = {
 			isa = PBXGroup;
 			children = (
@@ -1808,6 +1840,7 @@
 		39ABDE7A16772BA800025349 /* Extaernal */ = {
 			isa = PBXGroup;
 			children = (
+				39331D871914155B00BF550A /* MXLCalendarManager */,
 				39A94B031677BB96008A9CF6 /* LBYouTubeView */,
 				39ABDE7B16772BA800025349 /* CGICalendar */,
 				39ABDE8E16772BA800025349 /* MagicalRecord */,
@@ -2421,7 +2454,7 @@
 		09ABC06413A1D52D009C3FCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 09ABC06713A1D52D009C3FCF /* Build configuration list for PBXProject "JerusalemBiblicalZoo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2961,6 +2994,7 @@
 				39ABDE7916772B7700025349 /* UIView+i7Rotate360.m in Sources */,
 				39ABDEDD16772BA800025349 /* CGICalendar.m in Sources */,
 				39ABDEDE16772BA800025349 /* CGICalendarComponent.m in Sources */,
+				39331D921914155B00BF550A /* MXLCalendarManager.m in Sources */,
 				39ABDEDF16772BA800025349 /* CGICalendarContentLine.m in Sources */,
 				39ABDEE016772BA800025349 /* CGICalendarObject.m in Sources */,
 				39ABDEE116772BA800025349 /* CGICalendarParameter.m in Sources */,
@@ -2979,6 +3013,7 @@
 				39ABDEEF16772BA800025349 /* NSManagedObject+MagicalFinders.m in Sources */,
 				39ABDEF016772BA800025349 /* NSManagedObject+MagicalRecord.m in Sources */,
 				39ABDEF116772BA800025349 /* NSManagedObject+MagicalRequests.m in Sources */,
+				39331D901914155B00BF550A /* MXLCalendar.m in Sources */,
 				39ABDEF216772BA800025349 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				39ABDEF316772BA800025349 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				39ABDEF416772BA800025349 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
@@ -2990,6 +3025,7 @@
 				39ABDEFA16772BA800025349 /* MagicalRecord+ErrorHandling.m in Sources */,
 				39ABDEFB16772BA800025349 /* MagicalRecord+iCloud.m in Sources */,
 				39ABDEFC16772BA800025349 /* MagicalRecord+Options.m in Sources */,
+				39331D931914155B00BF550A /* NSTimeZone+ProperAbbreviation.m in Sources */,
 				39ABDEFD16772BA800025349 /* MagicalRecord+Setup.m in Sources */,
 				39ABDEFE16772BA800025349 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				39ABDEFF16772BA800025349 /* MagicalRecord.m in Sources */,
@@ -3022,6 +3058,8 @@
 				39ABDF6216772BE600025349 /* EventTableViewCell.m in Sources */,
 				39ABDF6316772BE600025349 /* Exhibit.m in Sources */,
 				39ABDF6416772BE600025349 /* ExhibitAnimalsViewController.m in Sources */,
+				39331D911914155B00BF550A /* MXLCalendarEvent.m in Sources */,
+				39331D96191425DD00BF550A /* EventsController.m in Sources */,
 				39ABDF6516772BE600025349 /* ExhibitAnnotation.m in Sources */,
 				39ABDF6616772BE600025349 /* ExhibitsViewController.m in Sources */,
 				39ABDF6816772BE600025349 /* ExhibitTableViewCell.m in Sources */,
@@ -3372,8 +3410,9 @@
 		09ABC08C13A1D52E009C3FCF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -3384,10 +3423,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -3397,8 +3440,9 @@
 		09ABC08D13A1D52E009C3FCF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -3406,8 +3450,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";

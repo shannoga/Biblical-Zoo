@@ -275,37 +275,65 @@
 
 #pragma mark -
 #pragma mark MKMapViewDelegate
-
-- (void)showDetails:(id)sender
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    
-    MKAnnotationView *annotationView = (MKAnnotationView*) [[sender superview]superview];
+    MKAnnotationView *annotationView = view;
     ExhibitAnnotation *anootation =  (ExhibitAnnotation*)annotationView.annotation;
-
+    
     Exhibit *exhibit = anootation.exhibit;
     
-   
-        NSArray *animals = [exhibit localAnimals];
-        [self.navigationController setToolbarHidden:YES animated:NO];
-        if ([animals count]==1) {
-            AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
-            if(!IS_IPHONE_5){
+    
+    NSArray *animals = [exhibit localAnimals];
+    [self.navigationController setToolbarHidden:YES animated:NO];
+    if ([animals count]==1) {
+        AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
+        if(!IS_IPHONE_5){
             self.navigationController.navigationBar.tintColor = nil;
             self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-            }
-            [anialViewController setHidesBottomBarWhenPushed:YES];
-            [self.navigationController pushViewController:anialViewController animated:YES];
-            
-        } else if([animals count]>1){
-            ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] init];
-            exhibitAnimalsViewController.exhibit = exhibit;
-            [self.navigationController pushViewController:exhibitAnimalsViewController animated:YES];
-            
-        }else{
-            NSLog(@"no animals in the exhibit");  
         }
+        [anialViewController setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:anialViewController animated:YES];
+        
+    } else if([animals count]>1){
+        ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] init];
+        exhibitAnimalsViewController.exhibit = exhibit;
+        [self.navigationController pushViewController:exhibitAnimalsViewController animated:YES];
+        
+    }else{
+        NSLog(@"no animals in the exhibit");
+    }
 
-     
+}
+- (void)showDetails:(id)sender
+{
+//    
+//    MKAnnotationView *annotationView = (MKAnnotationView*) [[sender superview]superview];
+//    ExhibitAnnotation *anootation =  (ExhibitAnnotation*)annotationView.annotation;
+//
+//    Exhibit *exhibit = anootation.exhibit;
+//    
+//   
+//        NSArray *animals = [exhibit localAnimals];
+//        [self.navigationController setToolbarHidden:YES animated:NO];
+//        if ([animals count]==1) {
+//            AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
+//            if(!IS_IPHONE_5){
+//            self.navigationController.navigationBar.tintColor = nil;
+//            self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+//            }
+//            [anialViewController setHidesBottomBarWhenPushed:YES];
+//            [self.navigationController pushViewController:anialViewController animated:YES];
+//            
+//        } else if([animals count]>1){
+//            ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] init];
+//            exhibitAnimalsViewController.exhibit = exhibit;
+//            [self.navigationController pushViewController:exhibitAnimalsViewController animated:YES];
+//            
+//        }else{
+//            NSLog(@"no animals in the exhibit");  
+//        }
+//
+//     
 }
 
 
@@ -349,11 +377,7 @@
            
             
             UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-			
-		
-            [rightButton addTarget:self
-                            action:@selector(showDetails:)
-                  forControlEvents:UIControlEventTouchUpInside];
+
             annotationView.rightCalloutAccessoryView = rightButton;
             return annotationView;
         }
