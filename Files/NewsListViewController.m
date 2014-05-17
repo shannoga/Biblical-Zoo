@@ -15,10 +15,8 @@
 
 @implementation NewsListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style];
-    if (self) {
         // Custom the table
         self.title = [Helper languageSelectedStringForKey:@"News"]; 
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshObjects)];
@@ -27,7 +25,6 @@
         // The className to query on
         self.className = @"News";
         
-        self.tableView.backgroundColor = UIColorFromRGB(0x8C817B);
         // Whether the built-in pull-to-refresh is enabled
         self.pullToRefreshEnabled = NO;
     
@@ -37,10 +34,7 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 6;
-        
-       
-    }
-    return self;
+    
 }
 
 -(void)refreshObjects{

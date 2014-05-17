@@ -74,7 +74,6 @@
   
     self.tableView.delegate=self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = UIColorFromRGB(0xf8eddf);
     self.tableView.rowHeight = 60;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     

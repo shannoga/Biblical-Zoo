@@ -33,7 +33,7 @@
 		labelView = nil;
 		
 		
-        UIFont *font =  [UIFont fontWithName:@"Futura-CondensedExtraBold" size:18];
+        UIFont *font =  [UIFont fontWithName:@"Avenir-Heavy" size:18];
 
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
@@ -46,7 +46,7 @@
 
 		
 		label = [[UILabel alloc] initWithFrame:CGRectZero];
-		font =  [UIFont fontWithName:@"Futura" size:14];
+		font =  [UIFont fontWithName:@"Avenir-Book" size:14];
 		label.font = font;
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentLeft;
@@ -57,9 +57,9 @@
 		
 		
 		label = [[UILabel alloc] initWithFrame:CGRectZero];
-        font =  [UIFont fontWithName:@"Futura" size:14];
+        font =  [UIFont fontWithName:@"Avenir-Book" size:14];
 		label.font = font;
-		label.backgroundColor = UIColorFromRGBA(0x00000, .1);
+		label.backgroundColor = [UIColor colorWithWhite:0 alpha:.1];
 		label.textAlignment = UITextAlignmentCenter;
 		label.textColor = [UIColor blackColor];
 		label.numberOfLines=4;
@@ -67,9 +67,9 @@
 		[self.contentView addSubview:timeLableView];
         
         label = [[UILabel alloc] initWithFrame:CGRectZero];
-        font =  [UIFont fontWithName:@"Futura" size:12];
+        font =  [UIFont fontWithName:@"Avenir-Book" size:12];
 		label.font = font;
-		label.backgroundColor = UIColorFromRGBA(0x00000, .1);
+		label.backgroundColor =  [UIColor colorWithWhite:0 alpha:.1];
 		label.textAlignment = UITextAlignmentCenter;
 		label.textColor = [UIColor blackColor];
 		label.numberOfLines=2;
@@ -89,7 +89,7 @@
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 70);
   
         UIView *bgView = [[UIView alloc] initWithFrame:self.bounds];
-        bgView.backgroundColor = UIColorFromRGB(0xBDB38C);
+        bgView.backgroundColor = [UIColor colorWithRed:0.749 green:0.737 blue:0.631 alpha:1];
         [self setSelectedBackgroundView:bgView];
         self.accessoryType = UITableViewCellAccessoryNone;
     }
@@ -113,15 +113,15 @@
 	//if () {
     if ([Helper appLang] == kEnglish){
         self.cellImageView.frame =     CGRectMake(0, 15, 40,40);
-        self.detailLableView.textAlignment = self.labelView.textAlignment = UITextAlignmentLeft;
-        self.labelView.frame =         CGRectMake(self.cellImageView.frame.size.width+5,0,190,25);
+        self.detailLableView.textAlignment = self.labelView.textAlignment = NSTextAlignmentLeft;
+        self.labelView.frame =         CGRectMake(self.cellImageView.frame.size.width+5,15,190,25);
         self.detailLableView.frame =   CGRectMake(self.cellImageView.frame.size.width+5,25,190,45);;
         self.timeLableView.frame =     CGRectMake(CGRectGetWidth(self.bounds)-80,0,80,25);
         self.locationLableView.frame = CGRectMake(CGRectGetWidth(self.bounds)-80,25,80,45);
     }else{
-        self.detailLableView.textAlignment = self.labelView.textAlignment = UITextAlignmentRight;
+        self.detailLableView.textAlignment = self.labelView.textAlignment = NSTextAlignmentRight;
         self.cellImageView.frame = CGRectMake(CGRectGetWidth(self.bounds)-50, 15, 50,50);
-        self.labelView.frame =         CGRectMake(CGRectGetWidth(self.bounds)-210,0,160,25);
+        self.labelView.frame =         CGRectMake(CGRectGetWidth(self.bounds)-210,8,160,25);
         self.detailLableView.frame =   CGRectMake(CGRectGetWidth(self.bounds)-210,25,160,45);;
         self.timeLableView.frame =     CGRectMake(0,0,80,25);
         self.locationLableView.frame = CGRectMake(0,25,80,45);
@@ -177,9 +177,22 @@
     UIImage *cellImage= [event icon];
    
 	[self.cellImageView setImage:cellImage];
+    switch ([event.type intValue]) {
+        case kEventTypeFeeding:
+            cellImageView.tintColor = [UIColor colorWithRed:0.243 green:0.435 blue:0.478 alpha:1];
+            break;
+        case kEventTypeTalk:
+            cellImageView.tintColor = [UIColor colorWithRed:0.463 green:0.365 blue:0.322 alpha:1];
+            break;
+            
+        default:
+            cellImageView.tintColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+
+            break;
+    }
     
-    
-	
+    self.cellImageView.image = [self.cellImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
 
 	[labelView setNeedsDisplay];
     [detailLableView setNeedsDisplay];

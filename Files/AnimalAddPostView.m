@@ -100,6 +100,9 @@
     
 }
 
+
+
+
 -(void)sendPost{
     if (![self verifyPost]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Post Attantion"]

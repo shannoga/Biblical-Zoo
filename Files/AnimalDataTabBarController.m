@@ -55,10 +55,10 @@
         /* Description view*/
         /*****************************************/
 
-        AnimalDescriptionWebView *descriptionViewController = [[AnimalDescriptionWebView alloc] initWithAnimal:anAnimal];
-        descriptionViewController.title = [Helper languageSelectedStringForKey:@"More"];
-        descriptionViewController.tabBarItem.image =[UIImage imageNamed:@"description"];
-        [self addChildViewController:descriptionViewController];
+//        AnimalDescriptionWebView *descriptionViewController = [[AnimalDescriptionWebView alloc] initWithAnimal:anAnimal];
+//        descriptionViewController.title = [Helper languageSelectedStringForKey:@"More"];
+//        descriptionViewController.tabBarItem.image =[UIImage imageNamed:@"description"];
+//        [self addChildViewController:descriptionViewController];
 
         
         

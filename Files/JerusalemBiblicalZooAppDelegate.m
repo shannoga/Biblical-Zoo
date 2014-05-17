@@ -37,7 +37,7 @@
      UIRemoteNotificationTypeSound];
     
     
-    [self setUpTabBarControllers];
+  //  [self setUpTabBarControllers];
     
     
     BOOL askedUser = [[NSUserDefaults standardUserDefaults] boolForKey:@"answeredBugsense"];
@@ -247,18 +247,23 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 
 -(void)setUIAppearence{
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
-    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundImage:[UIImage imageNamed:@"nav_pattern_baje"] ];
-    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundColor:UIColorFromRGB(0xf8eddf)];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];
     
-    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
-    [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
-    [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xC95000)];
-    [[UITabBar appearance] setTintColor:UIColorFromRGB(0x3B2F24)];
-    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setSelectedImageTintColor:UIColorFromRGB(0x69742C)];
-    [[UITableView appearance] setBackgroundColor:UIColorFromRGB(0xBDB38C)];
+    self.window.tintColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+//    [[UITableViewCell appearance] setBackgroundColor:[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1]];
+
+   // [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
+  //  [[UITabBar appearance] setTintColor:UIColorFromRGB(0xD9593A)];
+//    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundImage:[UIImage imageNamed:@"nav_pattern_baje"] ];
+//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundColor:UIColorFromRGB(0xf8eddf)];
+//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];
+//    
+//    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
+//    [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
+//    [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xEFF1E7)];
+////    [[UITabBar appearance] setTintColor:UIColorFromRGB(0x3B2F24)];
+//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setSelectedImageTintColor:UIColorFromRGB(0x69742C)];
+    [[UITableView appearance] setBackgroundColor:[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1]];
 }
 -(void)setUpMagicalRecord{
     // [MagicalRecord setupCoreDataStack];
@@ -281,7 +286,6 @@ monitoringDidFailForRegion:(CLRegion *)region
             }
         }
     }
-    
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"JerusalemBiblicalZooSeed.sqlite"];
     
     if (firstLunch) {
@@ -318,53 +322,27 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 -(void)setUpTabBarControllers{
     
-    // Create a tabbar controller and an array to contain the view controllers
-    if (!self.tabBarController) {
-        self.tabBarController = [[UITabBarController alloc] init];
-        
-    }
-    self.tabBarController.viewControllers  = @[];
     
-    NSMutableArray *localViewControllersArray = [NSMutableArray array];
+    UITabBarController* tabBar = (UITabBarController *)self.window.rootViewController;
     
-    ExhibitsViewController *exhibitsViewController = [[ExhibitsViewController alloc] initWithStyle:UITableViewStylePlain];
-    exhibitsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Exhibits"] image:[UIImage imageNamed:@"exhibits"] tag:0];
-    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:exhibitsViewController];
-	[localViewControllersArray addObject:nc];
-    
-  
-    
-    EventsTableViewController *eventsTableViewController = [[EventsTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    eventsTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Events"] image:[UIImage imageNamed:@"events"] tag:1];
-    nc = [[UINavigationController alloc]initWithRootViewController:eventsTableViewController];
-	[localViewControllersArray addObject:nc];
-    
-    self.mapController = [[TileMapViewController alloc] init];
-    self.mapController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Map"] image:[UIImage imageNamed:@"088-Map"] tag:2];
-    nc = [[UINavigationController alloc]initWithRootViewController:self.mapController];
-	[localViewControllersArray addObject:nc];
-    
-    NewsListViewController *news = [[NewsListViewController alloc] init];
-    news.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"News"] image:[UIImage imageNamed:@"121-Mic"] tag:3];
-    nc = [[UINavigationController alloc]initWithRootViewController:news];
-	[localViewControllersArray addObject:nc];
-    
-    FunViewController * funViewController = [[FunViewController alloc] initWithNibName:@"FunViewController" bundle:[Helper localizationBundle]];
-    funViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"More"] image:[UIImage imageNamed:@"056-PlusCircle"] tag:4];
-    nc = [[UINavigationController alloc]initWithRootViewController:funViewController];
-	[localViewControllersArray addObject:nc];
-    
-    // set the tab bar controller view controller array to the localViewControllersArray
-    self.tabBarController.viewControllers = localViewControllersArray;
+    // reload the storyboard in the selected language
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[Helper currentLang] ofType:@"lproj"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     
-    // set the window subview as the tab bar controller
-    [self.window setRootViewController:self.tabBarController];
+    // reload the view controllers
+    UINavigationController *exhibitsController = (UINavigationController *)[storyBoard instantiateViewControllerWithIdentifier:@"ExhibitsNavController"];
+    UINavigationController *eventsNavController = (UINavigationController *)[storyBoard instantiateViewControllerWithIdentifier:@"EventsNavController"];
+    UINavigationController *mapNavController = (UINavigationController *)[storyBoard instantiateViewControllerWithIdentifier:@"MapNavController"];
+    UINavigationController *newsNavController = (UINavigationController *)[storyBoard instantiateViewControllerWithIdentifier:@"NewsNavController"];
+    UINavigationController *funNavController = (UINavigationController *)[storyBoard instantiateViewControllerWithIdentifier:@"FunNavController"];
     
-    // make the window visible
-    [self.window makeKeyAndVisible];
-    
-   // [eventsTableViewController updateCalendar];
+    // set them
+    NSArray *newViewControllers = @[exhibitsController, eventsNavController, mapNavController, newsNavController, funNavController];
+    tabBar.viewControllers = newViewControllers;
+
+    [eventsNavController.viewControllers[0] updateCalendar];
 }
 
 -(void)refreshViewControllersAfterLangChange{

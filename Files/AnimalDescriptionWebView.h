@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AnimalDescriptionWebView : UIViewController<UIWebViewDelegate>
-- (id)initWithAnimal:(Animal*)anAnimal;
+@property (weak, nonatomic) IBOutlet UIWebView *descriptionView;
+@property (nonatomic,strong) Animal* animal;
+
 @end

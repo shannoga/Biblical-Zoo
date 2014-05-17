@@ -26,10 +26,8 @@
 
 @implementation EventsTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style];
-    if (self) {
         // Custom initialization
         
         self.title = [Helper languageSelectedStringForKey:@"Events"];
@@ -41,8 +39,7 @@
     
         updateLoopCounter=1;
         shouldUpdateUI=NO;
-    }
-    return self;
+
 }
 
 
@@ -120,7 +117,6 @@
     self.tableView.delegate=self;
     
 
-    self.tableView.backgroundColor = UIColorFromRGB(0x8C817B);
 
    
     //segmentedController
@@ -137,24 +133,23 @@
                          action:@selector(reloadTableViewAfterSegmentedControllerChange:)
                forControlEvents:UIControlEventValueChanged];
     
-    segmentedControl.tintColor = UIColorFromRGB(0x8C9544);
     segmentedControl.selectedSegmentIndex = 0;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
  
     
 	self.tableView.rowHeight=70;
 
-    //update calendar if it is empty
-    if([[Event findAll] count]==0){
-        [self updateCalendar];
-    }
-    else
-    {
-        [[Event findAll] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSLog(@"event = %@",((Event*)obj).title);
-        }];
-    }
-   
+//    //update calendar if it is empty
+//    if([[Event findAll] count]==0){
+//        [self updateCalendar];
+//    }
+//    else
+//    {
+//        [[Event findAll] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//            NSLog(@"event = %@",((Event*)obj).title);
+//        }];
+//    }
+//   
 }
 
 
@@ -281,20 +276,6 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    // Set the colors for the gradient layer.
-//    CAGradientLayer *gradientLayer_ = (CAGradientLayer *)cell.contentView.layer;
-//    [gradientLayer_ setContentsScale:[[UIScreen mainScreen] scale]];
-    NSArray *cellColors = [event colors];
-   // gradientLayer_.colors =@[cellColors[0],
-                            // cellColors[1]];
-    cell.contentView.backgroundColor = [UIColor yellowColor];
-}
 
 #pragma mark - Table view delegate
 

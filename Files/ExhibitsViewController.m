@@ -16,12 +16,13 @@
 #import "ZooInfoViewController.h"
 #import "SettingsViewController.h"
 #import "AnimalDataTabBarController.h"
+#import "AnimalDataNewViewController.h"
 @interface ExhibitsViewController ()
 
 -(void)storeNewAnimalObjectsLocallyInContext:(NSManagedObjectContext*)moc updateOldEntities:(BOOL)update;
 -(void)storeNewExhibitsLocallyInContext:(NSManagedObjectContext*)moc updateOldEntities:(BOOL)update;
 -(void)updateExhibitsAndAnimalsImManagedContext:(NSManagedObjectContext*)moc updateExisting:(BOOL)update;
-
+@property (nonatomic, strong)Exhibit *selectedExhibit;
 @end
 
 @implementation ExhibitsViewController
@@ -30,10 +31,9 @@
 @synthesize headerButtonIconView;
 @synthesize headerButtonLabel;
 @synthesize headerButton;
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style];
-    if (self) {
+  
         self.title = [Helper languageSelectedStringForKey:@"Exhibits"];
         
         /*
@@ -44,16 +44,15 @@
         */
     
         
-        UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Info"] style:UIBarButtonItemStyleDone target:self action:@selector(showInfoController)];
+        UIBarButtonItem *infoBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"724-info"] style:UIBarButtonItemStylePlain target:self action:@selector(showInfoController)];
         self.navigationItem.leftBarButtonItem = infoBarItem;
         
         //073-Setting
-        UIBarButtonItem *settingsBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"073-Setting"] style:UIBarButtonItemStyleDone target:self action:@selector(showSettings)];
+        UIBarButtonItem *settingsBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"740-gear"] style:UIBarButtonItemStyleDone target:self action:@selector(showSettings)];
 
               self.navigationItem.rightBarButtonItem = settingsBarItem;
 
-    }
-    return self;
+
 }
 -(void)showSettings{
     SettingsViewController *settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:[Helper localizationBundle]];
@@ -98,11 +97,11 @@
         font = [UIFont fontWithName:@"Futura" size:20];
         textAlign = UITextAlignmentLeft;
     }
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    self.headerView.backgroundColor = [UIColor whiteColor];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    self.headerView.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
     
     self.headerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.headerButton.frame = CGRectMake(0, 0, 320, 60);
+    self.headerButton.frame = CGRectMake(0, 0, 320, 50);
     
     self.headerButtonIconView = [[UIImageView alloc] initWithFrame:iconRect];
     
@@ -118,6 +117,8 @@
  
     self.tableView.tableHeaderView = self.headerView;
     
+ 
+  
     [self updateHeaderView];
 
 }
@@ -140,16 +141,16 @@
 
     if (exhibitsHasPendingUpdates) {
         // Do any additional setup after loading the view, typically from a nib.
-        self.headerButton.backgroundColor = UIColorFromRGB(0x3A2E23);
+        self.headerButton.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
         [self.headerButton addTarget:self action:@selector(updateAnimalsData) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"156-Cycle"]];
         if(exhibitsHasPendingUpdates)self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Update available for exhibits"];
 
     }else{
         //nearest exhibit        
-        self.headerButton.backgroundColor = UIColorFromRGB(0x8C9544);
+        self.headerButton.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
         [self.headerButton addTarget:self action:@selector(findNearestExhibit) forControlEvents:UIControlEventTouchUpInside];
-        [self.headerButtonIconView setImage:[UIImage imageNamed:@"343-Wand"]];
+        [self.headerButtonIconView setImage:[UIImage imageNamed:@"873-magic-wand"]];
         [self.headerButton addSubview:self.headerButtonIconView];
         self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Show Nearest Exhibit"];
   
@@ -194,11 +195,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.translucent =NO;;
-    self.tableView.backgroundColor = UIColorFromRGB(0xBDB38C);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor = UIColorFromRGBA(0xffffff, .2);
+    self.tableView.separatorColor = [UIColor colorWithRed:0.749 green:0.737 blue:0.631 alpha:1];
     self.tableView.rowHeight = 60;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -261,9 +259,13 @@
     [self updateHeaderView];
     NSArray *animals = [exhibit localAnimals];
     if ([animals count]==1) {
-        AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]]; 
-        [anialViewController setHidesBottomBarWhenPushed:YES];
-        [self.navigationController pushViewController:anialViewController animated:YES];
+        [self performSegueWithIdentifier:@"SelectedSingleAnimalExhibit" sender:self];
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AnimalsStoryboard" bundle:[Helper localizationBundle]];
+//        AnimalDataNewViewController *animalDataViewCOntroller = [storyboard instantiateViewControllerWithIdentifier:@"AnimalDataNewViewController"];
+//        animalDataViewCOntroller.animal = [animals lastObject];
+//        animalDataViewCOntroller.title = [[animals lastObject] name];
+//        [self.navigationController pushViewController:animalDataViewCOntroller animated:YES];
+
         
     } else if([animals count]>1){
         ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -283,10 +285,21 @@
 }
 
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSArray *animals = [self.selectedExhibit localAnimals];
+
+    AnimalDataNewViewController *animalDataViewCOntroller = (AnimalDataNewViewController *)segue.destinationViewController;
+    animalDataViewCOntroller.animal = [animals lastObject];
+    animalDataViewCOntroller.title = [[animals lastObject] name];
+
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Exhibit *exhibit = (Exhibit*) [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    self.selectedExhibit = exhibit;
     [self showExhibit:exhibit];
 }
 

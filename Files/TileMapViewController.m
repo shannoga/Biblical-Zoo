@@ -74,16 +74,11 @@
     return 30.0f;
 }
 
-- (id)init
+- (void)awakeFromNib
 {
-    self = [super init];
-    if (self) {
         // Custom initialization
         self.title =  [Helper languageSelectedStringForKey:@"Map"];
-     
-       
-    }
-    return self;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"789-map-location"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserLocation)];
 }
 
 
@@ -156,6 +151,7 @@
 }
 
 
+
 #pragma mark -
 #pragma mark UIPinchGestureRecognizer
 
@@ -212,9 +208,9 @@
 {
     [super viewWillAppear:animated];
     
-    
+    if (!IS_IPHONE_5) {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
+    }
     [self.map setShowsUserLocation:YES];
 
     
@@ -231,8 +227,9 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    if (!IS_IPHONE_5) {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
 }
 
 
@@ -244,7 +241,7 @@
         view.tileAlpha = 1;
         return view;
     }else if([overlay isKindOfClass:[MKPolygon class]]){
-        UIColor *fillColor = UIColorFromRGBA(0x8C9544, 1);
+        UIColor *fillColor =  [UIColor colorWithRed:0.749 green:0.737 blue:0.631 alpha:1];
         MKPolygonView *polyLineView = [[MKPolygonView alloc] initWithOverlay: overlay];
         polyLineView.fillColor = fillColor;
         return polyLineView;
@@ -303,37 +300,6 @@
         NSLog(@"no animals in the exhibit");
     }
 
-}
-- (void)showDetails:(id)sender
-{
-//    
-//    MKAnnotationView *annotationView = (MKAnnotationView*) [[sender superview]superview];
-//    ExhibitAnnotation *anootation =  (ExhibitAnnotation*)annotationView.annotation;
-//
-//    Exhibit *exhibit = anootation.exhibit;
-//    
-//   
-//        NSArray *animals = [exhibit localAnimals];
-//        [self.navigationController setToolbarHidden:YES animated:NO];
-//        if ([animals count]==1) {
-//            AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:[animals lastObject]];
-//            if(!IS_IPHONE_5){
-//            self.navigationController.navigationBar.tintColor = nil;
-//            self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-//            }
-//            [anialViewController setHidesBottomBarWhenPushed:YES];
-//            [self.navigationController pushViewController:anialViewController animated:YES];
-//            
-//        } else if([animals count]>1){
-//            ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] init];
-//            exhibitAnimalsViewController.exhibit = exhibit;
-//            [self.navigationController pushViewController:exhibitAnimalsViewController animated:YES];
-//            
-//        }else{
-//            NSLog(@"no animals in the exhibit");  
-//        }
-//
-//     
 }
 
 
@@ -414,9 +380,9 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation: (MKUserLocation *)userLocation
 {
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      //  mapView.centerCoordinate = userLocation.location.coordinate;
-    });
+   // dispatch_once(&onceToken, ^{
+        mapView.centerCoordinate = userLocation.location.coordinate;
+   // });
 } 
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
@@ -426,9 +392,6 @@
 }
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-    
- 
-    
     for (ExhibitAnnotation *annotation in mapView.annotations) {
       
         //
@@ -476,6 +439,7 @@
     if( [newLocation distanceFromLocation:mapCenterLocation]<1000){
         NSLog(@"user is in zoo");
         
+        
     }else{
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -518,6 +482,7 @@
     
 
 }
+
 -(void)showAnnotationForExhibit:(Exhibit*)exhibit{
    
     for (ExhibitAnnotation *annotation in self.map.annotations) {
@@ -528,10 +493,11 @@
             }
         }
     }
-    
-   
+}
 
-   
+- (void)showUserLocation
+{
+    [locationManager startUpdatingLocation];
 }
 
 @end

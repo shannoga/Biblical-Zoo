@@ -74,20 +74,20 @@ return self;
             
             CGRect rect = CGRectMake(self.bounds.size.width-96,(self.bounds.size.height-86)/2, 86, 86);
             self.imageView.frame = rect;
-            rect = CGRectMake(5, 10, 210, 20);
+            rect = CGRectMake(5, 25, 210, 20);
             UIFont *font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:16];
             
             labelView.font = font;
             labelView.frame = rect;
             labelView.textAlignment = UITextAlignmentRight;
-            rect.origin.y = rect.origin.y+ 20;
+            rect.origin.y = rect.origin.y;
             rect.size.height =  CGRectGetHeight(self.bounds)*0.7;
             detailLableView.frame = rect;
             detailLableView.textAlignment= NSTextAlignmentRight;
         }
 
-    self.imageView.layer.borderWidth = 4.0;
-    self.imageView.layer.borderColor = UIColorFromRGB(0x3A2E23).CGColor;
+    self.imageView.layer.borderWidth = 3.0;
+    self.imageView.layer.borderColor = [UIColor colorWithRed:0.463 green:0.365 blue:0.322 alpha:1].CGColor;
     self.imageView.layer.cornerRadius =43;
     self.imageView.clipsToBounds=YES;
     self.imageView.layer.shouldRasterize=YES;

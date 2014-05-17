@@ -37,7 +37,6 @@
         // The className to query on
         self.className = @"AnimalQuestions";
         
-        self.tableView.backgroundColor = UIColorFromRGB(0xF8EDDF);
         
         // Whether the built-in pull-to-refresh is enabled
         self.pullToRefreshEnabled = NO;
@@ -364,7 +363,6 @@
                                reuseIdentifier:CellIdentifier];
     }
     
-    [cell setObject:object atIndex:indexPath.row isQuestion:YES];
     
     return cell;
 }

@@ -23,4 +23,6 @@
     #import "CoreData+MagicalRecord.h"
     #import "MBProgressHUD.h"
     #import <BugSense-iOS/BugSenseController.h>
+    #import "UIAlertView+Blocks.h"
+    #import "UIActionSheet+Blocks.h"
 #endif

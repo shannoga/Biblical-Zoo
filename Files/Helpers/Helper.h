@@ -42,5 +42,9 @@
 +(void)setCurrentExhibit:(Exhibit*)exhibit;
 +(void)saveContext;
 
+
++ (UIColor*)colorForConservationStatus:(ConservationStatus)status;
++ (UIColor*)textColorForConservationStatus:(ConservationStatus)status;
+
 @end
 

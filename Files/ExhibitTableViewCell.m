@@ -29,7 +29,10 @@
         self.nameLabel.backgroundColor = [UIColor clearColor];
         
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+   
+       // [ self.iconImageView setTintColor:[UIColor redColor]];
          self.auodioGuideIndicator = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [ self.auodioGuideIndicator setTintColor:[UIColor redColor]];
         self.manyAnimalsIndicator= [[UIImageView alloc] initWithFrame:CGRectZero];
         
         [self addSubview:self.manyAnimalsIndicator];
@@ -37,9 +40,9 @@
         [self addSubview:self.iconImageView];
         [self addSubview:self.nameLabel];
         
-        UIView *bgView = [[UIView alloc] initWithFrame:self.bounds];
-        bgView.backgroundColor = UIColorFromRGB(0xf8eddf);
-        [self setSelectedBackgroundView:bgView];
+//        UIView *bgView = [[UIView alloc] initWithFrame:self.bounds];
+//        bgView.backgroundColor = UIColorFromRGB(0xf8eddf);
+//        [self setSelectedBackgroundView:bgView];
         self.accessoryType = UITableViewCellAccessoryNone;
     }
     return self;
@@ -65,7 +68,7 @@
     
     UIImage *icon = [[exhibit icon] normalize];
     self.iconImageView.image = icon;
-    
+    self.iconImageView.image = [self.iconImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     if([Helper appLang]==kHebrew){
         self.nameLabel.text =self.exhibit.name;
         [self.nameLabel setFrame:CGRectMake(10,0,250,CGRectGetHeight(self.bounds))];

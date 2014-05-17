@@ -260,6 +260,69 @@
 }
 
 
++ (UIColor*)colorForConservationStatus:(ConservationStatus)status
+{
+    switch (status) {
+        case ConLC:
+            return UIColorFromRGB(0x06968);
+            break;
+        case ConNT:
+            return UIColorFromRGB(0x06968);
+            break;
+        case ConVU:
+            return UIColorFromRGB(0xD59A00);
+            break;
+        case ConEN:
+            return UIColorFromRGB(0xDC5D02);
+            break;
+        case ConCR:
+            return UIColorFromRGB(0xDF0012);
+            break;
+        case ConEW:
+            return [UIColor blackColor];
+            break;
+        case ConEX:
+            return [UIColor blackColor];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
++ (UIColor*)textColorForConservationStatus:(ConservationStatus)status
+{
+    switch (status) {
+        case ConLC:
+            return [UIColor whiteColor];
+            break;
+        case ConNT:
+            return UIColorFromRGB(0x87D295);
+            break;
+        case ConVU:
+            return [UIColor whiteColor];
+            break;
+        case ConEN:
+            return [UIColor whiteColor];
+            break;
+        case ConCR:
+            return [UIColor whiteColor];
+            break;
+        case ConEW:
+            return [UIColor whiteColor];
+            break;
+        case ConEX:
+            return UIColorFromRGB(0xDF0012);
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+
     
 
 @end

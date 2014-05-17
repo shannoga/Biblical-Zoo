@@ -72,7 +72,7 @@
         self.labelView.frame =         CGRectMake(10,6,CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.frame)/4);
         self.detailLableView.frame =   CGRectMake(10,CGRectGetMaxY(self.labelView.frame),CGRectGetWidth(self.frame)-10,CGRectGetHeight(self.labelView.frame)*3);;
     }else{
-        self.labelView.textAlignment = self.detailLableView.textAlignment =UITextAlignmentRight;
+        self.labelView.textAlignment = self.detailLableView.textAlignment =NSTextAlignmentRight;
         UIFont *font =  [UIFont fontWithName:@"ArialHebrew-Bold" size:14];
         self.labelView.font = font;
         font =  [UIFont fontWithName:@"ArialHebrew" size:16];

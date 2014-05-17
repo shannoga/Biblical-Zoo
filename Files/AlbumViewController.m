@@ -156,7 +156,7 @@
         imagePicker.delegate = self;
         
         // Show image picker
-        [self presentModalViewController:imagePicker animated:YES];
+        [self presentViewController:imagePicker animated:YES completion:nil];
     }
     else{
         // Device has no camera

@@ -58,7 +58,7 @@
                                                      name:@"PostEditingEnded"
                                                    object:nil];
         
-        UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"088-Map_white.png"] style:UIBarButtonItemStyleDone target:self action:@selector(showOnMap)];
+        UIBarButtonItem *mapButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"852-map"] style:UIBarButtonItemStyleDone target:self action:@selector(showOnMap)];
         
         self.navigationItem.rightBarButtonItem = mapButton;
         

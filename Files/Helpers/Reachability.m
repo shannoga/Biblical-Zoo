@@ -216,7 +216,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         //clear out the dispatch queue
         if(self.reachabilitySerialQueue)
         {
-            dispatch_release(self.reachabilitySerialQueue);
+           // dispatch_release(self.reachabilitySerialQueue);
             self.reachabilitySerialQueue = nil;
         }
         
@@ -240,7 +240,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         // then clear out the dispatch queue
         if(self.reachabilitySerialQueue)
         {
-            dispatch_release(self.reachabilitySerialQueue);
+           // dispatch_release(self.reachabilitySerialQueue);
             self.reachabilitySerialQueue = nil;
         }
         
@@ -262,7 +262,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     
     if(self.reachabilitySerialQueue)
     {
-        dispatch_release(self.reachabilitySerialQueue);
+        //dispatch_release(self.reachabilitySerialQueue);
         self.reachabilitySerialQueue = nil;
     }
     

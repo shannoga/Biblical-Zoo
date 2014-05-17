@@ -30,7 +30,6 @@
         UITableView *dataTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 240) style:UITableViewStylePlain];
         dataTableView.delegate=self;
         dataTableView.dataSource = self;
-        dataTableView.backgroundColor = UIColorFromRGB(0xf8eddf);
         dataTableView.rowHeight = 100;
         dataTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [dataTableView setCanCancelContentTouches:YES];
@@ -213,7 +212,6 @@
                                           reuseIdentifier:CellIdentifier];
     }
     PFObject *object = [self.tableViewdata objectAtIndex:indexPath.row];
-     [cell setObject:object atIndex:indexPath.row isQuestion:YES];
     
     
     return cell;

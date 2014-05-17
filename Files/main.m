@@ -2,11 +2,10 @@
 // Copyright 2011 Ping Labs, Inc. All rights reserved.
 
 #import <UIKit/UIKit.h>
-
-int main(int argc, char *argv[])
-{
+#import "JerusalemBiblicalZooAppDelegate.h"
+int main(int argc, char *argv[]) {
+    
     @autoreleasepool {
-        int retVal = UIApplicationMain(argc, argv, nil, nil);
-        return retVal;
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([JerusalemBiblicalZooAppDelegate class]));
     }
 }

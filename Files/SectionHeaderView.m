@@ -76,7 +76,7 @@
     if (self != nil) {
         
         self.userInteractionEnabled = NO;
-        self.backgroundColor = UIColorFromRGB(0x3A2E23);
+        self.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
 		
         
 		self.dateLabelView = nil;

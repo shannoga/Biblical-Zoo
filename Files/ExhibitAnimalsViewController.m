@@ -41,11 +41,10 @@
 
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = YES;
-    self.tableView.backgroundColor = UIColorFromRGB(0x8C9544);
     
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    headerView.backgroundColor = UIColorFromRGB(0x3A2E23);
+    headerView.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
     self.tableView.tableHeaderView = headerView;
     
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
@@ -82,9 +81,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.translucent =NO;
-    self.tableView.backgroundColor = UIColorFromRGB(0x7F7960);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = UIColorFromRGBA(0xffffff, .2);
     self.tableView.rowHeight = 60;
@@ -163,6 +159,14 @@
     [alert show];
 }
     
+}
+
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    cell.contentView.backgroundColor =[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1];
 }
 
 @end

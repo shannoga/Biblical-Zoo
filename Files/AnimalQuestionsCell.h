@@ -11,9 +11,8 @@
 @interface AnimalQuestionsCell : PFTableViewCell
 
 @property (nonatomic,strong) PFObject *questionObject;
-@property (nonatomic,strong) UILabel *labelView;
-@property (nonatomic,strong) UILabel *detailLableView;
-
--(void)setObject:(PFObject *)anObject atIndex:(NSInteger)cellIndex isQuestion:(BOOL)isQuestion;
+@property (nonatomic,strong) IBOutlet UILabel *labelView;
+@property (nonatomic,strong) IBOutlet UILabel *detailLableView;
+@property (nonatomic,strong) IBOutlet UIImageView *iconView;
 
 @end
