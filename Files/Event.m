@@ -19,6 +19,7 @@
 @dynamic type;
 @dynamic typeString;
 @dynamic startDate;
+@dynamic endDate;
 @dynamic title;
 @dynamic eventDescription;
 @dynamic location;

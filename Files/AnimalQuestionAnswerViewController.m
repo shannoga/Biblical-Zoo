@@ -20,6 +20,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIToolbar *toolbarBackground = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 44, CGRectGetWidth(self.view.frame), 106)];
+    [self.view addSubview:toolbarBackground];
+    [self.view sendSubviewToBack:toolbarBackground];
+    
     NSString *directionalString;
     NSString *key = [Helper appLang]==kHebrew? @"question":@"question_en";
     NSString *quest = self.questionObject[key];

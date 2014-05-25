@@ -76,20 +76,20 @@
     CGRect iconRect;
     UIFont * font;
     UIFont *secondFont;
-    UITextAlignment textAlign;
+    NSTextAlignment textAlign;
     CGFloat height = 50;
     if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 0, 320, 50);
         iconRect = CGRectMake(265, 10, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
         secondFont = [UIFont fontWithName:@"ArialHebrew" size:14];
-        textAlign = UITextAlignmentCenter;
+        textAlign = NSTextAlignmentCenter;
     }else{
         labelRect = CGRectMake(0, 0, 320, 50);
         iconRect = CGRectMake(25, 10, 30, 30);
         font = [UIFont fontWithName:@"Futura" size:20];
         secondFont = [UIFont fontWithName:@"Futura" size:14];
-        textAlign = UITextAlignmentCenter;
+        textAlign = NSTextAlignmentCenter;
     }
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, height)];
     headerView.backgroundColor = [UIColor whiteColor];
@@ -121,7 +121,7 @@
     CGRect secondRect;
     UIFont * font;
     UIFont *secondFont;
-    UITextAlignment textAlign;
+    NSTextAlignment textAlign;
     CGFloat height = noQuestions? 100:50;
     if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 0, 320, 50);
@@ -129,14 +129,14 @@
         iconRect = CGRectMake(265, 10, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
         secondFont = [UIFont fontWithName:@"ArialHebrew" size:14];
-        textAlign = UITextAlignmentCenter;
+        textAlign = NSTextAlignmentCenter;
     }else{
         labelRect = CGRectMake(0, 0, 320, 50);
          secondRect = CGRectMake(20, 45, 280, 40);
         iconRect = CGRectMake(25, 10, 30, 30);
         font = [UIFont fontWithName:@"Futura" size:20];
         secondFont = [UIFont fontWithName:@"Futura" size:14];
-        textAlign = UITextAlignmentCenter;
+        textAlign = NSTextAlignmentCenter;
     }
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, height)];
     headerView.backgroundColor = [UIColor whiteColor];
@@ -160,7 +160,7 @@
         headerButtonLabel2.lineBreakMode = NSLineBreakByWordWrapping;
         headerButtonLabel2.font= secondFont;
         headerButtonLabel2.numberOfLines=2;
-        headerButtonLabel2.textAlignment = UITextAlignmentCenter;
+        headerButtonLabel2.textAlignment = NSTextAlignmentCenter;
         [headerButton addSubview:headerButtonLabel2];
 
     }

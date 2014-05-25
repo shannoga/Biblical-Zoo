@@ -76,7 +76,7 @@
     if (self != nil) {
         
         self.userInteractionEnabled = NO;
-        self.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+        self.backgroundColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
 		
         
 		self.dateLabelView = nil;
@@ -85,7 +85,7 @@
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
 		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = UITextAlignmentLeft;
+		label.textAlignment = NSTextAlignmentLeft;
         label.textColor = [UIColor whiteColor];
 		self.dateLabelView = label;
 		[self addSubview:dateLabelView];
@@ -94,14 +94,14 @@
         
         label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
         label.textColor =[UIColor whiteColor];
 		self.afterNone = label;
 		[self addSubview:afterNone];
         
         label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
         label.textColor =[UIColor whiteColor];
 		self.morning = label;
 		[self addSubview:morning];
@@ -109,7 +109,7 @@
         label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
 		label.backgroundColor =[UIColor clearColor];
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
 		self.morningTitle = label;
         self.morningTitle.text = [Helper languageSelectedStringForKey:@"A.M"];
 		[self addSubview:self.morningTitle];
@@ -117,7 +117,7 @@
         label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
 		label.backgroundColor =[UIColor clearColor];
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
 		self.afterNoneTitle = label;
         self.afterNoneTitle.text = [Helper languageSelectedStringForKey:@"P.M"];
 		[self addSubview:self.afterNoneTitle];
@@ -132,7 +132,7 @@
     
     UIFont *font = [Helper appLang]==kHebrew? [UIFont fontWithName:@"ArialHebrew-Bold" size:16] :[UIFont fontWithName:@"Futura" size:14] ;
     self.dateLabelView.font = font;
-	self.dateLabelView.textAlignment = [Helper appLang]==kHebrew? UITextAlignmentRight : UITextAlignmentLeft;
+	self.dateLabelView.textAlignment = [Helper appLang]==kHebrew? NSTextAlignmentRight : NSTextAlignmentLeft;
     self.dateLabelView.frame = CGRectMake([Helper appLang]==kHebrew? 110 : 6 ,0,200,CGRectGetHeight(self.frame));
     
     self.morning.text = [self textForMadad:amVal];

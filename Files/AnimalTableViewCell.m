@@ -70,14 +70,14 @@
         [self.iconImageView setFrame:CGRectMake(270,10,40,40)];
         [self.auodioGuideIndicator setFrame:CGRectMake(30,20,20,20)];
         [self.manyAnimalsIndicator setFrame:CGRectMake(5,20,20,20)];
-        self.nameLabel.textAlignment = UITextAlignmentRight;
+        self.nameLabel.textAlignment = NSTextAlignmentRight;
     }else{
         self.nameLabel.text = self.animal.nameEn;
         [self.nameLabel setFrame:CGRectMake(65,0,250,CGRectGetHeight(self.bounds))];
         [self.iconImageView setFrame:CGRectMake(5,10,40,40)];
         [self.auodioGuideIndicator setFrame:CGRectMake(265,20,20,20)];
         [self.manyAnimalsIndicator setFrame:CGRectMake(290,20,20,20)];
-        self.nameLabel.textAlignment = UITextAlignmentLeft;
+        self.nameLabel.textAlignment = NSTextAlignmentLeft;
     }
     
     if([self.animal.audioGuide boolValue]){

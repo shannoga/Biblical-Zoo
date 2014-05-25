@@ -9,25 +9,33 @@
 #import "ExhibitAnimalsViewController.h"
 #import "AnimalViewController.h"
 #import "AnimalTableViewCell.h"
-
+#import "AnimalDataNewViewController.h"
 @interface ExhibitAnimalsViewController ()
-
+@property (nonatomic, strong) Animal *selectedAnimal;
 @end
 
 @implementation ExhibitAnimalsViewController
 @synthesize exhibit;
 @synthesize animals;
 
-- (id)initWithStyle:(UITableViewStyle)style
+
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-        self.title = [Helper languageSelectedStringForKey:@"Exhibit animals"];
-   
-    }
-    return self;
+    self.title = [Helper languageSelectedStringForKey:@"Exhibit animals"];
 }
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"AnimalFromExhibitAnimals"])
+    {
+        AnimalDataNewViewController *animalDataViewCOntroller = (AnimalDataNewViewController *)segue.destinationViewController;
+        animalDataViewCOntroller.animal = self.selectedAnimal;
+        animalDataViewCOntroller.title = self.selectedAnimal.name;
+    }
+    
+}
+
 
 - (void)viewDidLoad
 {
@@ -44,7 +52,7 @@
     
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    headerView.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+    headerView.backgroundColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
     self.tableView.tableHeaderView = headerView;
     
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
@@ -61,7 +69,7 @@
     if([Helper appLang]==kHebrew){
         [label setFrame:CGRectMake(0, 10, 250, 40)];
          label.font= [UIFont fontWithName:@"ArialHebrew-Bold" size:18];
-        label.textAlignment = UITextAlignmentRight;
+        label.textAlignment = NSTextAlignmentRight;
          label.text = exhibit.name;
     }else{
         label.font= [UIFont fontWithName:@"Futura" size:20];
@@ -139,14 +147,15 @@
     Animal *animal = (self.animals)[indexPath.row];
     
     if(animal){
-    AnimalDataTabBarController *anialViewController = [[AnimalDataTabBarController alloc] initWithAnimal:animal];
         if(!IS_IPHONE_5){
            // self.navigationController.navigationBar.tintColor = nil;
            // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         }
-    [anialViewController setHidesBottomBarWhenPushed:YES];
+        self.selectedAnimal = animal;
+        [self performSegueWithIdentifier:@"AnimalFromExhibitAnimals" sender:self];
+    //[anialViewController setHidesBottomBarWhenPushed:YES];
 
-    [self.navigationController pushViewController:anialViewController animated:YES];
+    //[self.navigationController pushViewController:anialViewController animated:YES];
     }else{
     
     NSLog(@"no animals in the exhibit");

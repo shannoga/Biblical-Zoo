@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Animal.h"
-@interface AnimalAudioGuideViewController : UIViewController <AVAudioPlayerDelegate,AVAudioSessionDelegate>{
-    UILabel *label;
-    BOOL shouldResume;
-    __unsafe_unretained Animal *animal;
-    NSTimer *sliderTimer;
-}
- @property (nonatomic,assign) Animal *animal;
+@interface AnimalAudioGuideViewController : UIViewController <AVAudioPlayerDelegate,AVAudioSessionDelegate>
+@property (nonatomic) BOOL shouldResume;
+@property (nonatomic,strong) UILabel *label;
+@property (nonatomic,strong) NSTimer *sliderTimer;
+@property (nonatomic,strong) Animal *animal;
 @property (nonatomic,strong) AVAudioPlayer *player;
-@property (nonatomic,strong) UISlider *progressSlider;
-@property (nonatomic,strong) UIButton *playButton;
+@property (nonatomic,weak) IBOutlet UISlider *progressSlider;
+@property (nonatomic,weak) IBOutlet UIBarButtonItem *playButton;
+@property (nonatomic,weak) IBOutlet UIBarButtonItem *pouseButton;
+@property (nonatomic,weak) IBOutlet UIBarButtonItem *stopButton;
 -(void)play;
 -(void)pause;
 -(void)stop;

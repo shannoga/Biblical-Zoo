@@ -10,6 +10,7 @@
 		092354B313A1D7EB00DA740F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B213A1D7EB00DA740F /* CFNetwork.framework */; };
 		092354B513A1D7F000DA740F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B413A1D7F000DA740F /* SystemConfiguration.framework */; };
 		092354B713A1D83C00DA740F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B613A1D83C00DA740F /* MobileCoreServices.framework */; };
+		095325575B334B16807C1DA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDF0ED2D90E46A3A5ABC0B4 /* libPods.a */; };
 		095ACE8613C68EA300566243 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095ACE8513C68EA300566243 /* AudioToolbox.framework */; };
 		099CCEAD13F9E3760039A464 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 099CCEAC13F9E3760039A464 /* libz.1.1.3.dylib */; };
 		09ABC07213A1D52D009C3FCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07113A1D52D009C3FCF /* UIKit.framework */; };
@@ -333,6 +334,7 @@
 		39217B12158A2D1A00DEA44C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39217B11158A2D1A00DEA44C /* CoreVideo.framework */; };
 		39217B14158A2D3500DEA44C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39217B13158A2D3500DEA44C /* AssetsLibrary.framework */; };
 		39217B16158A2D4900DEA44C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39217B15158A2D4900DEA44C /* AVFoundation.framework */; };
+		3929E0AA193267BF0052008D /* VisitorsImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3929E0A9193267BF0052008D /* VisitorsImageCollectionViewCell.m */; };
 		392CB4DD16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 392CB4DC16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite */; };
 		39331D901914155B00BF550A /* MXLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D891914155B00BF550A /* MXLCalendar.m */; };
 		39331D911914155B00BF550A /* MXLCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 39331D8B1914155B00BF550A /* MXLCalendarEvent.m */; };
@@ -343,6 +345,11 @@
 		3940655A192569430056D057 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39406559192569430056D057 /* MainStoryboard.storyboard */; };
 		394065601925F2730056D057 /* AnimalDataNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3940655F1925F2730056D057 /* AnimalDataNewViewController.m */; };
 		394065631925F98D0056D057 /* ViewQuestionsOrPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 394065621925F98D0056D057 /* ViewQuestionsOrPostsViewController.m */; };
+		39406566192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 39406564192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodeld */; };
+		3940656A192782A30056D057 /* UIViewController+CWPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 39406569192782A30056D057 /* UIViewController+CWPopup.m */; };
+		39406574192783970056D057 /* QuestionAnswerPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39406572192783970056D057 /* QuestionAnswerPopupViewController.m */; };
+		39406575192783970056D057 /* QuestionAnswerPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39406573192783970056D057 /* QuestionAnswerPopupViewController.xib */; };
+		39406577192784C00056D057 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39406576192784C00056D057 /* Accelerate.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		394B348716766C9D0021C507 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394B348616766C9D0021C507 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		394B348916766CA60021C507 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394B348816766CA60021C507 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		394B348B16766CC10021C507 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394B348A16766CC10021C507 /* StoreKit.framework */; };
@@ -421,6 +428,10 @@
 		39650F501684431F008EA096 /* wet_side_story_he.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 39650F3C1684431F008EA096 /* wet_side_story_he.m4a */; };
 		39650F6316845DF6008EA096 /* AnimalQuestionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39650F6216845DF5008EA096 /* AnimalQuestionsTableView.m */; };
 		39650F6616845F5F008EA096 /* AnimalQuestionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39650F6516845F5E008EA096 /* AnimalQuestionsCell.m */; };
+		39654030192945CE00CA2450 /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3965402E192945CE00CA2450 /* triangle@2x.png */; };
+		39654031192945CE00CA2450 /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3965402F192945CE00CA2450 /* triangle.png */; };
+		3965403419295E2200CA2450 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3965403219295E2200CA2450 /* circle.png */; };
+		3965403519295E2200CA2450 /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3965403319295E2200CA2450 /* circle@2x.png */; };
 		396BBA6B158B13A9008620CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396BBA6A158B13A9008620CB /* CoreLocation.framework */; };
 		398A1AEC1589C5CD005FBA99 /* event_feeding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 398A1AD31589C5CD005FBA99 /* event_feeding@2x.png */; };
 		398A1AEF1589C5CD005FBA99 /* event_feeding_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 398A1AD61589C5CD005FBA99 /* event_feeding_small@2x.png */; };
@@ -546,10 +557,15 @@
 		39A7850B16BE8ACB008A0A4A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A7850916BE8AC2008A0A4A /* Icon.png */; };
 		39A7850C16BE8ACB008A0A4A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A7850A16BE8AC5008A0A4A /* Icon@2x.png */; };
 		39A7850F16BEA8BA008A0A4A /* SignForFriendView_HalfSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A7850E16BEA8B5008A0A4A /* SignForFriendView_HalfSize.m */; };
-		39A94AF316773DE3008A9CF6 /* jerusalemBiblicalZoo.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 39A94AF116773DA6008A9CF6 /* jerusalemBiblicalZoo.xcdatamodel */; };
 		39A94B091677BB96008A9CF6 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A94B061677BB96008A9CF6 /* LBYouTubeExtractor.m */; };
 		39A94B0A1677BB96008A9CF6 /* LBYouTubePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A94B081677BB96008A9CF6 /* LBYouTubePlayerController.m */; };
 		39A94B0D1677BCC3008A9CF6 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A94B0C1677BCC3008A9CF6 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		39A9D40B192D24B40033782C /* AnimalDataNewSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A9D40A192D24B40033782C /* AnimalDataNewSectionHeaderView.m */; };
+		39A9D40D192D24EF0033782C /* AnimalDataNewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A9D40C192D24EF0033782C /* AnimalDataNewSectionHeaderView.xib */; };
+		39A9D41019311C740033782C /* RoundedButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A9D40F19311C740033782C /* RoundedButtonView.m */; };
+		39A9D414193146F90033782C /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A9D413193146F90033782C /* CustomNavigationController.m */; };
+		39A9D417193260950033782C /* CPFQueryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A9D416193260950033782C /* CPFQueryCollectionViewController.m */; };
+		39A9D41A193260BC0033782C /* VisitorsImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A9D419193260BC0033782C /* VisitorsImagesViewController.m */; };
 		39ABDE6D16772B7700025349 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDE5216772B7700025349 /* Helper.m */; };
 		39ABDE6E16772B7700025349 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDE5416772B7700025349 /* MKMapView+ZoomLevel.m */; };
 		39ABDE6F16772B7700025349 /* NSData+Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDE5616772B7700025349 /* NSData+Encoding.m */; };
@@ -611,9 +627,9 @@
 		39ABDF4C16772BE600025349 /* Animal.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0D16772BE600025349 /* Animal.m */; };
 		39ABDF4D16772BE600025349 /* AnimalAudioGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF0F16772BE600025349 /* AnimalAudioGuideViewController.m */; };
 		39ABDF4E16772BE600025349 /* AnimalDataTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1116772BE600025349 /* AnimalDataTabBarController.m */; };
-		39ABDF4F16772BE600025349 /* AnimalDataTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1316772BE600025349 /* AnimalDataTableView.m */; };
+		39ABDF4F16772BE600025349 /* AnimalDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1316772BE600025349 /* AnimalDataTableViewController.m */; };
 		39ABDF5016772BE600025349 /* AnimalDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1516772BE600025349 /* AnimalDataTableViewCell.m */; };
-		39ABDF5116772BE600025349 /* AnimalDescriptionWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1716772BE600025349 /* AnimalDescriptionWebView.m */; };
+		39ABDF5116772BE600025349 /* AnimalDescriptionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1716772BE600025349 /* AnimalDescriptionWebViewController.m */; };
 		39ABDF5216772BE600025349 /* AnimalPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1916772BE600025349 /* AnimalPostView.m */; };
 		39ABDF5316772BE600025349 /* AnimalsImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1B16772BE600025349 /* AnimalsImagesScrollView.m */; };
 		39ABDF5416772BE600025349 /* AnimalUserPostsViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ABDF1D16772BE600025349 /* AnimalUserPostsViewer.m */; };
@@ -1038,6 +1054,8 @@
 		39217B11158A2D1A00DEA44C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		39217B13158A2D3500DEA44C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		39217B15158A2D4900DEA44C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3929E0A8193267BF0052008D /* VisitorsImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorsImageCollectionViewCell.h; sourceTree = "<group>"; };
+		3929E0A9193267BF0052008D /* VisitorsImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorsImageCollectionViewCell.m; sourceTree = "<group>"; };
 		392CB4DC16791A8B005A1E8C /* JerusalemBiblicalZooSeed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = JerusalemBiblicalZooSeed.sqlite; sourceTree = "<group>"; };
 		39331D881914155B00BF550A /* MXLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXLCalendar.h; sourceTree = "<group>"; };
 		39331D891914155B00BF550A /* MXLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXLCalendar.m; sourceTree = "<group>"; };
@@ -1055,6 +1073,14 @@
 		3940655F1925F2730056D057 /* AnimalDataNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataNewViewController.m; sourceTree = "<group>"; };
 		394065611925F98D0056D057 /* ViewQuestionsOrPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewQuestionsOrPostsViewController.h; sourceTree = "<group>"; };
 		394065621925F98D0056D057 /* ViewQuestionsOrPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewQuestionsOrPostsViewController.m; sourceTree = "<group>"; };
+		39406565192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = jerusalemBiblicalZoo.xcdatamodel; sourceTree = "<group>"; };
+		394065671927671C0056D057 /* jerusalemBiblicalZoo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "jerusalemBiblicalZoo 2.xcdatamodel"; sourceTree = "<group>"; };
+		39406568192782A30056D057 /* UIViewController+CWPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CWPopup.h"; sourceTree = "<group>"; };
+		39406569192782A30056D057 /* UIViewController+CWPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CWPopup.m"; sourceTree = "<group>"; };
+		39406571192783970056D057 /* QuestionAnswerPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionAnswerPopupViewController.h; sourceTree = "<group>"; };
+		39406572192783970056D057 /* QuestionAnswerPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionAnswerPopupViewController.m; sourceTree = "<group>"; };
+		39406573192783970056D057 /* QuestionAnswerPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionAnswerPopupViewController.xib; sourceTree = "<group>"; };
+		39406576192784C00056D057 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		394B348616766C9D0021C507 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		394B348816766CA60021C507 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		394B348A16766CC10021C507 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -1136,6 +1162,10 @@
 		39650F6216845DF5008EA096 /* AnimalQuestionsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalQuestionsTableView.m; sourceTree = "<group>"; };
 		39650F6416845F5E008EA096 /* AnimalQuestionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalQuestionsCell.h; sourceTree = "<group>"; };
 		39650F6516845F5E008EA096 /* AnimalQuestionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalQuestionsCell.m; sourceTree = "<group>"; };
+		3965402E192945CE00CA2450 /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "../../../../../Desktop/triangle@2x.png"; sourceTree = "<group>"; };
+		3965402F192945CE00CA2450 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = ../../../../../Desktop/triangle.png; sourceTree = "<group>"; };
+		3965403219295E2200CA2450 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		3965403319295E2200CA2450 /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
 		396BBA6A158B13A9008620CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		398A1AD31589C5CD005FBA99 /* event_feeding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event_feeding@2x.png"; sourceTree = "<group>"; };
 		398A1AD61589C5CD005FBA99 /* event_feeding_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "event_feeding_small@2x.png"; sourceTree = "<group>"; };
@@ -1274,7 +1304,6 @@
 		39A7850D16BEA8B1008A0A4A /* SignForFriendView_HalfSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignForFriendView_HalfSize.h; sourceTree = "<group>"; };
 		39A7850E16BEA8B5008A0A4A /* SignForFriendView_HalfSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignForFriendView_HalfSize.m; sourceTree = "<group>"; };
 		39A94AE516773455008A9CF6 /* he */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = he; path = he.lproj/EventDetailsViewController.xib; sourceTree = SOURCE_ROOT; };
-		39A94AF116773DA6008A9CF6 /* jerusalemBiblicalZoo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = jerusalemBiblicalZoo.xcdatamodel; path = jerusalemBiblicalZoo.xcdatamodeld/jerusalemBiblicalZoo.xcdatamodel; sourceTree = SOURCE_ROOT; };
 		39A94AF81677416B008A9CF6 /* EventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTableViewController.h; sourceTree = "<group>"; };
 		39A94B041677BB96008A9CF6 /* LBYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTube.h; sourceTree = "<group>"; };
 		39A94B051677BB96008A9CF6 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
@@ -1283,6 +1312,17 @@
 		39A94B081677BB96008A9CF6 /* LBYouTubePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerController.m; sourceTree = "<group>"; };
 		39A94B0B1677BCC3008A9CF6 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		39A94B0C1677BCC3008A9CF6 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		39A9D409192D24B40033782C /* AnimalDataNewSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataNewSectionHeaderView.h; sourceTree = "<group>"; };
+		39A9D40A192D24B40033782C /* AnimalDataNewSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataNewSectionHeaderView.m; sourceTree = "<group>"; };
+		39A9D40C192D24EF0033782C /* AnimalDataNewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimalDataNewSectionHeaderView.xib; sourceTree = "<group>"; };
+		39A9D40E19311C740033782C /* RoundedButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedButtonView.h; sourceTree = "<group>"; };
+		39A9D40F19311C740033782C /* RoundedButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedButtonView.m; sourceTree = "<group>"; };
+		39A9D412193146F90033782C /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
+		39A9D413193146F90033782C /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
+		39A9D415193260950033782C /* CPFQueryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPFQueryCollectionViewController.h; sourceTree = "<group>"; };
+		39A9D416193260950033782C /* CPFQueryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPFQueryCollectionViewController.m; sourceTree = "<group>"; };
+		39A9D418193260BC0033782C /* VisitorsImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorsImagesViewController.h; sourceTree = "<group>"; };
+		39A9D419193260BC0033782C /* VisitorsImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorsImagesViewController.m; sourceTree = "<group>"; };
 		39ABDE5116772B7700025349 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		39ABDE5216772B7700025349 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		39ABDE5316772B7700025349 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
@@ -1408,12 +1448,12 @@
 		39ABDF0F16772BE600025349 /* AnimalAudioGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalAudioGuideViewController.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1016772BE600025349 /* AnimalDataTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTabBarController.h; sourceTree = SOURCE_ROOT; };
 		39ABDF1116772BE600025349 /* AnimalDataTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTabBarController.m; sourceTree = SOURCE_ROOT; };
-		39ABDF1216772BE600025349 /* AnimalDataTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTableView.h; sourceTree = SOURCE_ROOT; };
-		39ABDF1316772BE600025349 /* AnimalDataTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTableView.m; sourceTree = SOURCE_ROOT; };
+		39ABDF1216772BE600025349 /* AnimalDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTableViewController.h; sourceTree = SOURCE_ROOT; };
+		39ABDF1316772BE600025349 /* AnimalDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTableViewController.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1416772BE600025349 /* AnimalDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDataTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		39ABDF1516772BE600025349 /* AnimalDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDataTableViewCell.m; sourceTree = SOURCE_ROOT; };
-		39ABDF1616772BE600025349 /* AnimalDescriptionWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDescriptionWebView.h; sourceTree = SOURCE_ROOT; };
-		39ABDF1716772BE600025349 /* AnimalDescriptionWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDescriptionWebView.m; sourceTree = SOURCE_ROOT; };
+		39ABDF1616772BE600025349 /* AnimalDescriptionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalDescriptionWebViewController.h; sourceTree = SOURCE_ROOT; };
+		39ABDF1716772BE600025349 /* AnimalDescriptionWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalDescriptionWebViewController.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1816772BE600025349 /* AnimalPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalPostView.h; sourceTree = SOURCE_ROOT; };
 		39ABDF1916772BE600025349 /* AnimalPostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimalPostView.m; sourceTree = SOURCE_ROOT; };
 		39ABDF1A16772BE600025349 /* AnimalsImagesScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimalsImagesScrollView.h; sourceTree = SOURCE_ROOT; };
@@ -1570,6 +1610,8 @@
 		39FC165B169AF22300E60F99 /* info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = info.html; sourceTree = SOURCE_ROOT; };
 		39FC165D169AF65500E60F99 /* info.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = info.css; sourceTree = SOURCE_ROOT; };
 		39FC8DEE1592FA60002837A6 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		95F9C237AA684F5E99FAB6FF /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		FCDF0ED2D90E46A3A5ABC0B4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1577,6 +1619,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39406577192784C00056D057 /* Accelerate.framework in Frameworks */,
 				394B348F16766D5B0021C507 /* AdSupport.framework in Frameworks */,
 				09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */,
 				394B348D16766D100021C507 /* libsqlite3.dylib in Frameworks */,
@@ -1606,6 +1649,7 @@
 				09ABC07413A1D52D009C3FCF /* Foundation.framework in Frameworks */,
 				39ABDF0616772BA800025349 /* Parse.framework in Frameworks */,
 				390C208317A927BF00D85954 /* BugSense-iOS.framework in Frameworks */,
+				095325575B334B16807C1DA2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1615,13 +1659,34 @@
 		09ABC06213A1D52D009C3FCF = {
 			isa = PBXGroup;
 			children = (
+				39A9D412193146F90033782C /* CustomNavigationController.h */,
+				39A9D413193146F90033782C /* CustomNavigationController.m */,
+				39406564192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodeld */,
 				39406559192569430056D057 /* MainStoryboard.storyboard */,
-				394065611925F98D0056D057 /* ViewQuestionsOrPostsViewController.h */,
-				394065621925F98D0056D057 /* ViewQuestionsOrPostsViewController.m */,
 				3940655E1925F2730056D057 /* AnimalDataNewViewController.h */,
 				3940655F1925F2730056D057 /* AnimalDataNewViewController.m */,
+				39A9D40E19311C740033782C /* RoundedButtonView.h */,
+				39A9D40F19311C740033782C /* RoundedButtonView.m */,
+				39A9D409192D24B40033782C /* AnimalDataNewSectionHeaderView.h */,
+				39A9D40A192D24B40033782C /* AnimalDataNewSectionHeaderView.m */,
+				39A9D40C192D24EF0033782C /* AnimalDataNewSectionHeaderView.xib */,
+				394065611925F98D0056D057 /* ViewQuestionsOrPostsViewController.h */,
+				394065621925F98D0056D057 /* ViewQuestionsOrPostsViewController.m */,
+				39406571192783970056D057 /* QuestionAnswerPopupViewController.h */,
+				39406572192783970056D057 /* QuestionAnswerPopupViewController.m */,
+				39406573192783970056D057 /* QuestionAnswerPopupViewController.xib */,
 				39D38E3A1923FE9B0071142B /* SendPostOrQuestionViewController.h */,
 				39D38E3B1923FE9B0071142B /* SendPostOrQuestionViewController.m */,
+				39ABDF1616772BE600025349 /* AnimalDescriptionWebViewController.h */,
+				39ABDF1716772BE600025349 /* AnimalDescriptionWebViewController.m */,
+				39ABDF1216772BE600025349 /* AnimalDataTableViewController.h */,
+				39ABDF1316772BE600025349 /* AnimalDataTableViewController.m */,
+				39A9D418193260BC0033782C /* VisitorsImagesViewController.h */,
+				39A9D419193260BC0033782C /* VisitorsImagesViewController.m */,
+				3929E0A8193267BF0052008D /* VisitorsImageCollectionViewCell.h */,
+				3929E0A9193267BF0052008D /* VisitorsImageCollectionViewCell.m */,
+				39A9D415193260950033782C /* CPFQueryCollectionViewController.h */,
+				39A9D416193260950033782C /* CPFQueryCollectionViewController.m */,
 				390C208217A927BE00D85954 /* BugSense-iOS.framework */,
 				39A77F6816BD9EAA008A0A4A /* Opening-568h@2x.png */,
 				39A77F6A16BD9EAA008A0A4A /* Opening.png */,
@@ -1657,12 +1722,8 @@
 				39C7F4D117A77DAC00063A6F /* AnimalPostsTableViewController.m */,
 				39650F6116845DF5008EA096 /* AnimalQuestionsTableView.h */,
 				39650F6216845DF5008EA096 /* AnimalQuestionsTableView.m */,
-				39ABDF1216772BE600025349 /* AnimalDataTableView.h */,
-				39ABDF1316772BE600025349 /* AnimalDataTableView.m */,
 				39ABDF1416772BE600025349 /* AnimalDataTableViewCell.h */,
 				39ABDF1516772BE600025349 /* AnimalDataTableViewCell.m */,
-				39ABDF1616772BE600025349 /* AnimalDescriptionWebView.h */,
-				39ABDF1716772BE600025349 /* AnimalDescriptionWebView.m */,
 				39ABDF1816772BE600025349 /* AnimalPostView.h */,
 				39ABDF1916772BE600025349 /* AnimalPostView.m */,
 				39559476167DE0A900F3737C /* AnimalAddPostView.h */,
@@ -1766,6 +1827,7 @@
 				09ABC07813A1D52D009C3FCF /* Supporting Files */,
 				09ABC07013A1D52D009C3FCF /* Frameworks */,
 				09ABC06E13A1D52D009C3FCF /* Products */,
+				95F9C237AA684F5E99FAB6FF /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1780,6 +1842,7 @@
 		09ABC07013A1D52D009C3FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39406576192784C00056D057 /* Accelerate.framework */,
 				394B348E16766D5B0021C507 /* AdSupport.framework */,
 				394B348C16766D100021C507 /* libsqlite3.dylib */,
 				394B348A16766CC10021C507 /* StoreKit.framework */,
@@ -1809,6 +1872,7 @@
 				09ABC07113A1D52D009C3FCF /* UIKit.framework */,
 				09ABC07313A1D52D009C3FCF /* Foundation.framework */,
 				09ABC07513A1D52D009C3FCF /* CoreGraphics.framework */,
+				FCDF0ED2D90E46A3A5ABC0B4 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1823,7 +1887,6 @@
 				39650F5116844327008EA096 /* audio guides */,
 				3906EE88167A089200108162 /* style-news.css */,
 				3906EE89167A089200108162 /* style.css */,
-				39A94AF116773DA6008A9CF6 /* jerusalemBiblicalZoo.xcdatamodel */,
 				39ABE02F167732B900025349 /* Final resize zoo images */,
 				39ABE02D1677328300025349 /* Tiles */,
 				39ABE0291677320E00025349 /* main.m */,
@@ -1891,6 +1954,10 @@
 		39816B111915091600052AE7 /* ios7_images */ = {
 			isa = PBXGroup;
 			children = (
+				3965403219295E2200CA2450 /* circle.png */,
+				3965403319295E2200CA2450 /* circle@2x.png */,
+				3965402E192945CE00CA2450 /* triangle@2x.png */,
+				3965402F192945CE00CA2450 /* triangle.png */,
 				399255D11922B72A00AEC8A6 /* 747-tag.png */,
 				399255D21922B72A00AEC8A6 /* 721-bookmarks.png */,
 				399255D31922B72A00AEC8A6 /* 721-bookmarks@2x.png */,
@@ -1989,6 +2056,8 @@
 		39ABDE5016772B7700025349 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				39406568192782A30056D057 /* UIViewController+CWPopup.h */,
+				39406569192782A30056D057 /* UIViewController+CWPopup.m */,
 				39ABDE5116772B7700025349 /* Helper.h */,
 				39ABDE5216772B7700025349 /* Helper.m */,
 				39ABDE5316772B7700025349 /* MKMapView+ZoomLevel.h */,
@@ -2634,9 +2703,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09ABC08E13A1D52E009C3FCF /* Build configuration list for PBXNativeTarget "JerusalemBiblicalZoo" */;
 			buildPhases = (
+				B5C25255BEB14431BEC13FAA /* Check Pods Manifest.lock */,
 				09ABC06913A1D52D009C3FCF /* Sources */,
 				09ABC06A13A1D52D009C3FCF /* Frameworks */,
 				09ABC06B13A1D52D009C3FCF /* Resources */,
+				510D49593DC04B9E8E6CD2BB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2762,6 +2833,7 @@
 				39A77FF516BE865C008A0A4A /* 088-Map.png in Resources */,
 				39A77FF616BE865C008A0A4A /* 088-Map@2x.png in Resources */,
 				39A77FF716BE865C008A0A4A /* 098-ShareThis.png in Resources */,
+				39654030192945CE00CA2450 /* triangle@2x.png in Resources */,
 				39A77FF816BE865C008A0A4A /* 098-ShareThis@2x.png in Resources */,
 				39A77FFB16BE865C008A0A4A /* 121-Mic.png in Resources */,
 				39A77FFC16BE865C008A0A4A /* 121-Mic@2x.png in Resources */,
@@ -2843,6 +2915,7 @@
 				39A7806116BE86A1008A0A4A /* event_feeding_small.png in Resources */,
 				39A7806216BE86A1008A0A4A /* event_feeding.png in Resources */,
 				39A7806316BE86A1008A0A4A /* event_kids_small.png in Resources */,
+				39A9D40D192D24EF0033782C /* AnimalDataNewSectionHeaderView.xib in Resources */,
 				39A7806416BE86A1008A0A4A /* event_kids.png in Resources */,
 				39A7806516BE86A1008A0A4A /* event_music_small.png in Resources */,
 				39A7806616BE86A1008A0A4A /* event_music.png in Resources */,
@@ -2953,6 +3026,7 @@
 				3900F07A16E241DB00C7AAEA /* cane_toad_2@2x.jpg in Resources */,
 				3900F07B16E241DB00C7AAEA /* capybara_1@2x.jpg in Resources */,
 				3900F07C16E241DB00C7AAEA /* capybara_2@2x.jpg in Resources */,
+				39406575192783970056D057 /* QuestionAnswerPopupViewController.xib in Resources */,
 				3900F07D16E241DB00C7AAEA /* capybara_3@2x.jpg in Resources */,
 				3900F07E16E241DB00C7AAEA /* cheetah_1@2x.jpg in Resources */,
 				39634C921915739200647DAE /* event_feeding_new.png in Resources */,
@@ -3015,6 +3089,7 @@
 				3900F0AF16E241DB00C7AAEA /* egyptian_vulture_1@2x.jpg in Resources */,
 				3900F0B016E241DB00C7AAEA /* egyptian_vulture_2@2x.jpg in Resources */,
 				3900F0B116E241DB00C7AAEA /* egyptian_vulture_3@2x.jpg in Resources */,
+				39654031192945CE00CA2450 /* triangle.png in Resources */,
 				3900F0B216E241DB00C7AAEA /* eurasian_eagle_owl_1@2x.jpg in Resources */,
 				3900F0B316E241DB00C7AAEA /* eurasian_eagle_owl_2@2x.jpg in Resources */,
 				3900F0B416E241DB00C7AAEA /* eurasian_eagle_owl_3@2x.jpg in Resources */,
@@ -3029,6 +3104,7 @@
 				3900F0BC16E241DB00C7AAEA /* geoffrey's_marmoset_1@2x.jpg in Resources */,
 				3900F0BD16E241DB00C7AAEA /* geoffrey's_marmoset_2@2x.jpg in Resources */,
 				3900F0BE16E241DB00C7AAEA /* geoffrey's_marmoset_3@2x.jpg in Resources */,
+				3965403519295E2200CA2450 /* circle@2x.png in Resources */,
 				3900F0BF16E241DB00C7AAEA /* giant_african_snail_1@2x.jpg in Resources */,
 				3900F0C016E241DB00C7AAEA /* giant_aldabra_tortoise_1@2x.jpg in Resources */,
 				3900F0C116E241DB00C7AAEA /* giant_aldabra_tortoise_2@2x.jpg in Resources */,
@@ -3137,6 +3213,7 @@
 				3900F12416E241DB00C7AAEA /* red_panda_2@2x.jpg in Resources */,
 				3900F12516E241DB00C7AAEA /* red_panda_3@2x.jpg in Resources */,
 				3900F12616E241DB00C7AAEA /* ring_tailed_lemur_1@2x.jpg in Resources */,
+				3965403419295E2200CA2450 /* circle.png in Resources */,
 				3900F12716E241DB00C7AAEA /* ring_tailed_lemur_2@2x.jpg in Resources */,
 				3900F12816E241DB00C7AAEA /* ring_tailed_lemur_3@2x.jpg in Resources */,
 				3900F12916E241DB00C7AAEA /* ring_tailed_lemur_4@2x.jpg in Resources */,
@@ -3228,12 +3305,44 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		510D49593DC04B9E8E6CD2BB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5C25255BEB14431BEC13FAA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		09ABC06913A1D52D009C3FCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39A94AF316773DE3008A9CF6 /* jerusalemBiblicalZoo.xcdatamodel in Sources */,
 				39ABDE6D16772B7700025349 /* Helper.m in Sources */,
 				39ABDE6E16772B7700025349 /* MKMapView+ZoomLevel.m in Sources */,
 				39ABDE6F16772B7700025349 /* NSData+Encoding.m in Sources */,
@@ -3278,7 +3387,10 @@
 				39ABDEF716772BA800025349 /* NSPersistentStore+MagicalRecord.m in Sources */,
 				39ABDEF816772BA800025349 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				394065631925F98D0056D057 /* ViewQuestionsOrPostsViewController.m in Sources */,
+				39406574192783970056D057 /* QuestionAnswerPopupViewController.m in Sources */,
 				39ABDEF916772BA800025349 /* MagicalRecord+Actions.m in Sources */,
+				39A9D41019311C740033782C /* RoundedButtonView.m in Sources */,
+				39A9D417193260950033782C /* CPFQueryCollectionViewController.m in Sources */,
 				39ABDEFA16772BA800025349 /* MagicalRecord+ErrorHandling.m in Sources */,
 				39ABDEFB16772BA800025349 /* MagicalRecord+iCloud.m in Sources */,
 				39ABDEFC16772BA800025349 /* MagicalRecord+Options.m in Sources */,
@@ -3290,6 +3402,7 @@
 				39ABDF0016772BA800025349 /* MBProgressHUD.m in Sources */,
 				39ABDF0116772BA800025349 /* ioapi.c in Sources */,
 				39ABDF0216772BA800025349 /* mztools.c in Sources */,
+				39A9D41A193260BC0033782C /* VisitorsImagesViewController.m in Sources */,
 				39BD910A192141C400F9985B /* RIButtonItem.m in Sources */,
 				39ABDF0316772BA800025349 /* unzip.c in Sources */,
 				39ABDF0416772BA800025349 /* zip.c in Sources */,
@@ -3300,9 +3413,10 @@
 				39ABDF4C16772BE600025349 /* Animal.m in Sources */,
 				39ABDF4D16772BE600025349 /* AnimalAudioGuideViewController.m in Sources */,
 				39ABDF4E16772BE600025349 /* AnimalDataTabBarController.m in Sources */,
-				39ABDF4F16772BE600025349 /* AnimalDataTableView.m in Sources */,
+				39ABDF4F16772BE600025349 /* AnimalDataTableViewController.m in Sources */,
 				39ABDF5016772BE600025349 /* AnimalDataTableViewCell.m in Sources */,
-				39ABDF5116772BE600025349 /* AnimalDescriptionWebView.m in Sources */,
+				39406566192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodeld in Sources */,
+				39ABDF5116772BE600025349 /* AnimalDescriptionWebViewController.m in Sources */,
 				39ABDF5216772BE600025349 /* AnimalPostView.m in Sources */,
 				39ABDF5316772BE600025349 /* AnimalsImagesScrollView.m in Sources */,
 				39ABDF5416772BE600025349 /* AnimalUserPostsViewer.m in Sources */,
@@ -3313,9 +3427,11 @@
 				39ABDF5E16772BE600025349 /* ConservasionStatusIndicator.m in Sources */,
 				39ABDF5F16772BE600025349 /* Event.m in Sources */,
 				39ABDF6016772BE600025349 /* EventDetailsViewController.m in Sources */,
+				39A9D414193146F90033782C /* CustomNavigationController.m in Sources */,
 				39ABDF6116772BE600025349 /* EventsTableViewController.m in Sources */,
 				39ABDF6216772BE600025349 /* EventTableViewCell.m in Sources */,
 				39ABDF6316772BE600025349 /* Exhibit.m in Sources */,
+				39A9D40B192D24B40033782C /* AnimalDataNewSectionHeaderView.m in Sources */,
 				39ABDF6416772BE600025349 /* ExhibitAnimalsViewController.m in Sources */,
 				39331D911914155B00BF550A /* MXLCalendarEvent.m in Sources */,
 				39331D96191425DD00BF550A /* EventsController.m in Sources */,
@@ -3338,8 +3454,10 @@
 				39ABDFA616772C0D00025349 /* TickleGestureRecognizer.m in Sources */,
 				39ABDFA716772C0D00025349 /* TileMapViewController.m in Sources */,
 				39ABDFA916772C0D00025349 /* TileOverlay.m in Sources */,
+				3929E0AA193267BF0052008D /* VisitorsImageCollectionViewCell.m in Sources */,
 				39ABDFAA16772C0D00025349 /* TileOverlayView.m in Sources */,
 				39ABE02216772DC400025349 /* JerusalemBiblicalZooAppDelegate.m in Sources */,
+				3940656A192782A30056D057 /* UIViewController+CWPopup.m in Sources */,
 				39ABE02A1677320E00025349 /* main.m in Sources */,
 				39A94B091677BB96008A9CF6 /* LBYouTubeExtractor.m in Sources */,
 				39A94B0A1677BB96008A9CF6 /* LBYouTubePlayerController.m in Sources */,
@@ -3690,6 +3808,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -3717,6 +3836,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
@@ -3727,6 +3847,7 @@
 		};
 		09ABC08F13A1D52E009C3FCF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95F9C237AA684F5E99FAB6FF /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -3761,6 +3882,7 @@
 		};
 		09ABC09013A1D52E009C3FCF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95F9C237AA684F5E99FAB6FF /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -3815,6 +3937,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		39406564192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				394065671927671C0056D057 /* jerusalemBiblicalZoo 2.xcdatamodel */,
+				39406565192766DB0056D057 /* jerusalemBiblicalZoo.xcdatamodel */,
+			);
+			currentVersion = 394065671927671C0056D057 /* jerusalemBiblicalZoo 2.xcdatamodel */;
+			path = jerusalemBiblicalZoo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 09ABC06413A1D52D009C3FCF /* Project object */;
 }

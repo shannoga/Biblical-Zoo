@@ -8,14 +8,17 @@
 
 #import "ViewQuestionsOrPostsViewController.h"
 #import "AnimalQuestionsCell.h"
+#import "QuestionAnswerPopupViewController.h"
+#import "UIViewController+CWPopup.h"
 
-#define FONT_SIZE 17.0f
+#define FONT_SIZE 15.0f
 #define CELL_MIN_HEIGHT 40.0f
 #define CELL_CONTENT_WIDTH 280.0f
-#define CELL_CONTENT_MARGIN 20.0f
+#define CELL_CONTENT_MARGIN 30.0f
 
-@interface ViewQuestionsOrPostsViewController () <MBProgressHUDDelegate>
+@interface ViewQuestionsOrPostsViewController () <MBProgressHUDDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) MBProgressHUD *refreshHUD;
+@property (nonatomic) BOOL isPresentingAnswer;
 @end
 
 @implementation ViewQuestionsOrPostsViewController
@@ -30,7 +33,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    if(self.postType == ViewerPostTypeQuestion)
+    {
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPopup)];
+        tapRecognizer.numberOfTapsRequired = 1;
+        tapRecognizer.delegate = self;
+        [self.tableView addGestureRecognizer:tapRecognizer];
+        self.useBlurForPopup = YES;
+        self.isPresentingAnswer = NO;
+        
+    }
+    
 }
 
 
@@ -53,15 +66,38 @@
     if(indexPath.row==[self.objects count])return 0;
     PFObject *object = [self.objects objectAtIndex:[indexPath row]];
     NSString *key = [Helper appLang]==kHebrew?@"question":@"question_en";
+    if(self.postType == ViewerPostTypeQuestion)
+    {
+        key = [Helper appLang]==kHebrew? @"question":@"question_en";
+    }else{
+        key = [Helper appLang]==kHebrew? @"text":@"text";
+    }
+    
     NSString *text = object[key];
-    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH , 20000.0f);
+    UIFont *font = [UIFont systemFontOfSize:16];
     
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGFloat height = MAX(size.height, CELL_MIN_HEIGHT);
-    
-    return height + (CELL_CONTENT_MARGIN * 2);
-    
+    if (text) {
+        CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH , 20000.0f);
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:text
+                                                                         attributes:@{ NSFontAttributeName:font}];
+        
+        CGSize size;
+        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+            
+            NSRange range = NSMakeRange(0, [attrString length]);
+            
+            NSDictionary *attributes = [attrString attributesAtIndex:0 effectiveRange:&range];
+            CGSize boundingBox = [text boundingRectWithSize:constraint options: NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+            
+            size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+        }
+        else{
+            size = [text sizeWithFont:font constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        }
+        
+        return size.height + (CELL_CONTENT_MARGIN * 2);
+    }
+    return 44;
 }
 
 - (PFTableViewCell *)tableView:(UITableView *)tableView
@@ -76,13 +112,18 @@
     {
         key = [Helper appLang]==kHebrew? @"question":@"question_en";
         uesrKey = @"user_name";
-        cell.iconView.image = [UIImage imageNamed:@"question"];
     }else{
         key = [Helper appLang]==kHebrew? @"text":@"text";
         uesrKey = @"user";
-        cell.iconView.image = [UIImage imageNamed:@"postCellIcon"];
     }
+    cell.iconView.image = self.animal.exhibit.icon;
     cell.labelView.text = object[key];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    [dateFormatter setCalendar:[NSCalendar currentCalendar]];
+    cell.dateLabel.text = [dateFormatter stringFromDate:object.createdAt];
     cell.detailLableView.text = object[uesrKey];
     return cell;
 }
@@ -90,12 +131,13 @@
 
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.className];
-    
+    [query orderByDescending:@"createdAt"];
+
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     
-    [query orderByDescending:@"createdAt"];
     if(self.animal!=nil){
-        [query whereKey:@"animal_en_name" equalTo:self.animal.nameEn];
+        
+        [query whereKey:self.postType == ViewerPostTypeQuestion ? @"animal_en_name" : @"animalNameEn" equalTo:self.animal.nameEn];
     }
     
     //NSString *key = [Helper appLang]==kHebrew? @"visible":@"visible_en";
@@ -104,12 +146,49 @@
     return query;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(self.postType == ViewerPostTypeQuestion)
+    {
+        self.useBlurForPopup = YES;
+        self.tableView.scrollEnabled = NO;
+        QuestionAnswerPopupViewController *answerPopupViewController = [[QuestionAnswerPopupViewController alloc] initWithNibName:@"QuestionAnswerPopupViewController" bundle:nil];
+        answerPopupViewController.popupViewOffset = self.tableView.contentOffset;
+        answerPopupViewController.questionObject = [self.objects objectAtIndex:indexPath.row];
+        [self presentPopupViewController:answerPopupViewController animated:YES completion:^{
+            self.isPresentingAnswer = YES;
+        }];
+    }
+    
+}
+
+- (void)dismissPopup {
+    if (self.popupViewController != nil) {
+        [self dismissPopupViewControllerAnimated:YES completion:^{
+            self.tableView.scrollEnabled = YES;
+            self.isPresentingAnswer = NO;
+
+        }];
+    }
+}
+
+
+#pragma mark - gesture recognizer delegate functions
+
+// so that tapping popup view doesnt dismiss it
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return [touch.view isDescendantOfView:self.tableView] && self.isPresentingAnswer;
+}
+
 #pragma mark MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [hud removeFromSuperview];
 	hud = nil;
 }
+
+
 /*
 #pragma mark - Navigation
 

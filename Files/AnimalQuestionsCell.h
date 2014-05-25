@@ -13,6 +13,7 @@
 @property (nonatomic,strong) PFObject *questionObject;
 @property (nonatomic,strong) IBOutlet UILabel *labelView;
 @property (nonatomic,strong) IBOutlet UILabel *detailLableView;
+@property (nonatomic,strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *iconView;
 
 @end

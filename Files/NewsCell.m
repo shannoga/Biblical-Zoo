@@ -66,8 +66,8 @@ return self;
             labelView.font = font;
             rect.origin.y = rect.origin.y+ CGRectGetHeight(self.bounds)*0.36;
             rect.size.height =  CGRectGetHeight(self.bounds)*0.5;
-            detailLableView.textAlignment= UITextAlignmentLeft;
-            labelView.textAlignment= UITextAlignmentLeft;
+            detailLableView.textAlignment= NSTextAlignmentLeft;
+            labelView.textAlignment= NSTextAlignmentLeft;
             detailLableView.frame = rect;
           
         }else{
@@ -79,7 +79,7 @@ return self;
             
             labelView.font = font;
             labelView.frame = rect;
-            labelView.textAlignment = UITextAlignmentRight;
+            labelView.textAlignment = NSTextAlignmentRight;
             rect.origin.y = rect.origin.y;
             rect.size.height =  CGRectGetHeight(self.bounds)*0.7;
             detailLableView.frame = rect;

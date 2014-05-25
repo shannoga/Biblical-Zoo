@@ -11,19 +11,32 @@
 
 @implementation NewsWebViewController
 @synthesize news;
-@synthesize scrollView;
-@synthesize youtubeController;
+//@synthesize youtubeController;
 
 - (id)initWithObject:(PFObject*)newsToSet{
     
     self = [super init];
     if (self) {
-        
+       // MP_EXTERN NSString *const XCDYouTubeVideoErrorDomain;
+       // MP_EXTERN NSString *const XCDMoviePlayerPlaybackDidFinishErrorUserInfoKey;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerDomainError:) name:XCDYouTubeVideoErrorDomain object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerDidFinishError:) name:XCDYouTubeVideoErrorDomain object:nil];
 		news = (PFObject*)newsToSet;
         self.hidesBottomBarWhenPushed=YES;
     }
     return self;
 }
+
+- (void)playerDomainError:(NSNotification *)notif
+{
+    NSLog(@"");
+
+}
+- (void)playerDidFinishError:(NSNotification *)notif
+{
+    NSLog(@"");
+}
+
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
     CGRect frame = aWebView.frame;
@@ -31,13 +44,10 @@
     aWebView.frame = frame;
     CGSize fittingSize = [aWebView sizeThatFits:CGSizeZero];
     frame.size = fittingSize;
-    self.scrollView.contentSize = CGSizeMake(320, fittingSize.height+300);
     aWebView.frame = frame;
-    
 }
 - (void)viewDidLoad {	
 	
-	self.view.backgroundColor = UIColorFromRGB(0x3a2918);
 
 	NSString *dir;
 	NSString *langClass;
@@ -49,59 +59,36 @@
         dir = @"rtl";
 		langClass = @"dirrtl"; 
     }
-    self.view.backgroundColor = UIColorFromRGB(0x3a2918);
+    self.view.backgroundColor = UIColorFromRGB(0xEEF2E6);
     
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectInset(self.view.bounds, 5, 0)];
-    bgView.backgroundColor = UIColorFromRGB(0xf8eddf);
-    [self.view addSubview:bgView];
+//    UIView *bgView = [[UIView alloc] initWithFrame:CGRectInset(self.view.bounds, 5, 0)];
+//    bgView.backgroundColor = UIColorFromRGB(0xf8eddf);
+//    [self.view addSubview:bgView];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    self.scrollView.backgroundColor = [UIColor clearColor];
-    self.scrollView.contentSize = CGSizeMake(320, 480);
-    self.scrollView.showsVerticalScrollIndicator = YES;
-    [self.view addSubview:self.scrollView];
+    
     NSLog(@"news =%@",news[@"youTubeUrl"]);
+    
+    self.imageView.image = [UIImage imageNamed:@"news_big_placeholder.png"]; // placeholder image
+    self.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.imageView.layer.borderWidth = 5;
+    
+    if(news[@"main_image"]!= [NSNull null]){
+        PFFile *thumbnail = news[@"main_image"];
+        self.imageView.file = thumbnail;
+        [self.imageView loadInBackground];
+    }
+    self.playVideoButton.hidden = YES;
+
     if (![news[@"youTubeUrl"] isEqualToString:@""] && news[@"youTubeUrl"]) {
         
-        self.youtubeController = [[LBYouTubePlayerController alloc] initWithYouTubeURL:[NSURL URLWithString:news[@"youTubeUrl"]] quality:LBYouTubeVideoQualityLarge];
-        self.youtubeController.delegate = self;
-        self.youtubeController.view.frame = CGRectMake(20.0f, 20.0f, 280.0f, 200.0f);
-        self.youtubeController.view.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.youtubeController.view.layer.borderWidth = 5;
-        [scrollView addSubview:self.youtubeController.view];
-        
-        progressHud = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.view addSubview:progressHud];
-        progressHud.labelText = [Helper languageSelectedStringForKey:@"Loading Video"];
-        [progressHud show:YES];
-        
+        self.playVideoButton.hidden = NO;
        
-    }else{
-        
-        
-        
-        
-        
-        PFImageView *imageView = [[PFImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 200)];
-        imageView.image = [UIImage imageNamed:@"news_big_placeholder.png"]; // placeholder image
-        imageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        imageView.layer.borderWidth = 5;
-        
-        if(news[@"main_image"]!= [NSNull null]){
-            PFFile *thumbnail = news[@"main_image"];
-             imageView.file = thumbnail;
-             [imageView loadInBackground];
-        }
-  
-        [scrollView addSubview:imageView];
-
     }
     
-	UIWebView *descriptionView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 200,320 ,370)];
 	//descriptionView.frame = CGRectInset(descriptionView.frame, CGRectGetWidth(self.view.frame)*.03 , CGRectGetHeight(self.view.frame)*.02);
-	descriptionView.delegate=self;
-    descriptionView.opaque =NO;
-    descriptionView.backgroundColor =[UIColor clearColor];
+	self.webView.delegate= self;
+    self.webView.opaque = NO;
+    self.webView.backgroundColor =[UIColor clearColor];
 	NSString *cssPath = [[NSBundle mainBundle] pathForResource:@"style-news" ofType:@"css"];
 	//do base url for css
 	NSString *path = [[NSBundle mainBundle] bundlePath];
@@ -124,32 +111,17 @@
 	NSString *html =[NSString stringWithFormat:@"<!DOCTYPE html><html lang=\"%@\" dir=\"%@\"><head><link rel=\"stylesheet\"  href=\"%@\" type=\"text/css\" /></head><body><article class=\"%@\"><h1>%@</h1><h4>%@</h4><p class=\"%@\">%@</p></article><br><footer>Publishd:<time pubdate>%@</time></footer> </body></html>",
 					 [Helper appLang] == kEnglish?@"en":@"he",dir,cssPath,langClass,title,subtitle,dir,text,formattedDateString];
 	
-	[descriptionView loadHTMLString:html baseURL:baseURL];  
-	[scrollView addSubview:descriptionView];
+	[self.webView loadHTMLString:html baseURL:baseURL];
     
 
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    self.youtubeController.delegate = nil;
+- (IBAction)playVideo:(id)sender
+{
+    XCDYouTubeVideoPlayerViewController *videoPlayerViewController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:news[@"youTubeUrl"]];
+    [self presentMoviePlayerViewControllerAnimated:videoPlayerViewController];
 }
 
-#pragma mark -
-#pragma mark LBYouTubePlayerViewControllerDelegate
-
--(void)youTubePlayerViewController:(LBYouTubePlayerController *)controller didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL{
-    NSLog(@"controlerrrrrrrrrr");
-    if(progressHud!=nil){
-        [progressHud hide:YES];
-    }
-}
-
--(void)youTubePlayerViewController:(LBYouTubePlayerController *)controller failedExtractingYouTubeURLWithError:(NSError *)error{
-    NSLog(@"Error extracting video error = %@",[error description]);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[Helper languageSelectedStringForKey:@"Attantion"]
-                                                    message:[Helper languageSelectedStringForKey:@"Problem Loading Video"] delegate:self cancelButtonTitle:[Helper languageSelectedStringForKey:@"Dismiss"] otherButtonTitles:nil];
-    [alert show];
-}
 
 
 #pragma mark -

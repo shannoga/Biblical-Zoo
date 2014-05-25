@@ -20,7 +20,7 @@
         
         postLabel = [[UITextView alloc] init];
         postLabel.textColor = [UIColor brownColor];
-        postLabel.textAlignment = [Helper appLang]==kHebrew?UITextAlignmentRight:UITextAlignmentLeft;
+        postLabel.textAlignment = [Helper appLang]==kHebrew?NSTextAlignmentRight:NSTextAlignmentLeft;
         postLabel.backgroundColor = [UIColor clearColor];
         postLabel.textColor = UIColorFromRGB(0x281502);
         postLabel.scrollEnabled=YES;

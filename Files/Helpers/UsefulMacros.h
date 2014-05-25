@@ -32,6 +32,7 @@
 #pragma mark iOS 4 Version Checkers
 
 #define IS_IOS4 ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"4"])
+#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"7"])
 
 #define CA360_SAMPLE_IOS4_ONLY \
 if(!IS_IOS4) { \
@@ -39,7 +40,7 @@ if(!IS_IOS4) { \
   badVersionLabel.text = @"This sample only works on iOS 4+"; \
   badVersionLabel.font = [UIFont boldSystemFontOfSize:26.f]; \
   badVersionLabel.textColor = [UIColor blackColor]; \
-  badVersionLabel.textAlignment = UITextAlignmentCenter; \
+  badVersionLabel.textAlignment = NSTextAlignmentCenter; \
   badVersionLabel.adjustsFontSizeToFitWidth = YES; \
   [self.view addSubview:badVersionLabel]; \
   [badVersionLabel release]; \

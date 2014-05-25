@@ -8,9 +8,9 @@
 
 #import "AnimalDataTabBarController.h"
 #import "Animal.h"
-#import "AnimalDescriptionWebView.h"
+#import "AnimalDescriptionWebViewController.h"
 #import "AnimalAudioGuideViewController.h"
-#import "AnimalDataTableView.h"
+#import "AnimalDataTableViewController.h"
 #import "AnimalPostView.h"
 #import "AnimalViewController.h"
 #import "AnimalQuestionsTableView.h"
@@ -45,7 +45,7 @@
         /*data table view*/
         /*****************************************/
         if(![anAnimal.generalExhibitDescription boolValue]){
-            AnimalDataTableView *dataTableView = [[AnimalDataTableView alloc] initWithStyle:UITableViewStylePlain withAnimal:anAnimal];
+            AnimalDataTableViewController *dataTableView = [[AnimalDataTableViewController alloc] initWithStyle:UITableViewStylePlain withAnimal:anAnimal];
             dataTableView.title = [Helper languageSelectedStringForKey:@"In Short"];
             dataTableView.tabBarItem.image =[UIImage imageNamed:@"data"];
             [self addChildViewController:dataTableView];

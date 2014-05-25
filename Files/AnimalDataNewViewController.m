@@ -8,19 +8,26 @@
 
 #import "AnimalDataNewViewController.h"
 #import "AnimalsImagesScrollView.h"
-#import "AnimalDescriptionWebView.h"
+#import "AnimalDescriptionWebViewController.h"
 #import "SendPostOrQuestionViewController.h"
 #import "ViewQuestionsOrPostsViewController.h"
+#import "AnimalDataTableViewController.h"
+#import "AnimalDataNewSectionHeaderView.h"
+#import "AnimalAudioGuideViewController.h"
+#import "VisitorsImagesViewController.h"
 
 @interface AnimalDataNewViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@property (nonatomic) BOOL isShowingHeaderView;
+@property (nonatomic) BOOL didLoadPosts;
+@property (nonatomic) BOOL didLoadQuestions;
+@property (nonatomic) BOOL didLoadImages;
 @end
 
 @implementation AnimalDataNewViewController
 
 - (void)awakeFromNib
 {
-    
+    self.isShowingHeaderView = NO;
 }
 
 
@@ -28,13 +35,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.tableHeaderView.hidden = YES;
+    if (!self.animal.audioGuide.boolValue) {
+        self.tableView.tableHeaderView = nil;
+    }
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.tableHeaderView.frame.size.height) animated:NO];
+    [[self tableView] setContentInset:UIEdgeInsetsMake(-self.tableView.tableHeaderView.frame.size.height, 0, 0, 0)];
+  //  self.tableView.tableHeaderView.hidden = YES;
+    self.latestPostLabel.textAlignment = self.latestQuestionLabel.textAlignment =[Helper appLang]==kHebrew ?NSTextAlignmentRight : NSTextAlignmentLeft;
     [self setUpConservationStatus];
     [self setUpScrollViewImages];
-    [self setUpLatestPost];
-     [self setUpLatestQuestion];
-    [self setUpLatestUserImage];
+    self.uploadImageProgressView.hidden = YES;
+
 }
+
 
 - (UIBarButtonItem *)cancelBarButton
 {
@@ -44,7 +57,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"animalDescriptionSegue"]) {
-        AnimalDescriptionWebView *webViewController = (AnimalDescriptionWebView *)segue.destinationViewController;
+        AnimalDescriptionWebViewController *webViewController = (AnimalDescriptionWebViewController *)segue.destinationViewController;
         webViewController.animal = self.animal;
     }
     else if ([segue.identifier isEqualToString:@"PostQuestion"] || [segue.identifier isEqualToString:@"PostPost"])
@@ -66,7 +79,7 @@
     else if ([segue.identifier isEqualToString:@"ViewAnimalQuestions"] || [segue.identifier isEqualToString:@"ViewAnimalPosts"])
     {
          ViewQuestionsOrPostsViewController *postsViewer = (ViewQuestionsOrPostsViewController *)segue.destinationViewController;
-        postsViewer.className = @"AnimalQuestions";
+       
         postsViewer.pullToRefreshEnabled = NO;
         postsViewer.loadingViewEnabled = NO;
         postsViewer.paginationEnabled = YES;
@@ -74,34 +87,89 @@
         postsViewer.animal = self.animal;
         if ([segue.identifier isEqualToString:@"ViewAnimalPosts"])
         {
+             postsViewer.className = @"AnimalPost";
             postsViewer.postType = ViewerPostTypePost;
         }
         else
         {
+             postsViewer.className = @"AnimalQuestions";
             postsViewer.postType = ViewerPostTypeQuestion;
         }
+    }
+    else if ([segue.identifier isEqualToString:@"DescriptionWebView"])
+    {
+         AnimalDescriptionWebViewController *webView = (AnimalDescriptionWebViewController *)segue.destinationViewController;
+        webView.animal = self.animal;
+    }
+    else if ([segue.identifier isEqualToString:@"DataList"])
+    {
+        AnimalDataTableViewController *tableViewController = (AnimalDataTableViewController *)segue.destinationViewController;
+        tableViewController.animal = self.animal;
+    }
+    else if ([segue.identifier isEqualToString:@"audioGuideSegue"])
+    {
+        AnimalAudioGuideViewController *audioViewController = (AnimalAudioGuideViewController *)segue.destinationViewController;
+        audioViewController.animal = self.animal;
+    }
+    else if ([segue.identifier isEqualToString:@"AnimalImageGallery"])
+    {
+        VisitorsImagesViewController *imagesController = (VisitorsImagesViewController *)segue.destinationViewController;
+        imagesController.animal = self.animal;
+        imagesController.pullToRefreshEnabled = NO;
     }
   
 }
 
 - (void)setUpConservationStatus
 {
-    for (UIView *conservationView in self.conservationViews) {
+
+    self.conservationIndicatorLabel.text = [Helper languageSelectedStringForKey:self.animal.conservationStatus];
+    //NSLocalizedString(self.animal.conservationStatus,nil);
+    for (UIView *conservationView in self.conservationViews)
+    {
         conservationView.layer.cornerRadius = 20.0f;
         conservationView.layer.borderColor = [Helper colorForConservationStatus:conservationView.tag].CGColor;
         conservationView.layer.borderWidth = 1.0;
-        for (UILabel *label in conservationView.subviews) {
-            if ([label isKindOfClass:[UILabel class]]) {
+        for (UILabel *label in conservationView.subviews)
+        {
+            if ([label isKindOfClass:[UILabel class]])
+            {
                 label.textColor = [Helper textColorForConservationStatus:conservationView.tag];
+            }
+            
+            if ([self.animal.conservationStatus isEqualToString:label.text])
+            {
+                self.conservationIndicatorConstraint.constant = CGRectGetWidth(self.view.frame) - conservationView.center.x - CGRectGetWidth(self.conservationIndicatorImageView.frame)/2;
+
+                [UIView animateWithDuration:2 animations:^{
+                    [self.conservationIndicatorImageView layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    [self startBlinkAnimation];
+                }];
             }
         }
     }
+    
+}
+
+- (void)startBlinkAnimation {
+    __weak AnimalDataNewViewController * weakSelf = self;
+    [UIView animateWithDuration:1.0f
+                     animations:^{
+                         weakSelf.conservationIndicatorImageView.alpha = (self.conservationIndicatorImageView.alpha < 1)? 1 : .2;
+                     }completion:^(BOOL finished){
+                         [weakSelf startBlinkAnimation];
+                     }];
+    
 }
 
 - (void)setUpLatestPost
 {
     PFQuery *query = [PFQuery queryWithClassName:@"AnimalPost"];
-    //[query whereKey:@"objectId" equalTo:self.animal.objectId];
+    query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+    [query orderByDescending:@"createdAt"];
+
+    [query whereKey:@"animalNameEn" equalTo:self.animal.nameEn];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!object) {
              NSString *placeHolderString = [NSString stringWithFormat:@"Be the first to ask a post about %@",self.animal.name];
@@ -123,8 +191,9 @@
 - (void)setUpLatestQuestion
 {
     PFQuery *query = [PFQuery queryWithClassName:@"AnimalQuestions"];
+    [query orderByDescending:@"createdAt"];
     query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-    //[query whereKey:@"objectId" equalTo:self.animal.objectId];
+    [query whereKey:@"animal_en_name" equalTo:self.animal.nameEn];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!object) {
             NSLog(@"The getFirstObject request failed.");
@@ -134,7 +203,8 @@
         } else {
             // The find succeeded.
             NSLog(@"Successfully retrieved the object.");
-            self.latestQuestionLabel.text = object[@"question_en"];
+            NSString *key = [Helper appLang]==kHebrew ?  @"question" : @"question_en" ;
+            self.latestQuestionLabel.text = object[key];
             self.latestQuestionUserNameLabel.text = object[@"user_name"];
         }
     }];
@@ -146,10 +216,12 @@
 
 - (void)setUpLatestUserImage
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"UserPhoto"];
+    PFQuery *query = [PFQuery queryWithClassName:@"VisitorsPhotos"];
     query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+    [query orderByDescending:@"createdAt"];
+    [query whereKey:@"animalNameEn" equalTo:self.animal.nameEn];
 
-    //[query whereKey:@"objectId" equalTo:self.animal.objectId];
+    //[query whereKey:@"animalNameEn" equalTo:self.animal.nameEn];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!object) {
             NSLog(@"The getFirstObject request failed.");
@@ -157,7 +229,7 @@
             // The find succeeded.
             NSLog(@"Successfully retrieved the object.");
             self.latestImageImageView.image = [UIImage imageNamed:@""]; // placeholder image
-            self.latestImageImageView.file = (PFFile *)object[@"imageFile"]; // remote image
+            self.latestImageImageView.file = (PFFile *)object[@"image"]; // remote image
             [self.latestImageImageView loadInBackground];
         }
     }];
@@ -173,7 +245,36 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (IS_IOS7) {
+        cell.imageView.image = [cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [cell.imageView setTintColor:[UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1]];
+    }
+    switch (indexPath.section) {
+        case AnmialDataSectionQuestions:
+            if (!self.didLoadQuestions)
+            {
+                [self setUpLatestQuestion];
+                self.didLoadQuestions = YES;
+            }
+            break;
+        case AnmialDataSectionPosts:
+            if (!self.didLoadPosts)
+            {
+                [self setUpLatestPost];
+                self.didLoadPosts = YES;
+            }
+            break;
+        case AnmialDataSectionPhotos:
+            if (!self.didLoadImages)
+            {
+                [self setUpLatestUserImage];
+                self.didLoadImages = YES;
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,8 +309,51 @@
     }
 }
 
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    if (section != 0) {
+// 
+//    AnimalDataNewSectionHeaderView *headerView = [[NSBundle mainBundle] loadNibNamed:@"AnimalDataNewSectionHeaderView" owner:self options:nil][0];
+//    NSString *title = nil;
+//    NSString *imageName = nil;
+//    switch (section) {
+//        case AnmialDataSectionData:
+//        {
+//            NSString *aboutString = NSLocalizedString(@"About the %@",nil);
+//            title = [NSString stringWithFormat:aboutString,self.animal.name];
+//        }
+//            break;
+//        case AnmialDataSectionQuestions:
+//        {
+//            title = NSLocalizedString(@"Ask Questions",nil);
+//        }
+//            break;
+//        case AnmialDataSectionPhotos:
+//        {
+//            title = NSLocalizedString(@"Your Images",nil);
+//        }
+//            break;
+//        case AnmialDataSectionPosts:
+//        {
+//            title = NSLocalizedString(@"Visitors Posts",nil);
+//        }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    headerView.titleLabel.text = title;
+//    //headerView.titleLabel.text = title;
+//    return headerView;
+//    }
+//    return nil;
+//}
 
 
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 40;
+//}
 
 #pragma mark take photo
 
@@ -256,28 +400,35 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-    UIImage *scaledImage = [self imageWithImage:image scaledToSize:CGSizeMake(320, 190)];
-    NSData *dataForJPEGFile = UIImageJPEGRepresentation(scaledImage, 0.6);
+    UIImage *scaledImage = [self imageWithImage:image scaledToSize:CGSizeMake(640, 380)];
+    NSData *dataForJPEGFile = UIImageJPEGRepresentation(scaledImage, 1);
     self.latestImageImageView.image = scaledImage;
     PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.jpg",self.animal.nameEn] data:dataForJPEGFile];
+      self.uploadImageProgressView.hidden = NO;
+    __weak AnimalDataNewViewController *weakSelf = self;
+
     [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"uploaded");
-        
+      
+
         PFObject *userPhoto = [PFObject objectWithClassName:@"VisitorsPhotos"];
         //PFObject *animal = [PFObject objectWithoutDataWithClassName:animal objectId:<#(NSString *)#>
-       // userPhoto[@"animal"] = self.animal.objectId;
+        userPhoto[@"animalNameEn"] = self.animal.nameEn;
         [userPhoto setObject:imageFile forKey:@"image"];
-        
         [userPhoto saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
+                weakSelf.uploadImageProgressView.hidden = YES;
                 //[self refresh:nil];
             }
             else{
+                weakSelf.uploadImageProgressView.hidden = YES;
+
                 // Log details of the failure
             }
         }];
     } progressBlock:^(int percentDone) {
-          NSLog(@"uploading %i",percentDone);
+          NSLog(@"uploading %f",percentDone/100.0f);
+        [weakSelf.uploadImageProgressView setProgress:percentDone/100.0f animated:YES];
         // Update your progress spinner here. percentDone will be between 0 and 100.
     }];
     [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -310,6 +461,31 @@
         
     }];
 }
+
+- (IBAction)showAudioGuide:(id)sender
+{
+    if (!self.isShowingHeaderView)
+    {
+        [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
+        //[[self tableView] setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+
+        self.isShowingHeaderView = YES;
+
+    }
+    else
+    {
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.tableHeaderView.frame.size.height-64) animated:YES];
+//        [[self tableView] setContentInset:UIEdgeInsetsMake(-self.tableView.tableHeaderView.frame.size.height, 0, 0, 0)];
+
+        self.isShowingHeaderView = NO;
+
+    }
+}
+
+
+
+
+
 
 
 

@@ -1,0 +1,3 @@
+pod 'XCDYouTubeVideoPlayerViewController', '~> 1.1'
+pod 'FSImageViewer', '~> 2.4'
+pod 'XHImageViewer', '~> 0.1.2'

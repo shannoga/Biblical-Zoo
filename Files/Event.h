@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * typeString;
 @property (nonatomic, retain) NSDate   *startDate;
+@property (nonatomic, retain) NSDate   *endDate;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* eventDescription;
 @property (nonatomic, retain) NSString* location;

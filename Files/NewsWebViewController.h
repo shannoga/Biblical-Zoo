@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "LBYouTubePlayerController.h"
+
 @interface NewsWebViewController : UIViewController<UIWebViewDelegate,LBYouTubePlayerControllerDelegate,MBProgressHUDDelegate>{
     MBProgressHUD *progressHud;
 }
 
-@property (strong,nonatomic) UIScrollView *scrollView;
+@property (weak ,nonatomic) IBOutlet UIWebView *webView;
+@property (weak ,nonatomic) IBOutlet PFImageView *imageView;
+@property (weak ,nonatomic) IBOutlet UIButton *playVideoButton;
+
 @property  (strong,nonatomic) PFObject *news;
-@property  (strong,nonatomic) LBYouTubePlayerController * youtubeController;
-- (id)initWithObject:(PFObject*)newsToSet;
 
 @end

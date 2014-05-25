@@ -32,7 +32,9 @@
    
        // [ self.iconImageView setTintColor:[UIColor redColor]];
          self.auodioGuideIndicator = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [ self.auodioGuideIndicator setTintColor:[UIColor redColor]];
+        if ([self.auodioGuideIndicator respondsToSelector:@selector(setTintColor:)]) {
+            [ self.auodioGuideIndicator setTintColor:[UIColor redColor]];
+        }
         self.manyAnimalsIndicator= [[UIImageView alloc] initWithFrame:CGRectZero];
         
         [self addSubview:self.manyAnimalsIndicator];
@@ -68,21 +70,24 @@
     
     UIImage *icon = [[exhibit icon] normalize];
     self.iconImageView.image = icon;
-    self.iconImageView.image = [self.iconImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    if (IS_IOS7) {
+         self.iconImageView.image = [self.iconImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+   
     if([Helper appLang]==kHebrew){
         self.nameLabel.text =self.exhibit.name;
         [self.nameLabel setFrame:CGRectMake(10,0,250,CGRectGetHeight(self.bounds))];
         [self.iconImageView setFrame:CGRectMake(275,15,30,30)];
         [self.auodioGuideIndicator setFrame:CGRectMake(30,20,20,20)];
         [self.manyAnimalsIndicator setFrame:CGRectMake(5,20,20,20)];
-        self.nameLabel.textAlignment = UITextAlignmentRight;
+        self.nameLabel.textAlignment = NSTextAlignmentRight;
     }else{
         self.nameLabel.text = self.exhibit.nameEn;
         [self.nameLabel setFrame:CGRectMake(65,0,250,CGRectGetHeight(self.bounds))];
         [self.iconImageView setFrame:CGRectMake(10,15,30,30)];
         [self.auodioGuideIndicator setFrame:CGRectMake(265,20,20,20)];
         [self.manyAnimalsIndicator setFrame:CGRectMake(290,20,20,20)];
-        self.nameLabel.textAlignment = UITextAlignmentLeft;
+        self.nameLabel.textAlignment = NSTextAlignmentLeft;
     }
     
     if([exhibit.audioGuide boolValue]){

@@ -403,7 +403,7 @@
         if([Helper appLang]==kHebrew){
             [label setFrame:CGRectMake(0, 10, 250, 40)];
             label.font= [UIFont fontWithName:@"ArialBold" size:18];
-            label.textAlignment = UITextAlignmentRight;
+            label.textAlignment = NSTextAlignmentRight;
         }else{
             label.font= [UIFont fontWithName:@"Futura" size:20];
         }

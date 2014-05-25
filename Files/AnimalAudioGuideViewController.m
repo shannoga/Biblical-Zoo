@@ -14,13 +14,15 @@
 
 
 @implementation AnimalAudioGuideViewController
-@synthesize player;
-@synthesize animal;
-@synthesize progressSlider;
-@synthesize playButton;
+
+- (void)awakeFromNib
+{
+    self.shouldResume=NO;
+    self.view.backgroundColor = [UIColor clearColor];
+}
 
 -(void)initializePlayer{
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@",animal.nameEn,[Helper appLang]==kHebrew?@"he":@"en"];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@",self.animal.nameEn,[Helper appLang]==kHebrew?@"he":@"en"];
     fileName = [[fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"m4a"];//[path stringByAppendingPathComponent:@"lion.m4a"];
     
@@ -30,16 +32,16 @@
         NSError *error;
         self.player  = [[AVAudioPlayer alloc] initWithContentsOfURL:fileUrl error:&error];
         [self.player setNumberOfLoops:0];
-        label.text = @"Loading";
+        self.label.text = @"Loading";
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
-            label.text = @"Eroor loading audio file";
+            self.label.text = @"Eroor loading audio file";
         } else {
             
             //Make sure the system follows our playback status
            
             //Load the audio into memory
-            label.text = @"Ready";
+            self.label.text = @"Ready";
         }
     }else{
          NSLog(@"no file in path = %@",path);
@@ -52,7 +54,7 @@
     self = [super init];
     if (self) {
         self.animal = anAnimal;
-        shouldResume=NO;
+        self.shouldResume=NO;
         self.view.backgroundColor = [UIColor clearColor];
 
 
@@ -60,63 +62,13 @@
     return self;
 }
 
--(void)viewDidLoad
+
+
+
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidLoad];
-    
-    UIButton *btn = [[UIButton alloc] init];
-    [btn setFrame:CGRectMake(self.view.bounds.size.width/2-70, 30, 140, 140)];
-    btn.backgroundColor = UIColorFromRGB(0xC95000);
-    btn.layer.cornerRadius = btn.bounds.size.width/2;
-    btn.tag =kPlay;
-    [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.playButton = btn;
-    [self.view addSubview:self.playButton];
-    
-    UIImageView *playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"play.png"]];
-    playImage.frame = CGRectMake(35, 30, 80, 80);
-    [self.playButton addSubview:playImage];
-    
-    btn = [[UIButton alloc] init];
-    [btn setFrame:CGRectMake(15, 70, 60, 60)];
-    btn.backgroundColor = UIColorFromRGB(0x3B2F24);
-    btn.layer.cornerRadius = btn.bounds.size.width/2;
-    btn.tag =kStop;
-    [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
-    playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"stop.png"]];
-    playImage.frame = CGRectMake(15, 15, 30, 30);
-    [btn addSubview:playImage];
-    
-    btn = [[UIButton alloc] init];
-    [btn setFrame:CGRectMake(245, 70, 60, 60)];
-    btn.backgroundColor = UIColorFromRGB(0x3B2F24);
-    btn.layer.cornerRadius = btn.bounds.size.width/2;
-    btn.tag =kPause;
-    [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
-    playImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"pouse.png"]];
-    playImage.frame = CGRectMake(15, 15, 30, 30);
-    [btn addSubview:playImage];
-    
-    self.progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(40, 180, 240, 40)];
-    self.progressSlider.maximumValue =1;
-    self.progressSlider.minimumValue =0;
-    self.progressSlider.value = 0;
-    self.progressSlider.thumbTintColor = UIColorFromRGB(0x48382E);
-    self.progressSlider.minimumTrackTintColor = UIColorFromRGB(0xC95000);
-    self.progressSlider.maximumTrackTintColor = UIColorFromRGB(0x3B2F24);
-    [self.progressSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview: self.progressSlider];
-    
-    label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-    label.font = [UIFont fontWithName:@"Futura" size:14];
-    label.textAlignment = UITextAlignmentCenter;
-    label.textColor = UIColorFromRGB(0x3B2F24);
-    label.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:label];
+    [super viewWillDisappear:animated];
+    [self stop:nil];
 }
 
 -(void)setVol:(UISlider*)sender{
@@ -130,7 +82,7 @@
         [self.player play];
     }
 }
--(void)play{
+-(IBAction)play:(id)sender{
     if (self.player==nil) {
         [self initializePlayer];
     }
@@ -142,9 +94,10 @@
     [self.player play];
     self.player.delegate = self;
     
-     label.text = @"Playing";
-    [self.playButton.layer addAnimation:[Animations pulseAnimation:1.05] forKey:@"pulse"];
-    sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateSlider) userInfo:nil repeats:YES];
+     self.label.text = @"Playing";
+    self.playButton.enabled = NO;
+//    [self.playButton.layer addAnimation:[Animations pulseAnimation:1.05] forKey:@"pulse"];
+    self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateSlider) userInfo:nil repeats:YES];
     self.progressSlider.maximumValue = self.player.duration;
 }
 
@@ -153,40 +106,44 @@
 	self.progressSlider.value = self.player.currentTime;
 }
 
-- (void)sliderChanged:(UISlider *)sender {
+- (IBAction)sliderChanged:(UISlider *)sender {
 	// Fast skip the music when user scroll the UISlider
 	[self.player stop];
 	[self.player setCurrentTime:self.progressSlider.value];
 	[self.player prepareToPlay];
-	[self play];
+	[self play:sender];
 }
 
--(void)pause{
+-(IBAction)pause:(id)sender{
     [self.player pause];
-    [self.playButton.layer removeAllAnimations];
-    label.text = @"Paused";
+    self.playButton.enabled = YES;
+
+   // [self.playButton.layer removeAllAnimations];
+    self.label.text = @"Paused";
 }
--(void)stop{
+-(IBAction)stop:(id)sender{
     [[AVAudioSession sharedInstance] setActive: NO error: nil];
     [[AVAudioSession sharedInstance] setDelegate:nil];
     [self.player stop];
     [self.player setCurrentTime:0];
-    [self.playButton.layer removeAllAnimations];
-    label.text = @"Ready";
+    self.playButton.enabled = YES;
+
+   // [self.playButton.layer removeAllAnimations];
+    self.label.text = @"Ready";
 }
 
 -(void)btnPressed:(UIButton*)sender{
     switch (sender.tag) {
         case kPlay:
-             [self play];
+            [self play:sender];
             break;
             
         case kStop:
-            [self stop];
+            [self stop:sender];
             break;
             
         case kPause:
-            [self pause];
+            [self pause:sender];
             break;
     }
 }
@@ -196,8 +153,10 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
 	// Music completed
 	if (flag) {
-		[sliderTimer invalidate];
-        [self.playButton.layer removeAllAnimations];
+		[self.sliderTimer invalidate];
+        self.playButton.enabled = YES;
+
+      //  [self.playButton.layer removeAllAnimations];
 
 	}
 
@@ -205,28 +164,28 @@
 -(void)audioPlayerBeginInterruption:(AVAudioPlayer *)audioPlayer;
 {
     if ([self.player isPlaying]) {
-        [self pause];
-        shouldResume = YES;
+        [self pause:nil];
+        self.shouldResume = YES;
     }else{
-        shouldResume = NO;
+        self.shouldResume = NO;
     }
 }
 
 -(void)audioPlayerEndInterruption:(AVAudioPlayer *)audioPlayer;
 {
-    if(shouldResume) [self play];
+    if(self.shouldResume) [self play:nil];
 }
 
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags{
-   if(shouldResume) [self play];
+    if(self.shouldResume) [self play:nil];
 }
 -(void)beginInterruption{
     if ([self.player isPlaying]) {
-        [self pause];
-        shouldResume = YES;
+        [self pause:nil];
+        self.shouldResume = YES;
     }else{
-        shouldResume = NO;
+        self.shouldResume = NO;
     }
       
 }

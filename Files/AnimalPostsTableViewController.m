@@ -66,7 +66,7 @@
     
     
     UITextView *postExplainLabel = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
-    postExplainLabel.textAlignment = UITextAlignmentCenter;
+    postExplainLabel.textAlignment = NSTextAlignmentCenter;
     postExplainLabel.backgroundColor = [UIColor clearColor];
     postExplainLabel.textColor = UIColorFromRGB(0x281502);
     postExplainLabel.editable = NO;
@@ -343,7 +343,7 @@
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     CGFloat height = MAX(size.height, 44.0f);
     

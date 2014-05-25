@@ -142,6 +142,7 @@
             MXLCalendarEvent *calendarEvent =  (MXLCalendarEvent*)obj;
             Event *event = [Event createInContext:[NSManagedObjectContext defaultContext]];
             event.startDate = [Event finalDateFromGeneratedStartDate:date originalDate:calendarEvent.eventStartDate];
+            event.endDate = [Event finalDateFromGeneratedStartDate:date originalDate:calendarEvent.eventEndDate];
             event.eventDescription = [Event localStringFromDoubleLangString:calendarEvent.eventDescription];
             event.location = [Event localStringFromDoubleLangString:calendarEvent.eventLocation];
             event.title = [Event localStringFromDoubleLangString:calendarEvent.eventSummary];

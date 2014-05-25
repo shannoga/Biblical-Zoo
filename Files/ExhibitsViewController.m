@@ -84,21 +84,21 @@
     CGRect labelRect;
     CGRect iconRect;
     UIFont * font;
-    UITextAlignment textAlign;
+    NSTextAlignment textAlign;
     
     if ([Helper appLang]==kHebrew) {
         labelRect = CGRectMake(0, 7, 260, 60);
         iconRect = CGRectMake(275, 15, 30, 30);
         font = [UIFont fontWithName:@"ArialHebrew-Bold" size:20];
-        textAlign = UITextAlignmentRight;
+        textAlign = NSTextAlignmentRight;
     }else{
         labelRect = CGRectMake(65, 0, 255, 60);
         iconRect = CGRectMake(10, 15, 30, 30);
         font = [UIFont fontWithName:@"Futura" size:20];
-        textAlign = UITextAlignmentLeft;
+        textAlign = NSTextAlignmentLeft;
     }
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    self.headerView.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+    self.headerView.backgroundColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
     
     self.headerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.headerButton.frame = CGRectMake(0, 0, 320, 50);
@@ -141,14 +141,14 @@
 
     if (exhibitsHasPendingUpdates) {
         // Do any additional setup after loading the view, typically from a nib.
-        self.headerButton.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+        self.headerButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
         [self.headerButton addTarget:self action:@selector(updateAnimalsData) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"156-Cycle"]];
         if(exhibitsHasPendingUpdates)self.headerButtonLabel.text = [Helper languageSelectedStringForKey:@"Update available for exhibits"];
 
     }else{
         //nearest exhibit        
-        self.headerButton.backgroundColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
+        self.headerButton.backgroundColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
         [self.headerButton addTarget:self action:@selector(findNearestExhibit) forControlEvents:UIControlEventTouchUpInside];
         [self.headerButtonIconView setImage:[UIImage imageNamed:@"873-magic-wand"]];
         [self.headerButton addSubview:self.headerButtonIconView];
@@ -268,9 +268,9 @@
 
         
     } else if([animals count]>1){
-        ExhibitAnimalsViewController * exhibitAnimalsViewController = [[ExhibitAnimalsViewController alloc] initWithStyle:UITableViewStylePlain];
-        exhibitAnimalsViewController.exhibit = exhibit;
-        [self.navigationController pushViewController:exhibitAnimalsViewController animated:YES];
+        [self performSegueWithIdentifier:@"ExhibitAnimalsSegue" sender:self];
+
+        
         
     }else{
         UIAlertView *alert = [[UIAlertView alloc]
@@ -287,12 +287,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSArray *animals = [self.selectedExhibit localAnimals];
-
-    AnimalDataNewViewController *animalDataViewCOntroller = (AnimalDataNewViewController *)segue.destinationViewController;
-    animalDataViewCOntroller.animal = [animals lastObject];
-    animalDataViewCOntroller.title = [[animals lastObject] name];
-
+    if ([segue.identifier isEqualToString:@"SelectedSingleAnimalExhibit"])
+    {
+        NSArray *animals = [self.selectedExhibit localAnimals];
+        
+        AnimalDataNewViewController *animalDataViewCOntroller = (AnimalDataNewViewController *)segue.destinationViewController;
+        animalDataViewCOntroller.animal = [animals lastObject];
+        animalDataViewCOntroller.title = [[animals lastObject] name];
+    }
+    else if([segue.identifier isEqualToString:@"ExhibitAnimalsSegue"])
+    {
+        ExhibitAnimalsViewController * exhibitAnimalsViewController = (ExhibitAnimalsViewController *) segue.destinationViewController;
+        exhibitAnimalsViewController.exhibit = self.selectedExhibit;
+    }
+  
 }
 
 

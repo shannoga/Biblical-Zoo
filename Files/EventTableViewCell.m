@@ -38,7 +38,7 @@
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
 		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = UITextAlignmentLeft;
+		label.textAlignment = NSTextAlignmentLeft;
 		label.numberOfLines=1;
         label.textColor = [UIColor blackColor];
 		labelView = label;
@@ -49,7 +49,7 @@
 		font =  [UIFont fontWithName:@"Avenir-Book" size:14];
 		label.font = font;
 		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = UITextAlignmentLeft;
+		label.textAlignment = NSTextAlignmentLeft;
 		label.numberOfLines=2;
         label.textColor = [UIColor blackColor];
 		detailLableView = label;
@@ -60,7 +60,7 @@
         font =  [UIFont fontWithName:@"Avenir-Book" size:14];
 		label.font = font;
 		label.backgroundColor = [UIColor colorWithWhite:0 alpha:.1];
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
 		label.textColor = [UIColor blackColor];
 		label.numberOfLines=4;
 		timeLableView = label;
@@ -70,7 +70,7 @@
         font =  [UIFont fontWithName:@"Avenir-Book" size:12];
 		label.font = font;
 		label.backgroundColor =  [UIColor colorWithWhite:0 alpha:.1];
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
 		label.textColor = [UIColor blackColor];
 		label.numberOfLines=2;
 		locationLableView = label;
@@ -179,19 +179,26 @@
 	[self.cellImageView setImage:cellImage];
     switch ([event.type intValue]) {
         case kEventTypeFeeding:
-            cellImageView.tintColor = [UIColor colorWithRed:0.243 green:0.435 blue:0.478 alpha:1];
+            if (IS_IOS7) {
+                cellImageView.tintColor = [UIColor colorWithRed:0.243 green:0.435 blue:0.478 alpha:1];
+            }
             break;
         case kEventTypeTalk:
-            cellImageView.tintColor = [UIColor colorWithRed:0.463 green:0.365 blue:0.322 alpha:1];
+            if (IS_IOS7) {
+                cellImageView.tintColor = [UIColor colorWithRed:0.463 green:0.365 blue:0.322 alpha:1];
+            }
             break;
             
         default:
-            cellImageView.tintColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
-
+            if (IS_IOS7) {
+                cellImageView.tintColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
+            }
+            
             break;
     }
-    
+    if (IS_IOS7) {
     self.cellImageView.image = [self.cellImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
 
 
 	[labelView setNeedsDisplay];

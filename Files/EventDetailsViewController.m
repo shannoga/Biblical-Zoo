@@ -75,7 +75,7 @@
 }
 
 -(IBAction)dismiss:(id)sender{
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(IBAction)callZoo:(id)sender{
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt:026750111"]];

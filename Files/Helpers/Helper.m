@@ -295,22 +295,22 @@
 {
     switch (status) {
         case ConLC:
-            return [UIColor whiteColor];
+            return [UIColor darkGrayColor];
             break;
         case ConNT:
             return UIColorFromRGB(0x87D295);
             break;
         case ConVU:
-            return [UIColor whiteColor];
+            return [UIColor darkGrayColor];
             break;
         case ConEN:
-            return [UIColor whiteColor];
+            return [UIColor darkGrayColor];
             break;
         case ConCR:
-            return [UIColor whiteColor];
+            return [UIColor darkGrayColor];
             break;
         case ConEW:
-            return [UIColor whiteColor];
+            return [UIColor darkGrayColor];
             break;
         case ConEX:
             return UIColorFromRGB(0xDF0012);

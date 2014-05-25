@@ -1,0 +1,40 @@
+PODS:
+  - AFNetworking (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.2.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.2.4):
+    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (2.2.4)
+  - AFNetworking/Security (2.2.4)
+  - AFNetworking/Serialization (2.2.4)
+  - AFNetworking/UIKit (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - EGOCache (2.0)
+  - FSImageViewer (2.4):
+    - AFNetworking (~> 2.2)
+    - EGOCache (~> 2.0)
+  - XCDYouTubeVideoPlayerViewController (1.1.2)
+  - XHImageViewer (0.1.2)
+
+DEPENDENCIES:
+  - FSImageViewer (~> 2.4)
+  - XCDYouTubeVideoPlayerViewController (~> 1.1)
+  - XHImageViewer (~> 0.1.2)
+
+SPEC CHECKSUMS:
+  AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  EGOCache: 71abd9a8cbf0c357309f25761f2ba06818b10661
+  FSImageViewer: e3560eba18274669cfeb3ca753929280fb4e0a17
+  XCDYouTubeVideoPlayerViewController: 228e161f9b3f73f3f8d3eb5cca5c5a8cfd041d7a
+  XHImageViewer: 84bcadb6d07a0040d2c7ac2e6ceb05df970da165
+
+COCOAPODS: 0.32.1

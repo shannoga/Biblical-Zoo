@@ -13,6 +13,10 @@
 #import "NewsCell.h"
 #import "Reachability.h"
 
+@interface NewsListViewController()
+@property (nonatomic, strong) PFObject *selectedNewsObject;
+@end
+
 @implementation NewsListViewController
 
 - (void)awakeFromNib
@@ -63,6 +67,8 @@
     [super viewDidLoad];
     self.tableView.rowHeight=120;
     self.tableView.sectionIndexMinimumDisplayRowCount=200;
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -70,45 +76,12 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+    NewsWebViewController *viewController = (NewsWebViewController *)segue.destinationViewController;
+    viewController.news = self.selectedNewsObject;
 }
 
 #pragma mark - Parse
@@ -179,9 +152,10 @@
     if (indexPath.row < [self.objects count]) {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
         PFObject *newsObject = (self.objects)[indexPath.row];
-
-        NewsWebViewController *viewController = [[NewsWebViewController alloc] initWithObject:newsObject];
-        [self.navigationController pushViewController:viewController animated:YES];
+        self.selectedNewsObject = newsObject;
+        [self performSegueWithIdentifier:@"showNewsSegue" sender:self];
+//        NewsWebViewController *viewController = [[NewsWebViewController alloc] initWithObject:newsObject];
+//        [self.navigationController pushViewController:viewController animated:YES];
     }else{
         Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
         NSLog(@"reach  = %@",[reach isReachable]? @"YES":@"NO");
@@ -209,6 +183,9 @@
     [hud removeFromSuperview];
 	hud = nil;
 }
+
+
+
 
 @end
 

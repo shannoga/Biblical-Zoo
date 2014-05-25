@@ -55,14 +55,14 @@
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 	</array>
 	<key>UILaunchImageFile</key>
 	<string>Opening.png</string>
+	<key>UIMainStoryboardFile</key>
+	<string>MainStoryboard</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
@@ -76,11 +76,11 @@
 			<key>TintColor</key>
 			<dict>
 				<key>Blue</key>
-				<real>0.1326625943183899</real>
+				<real>0.13266259431838989</real>
 				<key>Green</key>
-				<real>0.1823440939188004</real>
+				<real>0.18234409391880041</real>
 				<key>Red</key>
-				<real>0.2414098978042603</real>
+				<real>0.24140989780426031</real>
 			</dict>
 			<key>Translucent</key>
 			<false/>
@@ -89,6 +89,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

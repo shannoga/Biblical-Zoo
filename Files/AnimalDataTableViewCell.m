@@ -29,7 +29,7 @@
 		label.font = font;
         label.textColor = [UIColor brownColor];
 		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = UITextAlignmentLeft;
+		label.textAlignment = NSTextAlignmentLeft;
 		label.numberOfLines=1;
 		labelView = label;
 		[self.contentView addSubview:labelView];
@@ -38,7 +38,7 @@
 		label = [[UILabel alloc] initWithFrame:CGRectZero];
 		label.font = font;
 		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = UITextAlignmentLeft;
+		label.textAlignment = NSTextAlignmentLeft;
 		label.numberOfLines=0;
         label.textColor = UIColorFromRGB(0x281502);
 		detailLableView = label;

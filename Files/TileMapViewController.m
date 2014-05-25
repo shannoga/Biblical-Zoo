@@ -211,7 +211,6 @@
     if (!IS_IPHONE_5) {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     }
-    [self.map setShowsUserLocation:YES];
 
     
     if([CLLocationManager locationServicesEnabled]){
@@ -438,7 +437,8 @@
     CLLocation * mapCenterLocation = [[CLLocation alloc] initWithLatitude:31.746233 longitude:35.174095]; 
     if( [newLocation distanceFromLocation:mapCenterLocation]<1000){
         NSLog(@"user is in zoo");
-        
+        [self.map setShowsUserLocation:YES];
+
         
     }else{
         static dispatch_once_t onceToken;

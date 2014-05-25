@@ -247,22 +247,32 @@ monitoringDidFailForRegion:(CLRegion *)region
 
 
 -(void)setUIAppearence{
-    
-    self.window.tintColor = [UIColor colorWithRed:0.925 green:0.282 blue:0.090 alpha:1];
-//    [[UITableViewCell appearance] setBackgroundColor:[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1]];
+    if([self.window respondsToSelector:@selector(setTintColor:)])
+    {
+    self.window.tintColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
+    }
+    else
+    {
+            [[UITableViewCell appearance] setBackgroundColor:[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1]];
+        
+         [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
+           [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+      
+       // [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundColor:UIColorFromRGB(0xf8eddf)];
+            [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];
+//        
+           [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
+            [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
+            [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xEFF1E7)];
+            [[UITabBar appearance] setTintColor:UIColorFromRGB(0x3B2F24)];
+            [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setSelectedImageTintColor:UIColorFromRGB(0x69742C)];
+        
+        
+        
+        //         [[UITabBar appearance] setTintColor:UIColorFromRGB(0xD9593A)];
 
-   // [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] ];
-  //  [[UITabBar appearance] setTintColor:UIColorFromRGB(0xD9593A)];
-//    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundImage:[UIImage imageNamed:@"nav_pattern_baje"] ];
-//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setBackgroundColor:UIColorFromRGB(0xf8eddf)];
-//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_tile"] forBarMetrics:UIBarMetricsDefault];
-//    
-//    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0x8C9544)];
-//    [[UIToolbar appearance] setTintColor:UIColorFromRGB(0xBDB38C)];
-//    [[UITabBar appearance] setSelectedImageTintColor:UIColorFromRGB(0xEFF1E7)];
-////    [[UITabBar appearance] setTintColor:UIColorFromRGB(0x3B2F24)];
-//    [[UITabBar appearanceWhenContainedIn:[AnimalDataTabBarController class], nil] setSelectedImageTintColor:UIColorFromRGB(0x69742C)];
+    }
+
     [[UITableView appearance] setBackgroundColor:[UIColor colorWithRed:0.933 green:0.949 blue:0.902 alpha:1]];
 }
 -(void)setUpMagicalRecord{
@@ -326,8 +336,8 @@ monitoringDidFailForRegion:(CLRegion *)region
     UITabBarController* tabBar = (UITabBarController *)self.window.rootViewController;
     
     // reload the storyboard in the selected language
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[Helper currentLang] ofType:@"lproj"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+   // NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[Helper currentLang] ofType:@"lproj"];
+   // NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     
@@ -474,6 +484,31 @@ monitoringDidFailForRegion:(CLRegion *)region
 }
 
 
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    // Get topmost/visible view controller
+    UIViewController *currentViewController = [self topMostController];
+    
+    // Check whether it implements a dummy methods called canRotate
+    if ([currentViewController respondsToSelector:@selector(canRotate)]) {
+        // Unlock landscape view orientations for this view controller
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    }
+    
+    // Only allow portrait (standard behaviour)
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
 
 
 

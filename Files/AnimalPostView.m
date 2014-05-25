@@ -80,7 +80,7 @@
         
         
         UITextView *postExplainLabel = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, 280, 150)];
-        postExplainLabel.textAlignment = UITextAlignmentCenter;
+        postExplainLabel.textAlignment = NSTextAlignmentCenter;
         postExplainLabel.backgroundColor = [UIColor clearColor];
         postExplainLabel.textColor = UIColorFromRGB(0x281502);
         postExplainLabel.editable = NO;
