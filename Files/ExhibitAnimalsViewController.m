@@ -84,6 +84,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+   
 
 }
 
@@ -93,7 +95,7 @@
     self.tableView.separatorColor = UIColorFromRGBA(0xffffff, .2);
     self.tableView.rowHeight = 60;
 
-    
+   
 }
 
 

@@ -10,15 +10,17 @@
 #import "AnimalQuestionsCell.h"
 #import "QuestionAnswerPopupViewController.h"
 #import "UIViewController+CWPopup.h"
+#import "SendPostOrQuestionViewController.h"
 
 #define FONT_SIZE 15.0f
 #define CELL_MIN_HEIGHT 40.0f
-#define CELL_CONTENT_WIDTH 280.0f
-#define CELL_CONTENT_MARGIN 30.0f
+#define CELL_CONTENT_WIDTH 200.0f
+#define CELL_CONTENT_MARGIN 20.0f
 
 @interface ViewQuestionsOrPostsViewController () <MBProgressHUDDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) MBProgressHUD *refreshHUD;
 @property (nonatomic) BOOL isPresentingAnswer;
+- (IBAction)openComposer:(id)sender;
 @end
 
 @implementation ViewQuestionsOrPostsViewController
@@ -46,6 +48,36 @@
     
 }
 
+
+- (UIBarButtonItem *)cancelBarButton
+{
+    return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"openPostPageFromViewer"])
+    {
+        UINavigationController *navController = (UINavigationController *) segue.destinationViewController;
+        SendPostOrQuestionViewController *destController = (SendPostOrQuestionViewController *) navController.viewControllers[0];
+        destController.navigationItem.leftBarButtonItem = [self cancelBarButton];
+        destController.animal = self.animal;
+        if (self.postType == PostTypeQuestion)
+        {
+            destController.postType = PostTypeQuestion;
+        }
+        else
+        {
+            destController.postType = PostTypePost;
+            
+        }
+    }
+}
+
+- (IBAction)openComposer:(id)sender
+{
+    [self performSegueWithIdentifier:@"openPostPageFromViewer" sender:self];
+}
 
 - (void)objectsDidLoad:(NSError *)error {
     [super objectsDidLoad:error];
@@ -95,9 +127,9 @@
             size = [text sizeWithFont:font constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         }
         
-        return size.height + (CELL_CONTENT_MARGIN * 2);
+        return size.height + (CELL_CONTENT_MARGIN * 2) + 10;
     }
-    return 44;
+    return 0;
 }
 
 - (PFTableViewCell *)tableView:(UITableView *)tableView

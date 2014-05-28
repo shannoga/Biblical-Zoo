@@ -250,6 +250,8 @@ monitoringDidFailForRegion:(CLRegion *)region
     if([self.window respondsToSelector:@selector(setTintColor:)])
     {
     self.window.tintColor = [UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1];
+        [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.294 green:0.239 blue:0.184 alpha:1]];
+
     }
     else
     {

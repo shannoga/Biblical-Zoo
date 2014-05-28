@@ -140,6 +140,10 @@
             if ([self.animal.conservationStatus isEqualToString:label.text])
             {
                 self.conservationIndicatorConstraint.constant = CGRectGetWidth(self.view.frame) - conservationView.center.x - CGRectGetWidth(self.conservationIndicatorImageView.frame)/2;
+                if (IS_IOS7) {
+                    self.conservationIndicatorImageView.image = [self.conservationIndicatorImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    [self.conservationIndicatorImageView setTintColor:[Helper colorForConservationStatus:conservationView.tag]];
+                }
 
                 [UIView animateWithDuration:2 animations:^{
                     [self.conservationIndicatorImageView layoutIfNeeded];
@@ -243,8 +247,38 @@
     [self.imagesScrollViewContainer addSubview:imagesScrollView];
 }
 
+//[self.tableView beginUpdates];
+//[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+//[self.tableView endUpdates];
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    if(self.animal.generalExhibitDescription)
+    {
+        if(indexPath.section == 1)
+        {
+            if(indexPath.row < 3)
+            {
+                return 0;
+            }
+        }
+    }
+    
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+}
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.animal.generalExhibitDescription)
+    {
+        if(indexPath.section == 1)
+        {
+            if(indexPath.row < 3)
+            {
+                cell.hidden = YES;
+            }
+        }
+    }
     if (IS_IOS7) {
         cell.imageView.image = [cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [cell.imageView setTintColor:[UIColor colorWithRed:0.000 green:0.392 blue:0.004 alpha:1]];
