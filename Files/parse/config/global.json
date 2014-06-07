@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Jerusalem Biblical Zoo": {
+            "applicationId": "eT0jBVvhDb7bCk277TaGsnFFTl2msWervtRf2aUF", 
+            "masterKey": "jhf9uByUrWcS8saoTVNLBkgRbvaXCwfIyjBdY1kh"
+        }, 
+        "_default": {
+            "link": "Jerusalem Biblical Zoo"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}

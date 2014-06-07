@@ -1,0 +1,38 @@
+PODS:
+  - DACircularProgress (2.2.0)
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core
+  - MagicalRecord/Core (2.2)
+  - MBProgressHUD (0.8)
+  - MWPhotoBrowser (1.4.0):
+    - DACircularProgress
+    - MBProgressHUD (~> 0.8)
+    - PSTCollectionView (~> 1.2)
+    - SDWebImage (~> 3.5.4)
+  - PSTCollectionView (1.2.0)
+  - Reachability (3.1.1)
+  - SDWebImage (3.5.4):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.5.4)
+  - UIAlertView-Blocks (1.0)
+  - XCDYouTubeVideoPlayerViewController (1.1.2)
+
+DEPENDENCIES:
+  - MagicalRecord (~> 2.2)
+  - MWPhotoBrowser (~> 1.4)
+  - Reachability (~> 3.1)
+  - UIAlertView-Blocks (~> 1.0)
+  - XCDYouTubeVideoPlayerViewController (~> 1.1)
+
+SPEC CHECKSUMS:
+  DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
+  MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  MWPhotoBrowser: 4efcdb9da34751f97992128a5356f3929d1af537
+  PSTCollectionView: e82c1a71ec6469f88490b674c0f66f0bbf1de001
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+  SDWebImage: 571295c8acbb699505a0f68e54506147c3de9ea7
+  UIAlertView-Blocks: f3271e84372beb97aea115cd1fb26ae66457f12f
+  XCDYouTubeVideoPlayerViewController: d01e888e59ac7d27fff7ddd37053f4007a2ab650
+
+COCOAPODS: 0.33.1
